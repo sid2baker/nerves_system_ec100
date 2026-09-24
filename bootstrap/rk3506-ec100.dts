@@ -15,8 +15,8 @@
         device_type = "memory";
         reg = <0 0x20000000>;
     };
-    /* Official preloader supplies secure-memory reservations via ATAGS.
-     * Keep the vendor bidram path; do not impose the old source-TEE map.
+    /* Keep vendor memory handling; dynamic TEE memory tags are optional.
+     * Linux separately retains its SoC trust@0 reservation.
      */
 };
 

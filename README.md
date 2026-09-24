@@ -13,8 +13,10 @@ Erlang, but suffered execution faults and lockups. CPU voltage/frequency control
 been restored from the original board configuration; it did not resolve the instability.
 
 The current configuration switches to official Rockchip DDR/SPL/secure-firmware
-binaries. Local boot-artifact packaging has passed, but this boot chain is not yet
-hardware-qualified. A/B rollback and hardware watchdog reset also remain unqualified.
+binaries. Version 0.1.10-dev reaches interactive Elixir with all three CPUs and
+persistent ext4 mounted. Dynamic execution probes passed 1,300 launches on one boot;
+the user also reports success after reboot. Long-term stability, A/B rollback, and
+hardware watchdog reset remain unqualified.
 
 See [the component-set notes](docs/official-rk3506-component-set.md),
 [hardware map](docs/ec100-hardware-map.md), and
@@ -104,7 +106,8 @@ Nerves uses **Buildroot** to prepare the toolchain and build the base system.
 We do **not** compile the selected DDR initializer, SPL, or secure firmware.
 `patches/buildroot/` selects the rkbin version and adapts its integration.
 `bootstrap/patches/uboot/` adapts the legacy U-Boot configuration/compiler handling,
-accepts Buildroot's secure-firmware input, and checks the secure-memory handoff.
+and accepts Buildroot's secure-firmware input. Linux retains the vendor device
+tree's fixed secure-memory reservation.
 See [SOURCES.md](SOURCES.md) for source pins.
 
 ### 2. Package the boot images

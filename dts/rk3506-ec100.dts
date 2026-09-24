@@ -101,9 +101,8 @@
         /delete-node/ drm-logo@0;
         /delete-node/ linux,cma;
 
-        /* Retain the vendor SoC trust@0 reservation. Additional secure
-         * memory is supplied by the official preloader through U-Boot's
-         * ATAG_TOS_MEM/bidram memory-bank fixup, not fixed EC100 addresses.
+        /* Inherit the vendor trust@0 reservation: base 0, size 0x62000.
+         * The official small TEE does not require a dynamic TOS memory tag.
          */
     };
 

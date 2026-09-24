@@ -1,6 +1,6 @@
 # EC100 bootloader build and factory boundary
 
-System 0.1.9-dev integrates the official Rockchip low-level component set:
+System 0.1.10-dev integrates the official Rockchip low-level component set:
 
 1. Official DDR 750 MHz v1.08
 2. Official SPL v1.12
@@ -41,10 +41,12 @@ writes them. The separate eMMC boot0/boot1 hardware partitions are not touched.
 - U-Boot proper loads at 0x00200000; OP-TEE returns there.
 - Official TEE loads at 0x1000, as specified by RK3506TOS.ini; its binary is
   packaged intact. The old 0x18000000/0x10000000 source-TEE reservations are removed.
-- Vendor preloader memory tags feed U-Boot's `param_parse_optee_mem()` and
-  bidram reservations. `arch_fixup_fdt()` publishes the resulting RAM banks to
-  Linux. The SoC DTS's `trust@0` reservation is retained. Verify actual secure
-  reservations and memory banks on the first hardware boot before accepting it.
+- Linux inherits the vendor SoC DTS's `trust@0` reservation: base 0, size
+  0x62000 (392 KiB). The captured factory device tree has the same reservation.
+  This is separate from U-Boot's optional dynamic TEE-memory tags. Vendor
+  U-Boot allows an empty dynamic reservation; our 0.1.9-dev check incorrectly
+  rejected it and has been removed. See the hardware findings in
+  [the component-set notes](../docs/official-rk3506-component-set.md).
 - Kernel FIT read buffer is 0x08000000, distinct from kernel load 0x02080000.
 - UART target is **115200 8N1**. DDR is explicitly patched and U-Boot/Linux
   configured accordingly; verify the official SPL/TEE handoff on hardware.
@@ -86,5 +88,8 @@ boot area (including stale loader copies/vendor env), writes current firmware,
 and verifies every range before optional reset. It is not power-loss atomic.
 
 Earlier source-chain factory readback verification passed, but userspace was
-unstable. The 0.1.9-dev official chain is a new, not-yet-hardware-qualified
-configuration; earlier flashing results do not qualify it.
+unstable. On hardware, 0.1.9-dev reached official TEE and U-Boot but stopped at
+our incorrect dynamic-reservation check. Version 0.1.10-dev removes that check
+and has reached IEx on hardware, with 1,300 dynamic launches passing on one boot
+and a subsequent user-reported successful reboot test. Long-term stability and
+A/B rollback remain unqualified.

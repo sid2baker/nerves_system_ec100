@@ -53,18 +53,20 @@ binary dependency.
 - FlashData is DDR v1.08, FlashBoot is SPL v1.12. LOADER2_PARAM declares
   LOAD_ADDR=0x03f00000 and FLAG=0; do not reinterpret this as the Linux load address.
 - Upstream TOS INI: TOSTA=tee_v2.50 and ADDR=0x1000.
-- Our current OP-TEE is loaded at 0x18000000, with a 32 MiB reservation and a
+- The previous source-built OP-TEE loaded at 0x18000000, with a 32 MiB reservation and a
   separate 0x10000000 shared-memory reservation. These cannot simply be assumed
   correct for the official firmware.
 
-Integration uses the vendor runtime handoff rather than inventing a static
-reservation from this load address. `param_parse_optee_mem()` reads ATAG_TOS_MEM
-(or the vendor legacy parameter block); `board_bidram_reserve()` reserves it,
-and `arch_fixup_fdt()` calls `bidram_fixup()` and publishes the resulting banks
-to Linux. An EC100 patch rejects a missing secure-memory handoff and prints the
-region. The existing vendor SoC `trust@0` reservation remains; the custom source
-TEE/SHM reservations are removed. Exact runtime reservations and services must
-still be verified on hardware.
+Linux inherits the vendor `rk3502.dtsi` reservation `trust@0`, with
+`reg = <0x0 0x62000>` (392 KiB). The captured factory device tree and our built
+0.1.9 DTB both contain this same reservation. Linux's early reserved-memory
+scan excludes it from allocation. The old custom source-TEE/SHM reservations
+are removed.
+
+The separate U-Boot `param_parse_optee_mem()` path reads ATAG_TOS_MEM or legacy
+parameters. It is optional: vendor `bidram_core_reserve()` explicitly returns
+success for size zero. Our initial assertion that this path must return a
+nonempty region was incorrect; the hardware failure and correction are below.
 
 ## Implementation sequence
 
@@ -98,10 +100,59 @@ pass dry-run against the pinned Buildroot tree. Updated Linux DTB compiles and
 contains only the inherited trust/ramoops reservations, not the old custom TEE
 nodes. Temporary validation tree: `/tmp/ec100-official-build.1CduCX`.
 
-No flashing or hardware qualification has occurred. First boot must show the
-secure-memory handoff, sensible Linux RAM banks, working UART and SIP/PSCI,
-and correct PWM/OPP state. Do not treat host packaging validation as stability
-or A/B rollback validation.
+## 0.1.9 hardware failure and 0.1.10 correction
+
+The user's hardware log shows DDR v1.08, official SPL v1.12 and TEE v2.50
+starting. SPL falls back from GPT discovery to the raw FIT at sector 0x4000,
+verifies all three hashes, then enters TEE and U-Boot. TEE reports:
+
+```text
+OP-TEE memory size: TEEOS 0x5e000 TA 0x1000 SHM 0x1000
+```
+
+U-Boot then stops at our added check:
+
+```text
+DRAM:  EC100: missing OP-TEE memory handoff; refusing boot
+Bidram Error: Failed to reserve bidram for board
+```
+
+These sizes are consistent with the small vendor reservation, but are not by
+themselves a complete address map. The fixed Linux reservation is established
+by the vendor DTS and confirmed in the built DTB, not inferred from this log.
+U-Boot's normal image addresses are above it: U-Boot 0x00200000, kernel FIT
+buffer 0x00108000 (manual diagnostic buffer 0x08000000), kernel load
+0x02080000, Linux FDT load 0x06000000. The BSP places ATAGS at 0x62000.
+
+Version 0.1.10 removes patch 0003, restoring vendor handling of absent dynamic
+TEE-memory parameters. It retains the existing fixed Linux reservation and
+changes no firmware binaries, load addresses, partition layout, or boot policy.
+The misleading dynamic-handoff comments/documentation are corrected.
+
+Validation: rebuilt U-Boot after reversing only patch 0003, confirmed the fatal
+check string is absent, and successfully ran factory boot-artifact packaging.
+Validation outputs: `/tmp/ec100-reservation-fix.3ezYxE`.
+
+### 0.1.10 hardware results
+
+The user supplied a successful boot log: official DDR/SPL/TEE start, U-Boot
+shows `trust@0: addr=0 size=62000`, Linux starts all three CPUs with PSCI 1.0
+and SMCCC 1.1, SquashFS root mounts, and existing ext4 data mounts after journal
+recovery. Erlang/OTP 29 and interactive Elixir 1.20.4 start. The earlier SIP
+version/DRAM-refresh error messages are absent in this log; this does not verify
+all firmware services.
+
+IEx evaluation succeeded. Three 100-launch dynamic exec probes plus ten more
+100-launch batches all passed: 1,300/1,300 on that boot, exit status zero. After
+being asked to reboot and repeat the test, the user reported "it works"; no
+second detailed transcript/count was supplied. The prior execution failure has
+not reproduced in these tests, but long-term stability and root cause remain
+unproven. A/B rollback and watchdog reset are still unqualified.
+
+Remaining startup diagnostics include an unavailable NervesMOTD module in
+`/etc/iex.exs`, vendor GPT/boot-partition discovery fallbacks, optional peripheral
+configuration warnings, and an RGA driver binding failure. Preserve this working
+baseline and address demonstrated issues individually.
 
 ## Upstream references
 
