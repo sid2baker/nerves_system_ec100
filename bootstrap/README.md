@@ -1,16 +1,17 @@
 # EC100 bootloader build and factory boundary
 
-System 0.1.4-dev builds the complete boot chain:
+System 0.1.9-dev integrates the official Rockchip low-level component set:
 
-1. Rockchip DDR 750 MHz v1.05 (the retained proprietary DRAM-training component)
-2. Source SPL from pinned Rockchip U-Boot
-3. Source OP-TEE implementing ARM32 PSCI for the three Cortex-A7 cores
-4. Source U-Boot with redundant MMC env and bootcount support
+1. Official DDR 750 MHz v1.08
+2. Official SPL v1.12
+3. Official secure firmware v2.50 (standard, not TA-enabled variant)
+4. Rockchip-BSP U-Boot with redundant MMC env and Nerves bootcount support
 5. Raw FIT A/B, then matching SquashFS rootfs
 
-`nerves_defconfig` pins U-Boot `1c535d65b8509f388d09e49fb6961f49fda35a1d`
-and OP-TEE `5858c37a66cbffccf7b047d0f9a52dee0ebbf06c`. The Buildroot release
-pins rkbin `f43a462e7a1429a9d407ae52b4745033034a6cf9`.
+`nerves_defconfig` pins U-Boot `1c535d65b8509f388d09e49fb6961f49fda35a1d`.
+`patches/buildroot` pins rkbin `3e288fe814e059dd06833495f845cab04ac20a5c`;
+`rkbin.sha256` independently checks the four selected binary inputs. There is
+no separate DDR override or source-built OP-TEE dependency.
 
 The U-Boot tree is the **Rockchip 2017.09-derived BSP**, not modern mainline.
 Mainline has RK3506 SoC support but the inspected tree has no complete RK3506
@@ -31,19 +32,22 @@ replacing it with mainline remains desirable, not a completed milestone.
 
 `bootstrap/post-image.sh` creates `idbloader.img`, `u-boot.itb`, a temporary
 `ec100-maskrom-loader.bin`, and `bootloader.sha256`. The temporary transport
-contains rkbin USB plug code and is never persisted. Source SPL replaces rkbin's
-SPL in the NEWIDB. These artifacts are factory-only: no normal `.fw` update task
+uses official USB plug v1.04. USB plug code is never persisted; the NEWIDB
+contains official DDR and SPL. The official INI's SPL selection is not overridden. These artifacts are factory-only: no normal `.fw` update task
 writes them. The separate eMMC boot0/boot1 hardware partitions are not touched.
 
 ## Memory contract
 
 - U-Boot proper loads at 0x00200000; OP-TEE returns there.
-- OP-TEE loads at 0x18000000 with 32 MiB reserved; shared memory is
-  0x10000000+0x80000. Both U-Boot and Linux DTS reserve these ranges.
-- This BSP's SPL jumps directly to OP-TEE's FIT entry; the factory FIT uses
-  `tee-raw.bin`, **not** `tee.bin` with its OPTE header.
+- Official TEE loads at 0x1000, as specified by RK3506TOS.ini; its binary is
+  packaged intact. The old 0x18000000/0x10000000 source-TEE reservations are removed.
+- Vendor preloader memory tags feed U-Boot's `param_parse_optee_mem()` and
+  bidram reservations. `arch_fixup_fdt()` publishes the resulting RAM banks to
+  Linux. The SoC DTS's `trust@0` reservation is retained. Verify actual secure
+  reservations and memory banks on the first hardware boot before accepting it.
 - Kernel FIT read buffer is 0x08000000, distinct from kernel load 0x02080000.
-- DDR, SPL, U-Boot, OP-TEE and Linux all use UART0 at **115200 8N1**.
+- UART target is **115200 8N1**. DDR is explicitly patched and U-Boot/Linux
+  configured accordingly; verify the official SPL/TEE handoff on hardware.
   `ddrbin-param.txt` changes only DDR UART speed, not memory training or wiring.
   Packaging uses the pinned vendor DDR parameter tool, a fixed version label,
   and checks the decoded result before creating IDB and USB transport images.
@@ -81,5 +85,6 @@ all eMMC user-area bytes, explicitly removes old GPT metadata, replaces the low
 boot area (including stale loader copies/vendor env), writes current firmware,
 and verifies every range before optional reset. It is not power-loss atomic.
 
-Readback verification passed on the EC100. A successful boot to Linux/IEx has
-**not** yet been demonstrated; see [source-boot-install.md](../docs/source-boot-install.md).
+Earlier source-chain factory readback verification passed, but userspace was
+unstable. The 0.1.9-dev official chain is a new, not-yet-hardware-qualified
+configuration; earlier flashing results do not qualify it.

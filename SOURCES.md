@@ -5,8 +5,7 @@
 - RK3506-enabled Linux tree pin: `armbian/linux-rockchip@428ab2713a61e9bc438eb1e065469797f97953b4`
 - RK3506 SoC DTS ancestry and peripheral naming: `rockchip-linux/kernel`
 - Source-built RK3506 U-Boot/SPL: `rockchip-linux/u-boot@1c535d65b8509f388d09e49fb6961f49fda35a1d` (2017.09-derived BSP; isolated patches under `bootstrap/patches`)
-- Source-built ARM32 secure monitor/PSCI: `OP-TEE/optee_os@5858c37a66cbffccf7b047d0f9a52dee0ebbf06c`, platform rk3506
-- DDR init and temporary USB transport: `rockchip-linux/rkbin@f43a462e7a1429a9d407ae52b4745033034a6cf9`, DDR 750MHz v1.05 / USB plug v1.02. Proprietary DDR is persisted with source SPL; USB plug is RAM-only.
+- Official low-level firmware and packaging tools: `rockchip-linux/rkbin@3e288fe814e059dd06833495f845cab04ac20a5c`: DDR 750MHz v1.08, SPL v1.12, standard TEE v2.50, USB plug v1.04. Buildroot source/archive/license hashes are pinned in `patches/buildroot`; binary hashes are in `bootstrap/rkbin.sha256`. DDR UART metadata is customized to 115200; USB plug code is RAM-only. No captured vendor firmware is used as a build input.
 - Modern upstream U-Boot has RK3506 SoC support but the inspected tree lacked an RK3506 board defconfig/DTS; migration remains future work.
 - Hardware register/boot behavior: Rockchip RK3506 TRM Revision 1.2 (user-provided PDF)
 

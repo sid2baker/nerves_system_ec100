@@ -15,6 +15,68 @@
 
 #include "rk3506.dtsi"
 
+/* Replace newer BSP OPP policy with the captured EC100 table below. */
+/delete-node/ &cpu0_opp_table;
+
+/ {
+    cpu0_opp_table: cpu0-opp-table {
+        compatible = "operating-points-v2";
+        opp-shared;
+        nvmem-cells = <&cpu_leakage>;
+        nvmem-cell-names = "leakage";
+        rockchip,pvtm-voltage-sel = <
+            0 1584 0
+            1585 1619 1
+            1620 1654 2
+            1655 1689 3
+            1690 1724 4
+            1725 1759 5
+            1760 1794 6
+            1795 9999 7
+        >;
+        rockchip,pvtm-pvtpll;
+        rockchip,pvtm-offset = <0x18>;
+        rockchip,pvtm-sample-time = <500>;
+        rockchip,pvtm-freq = <1608000>;
+        rockchip,pvtm-volt = <1000000>;
+        rockchip,pvtm-ref-temp = <40>;
+        rockchip,pvtm-temp-prop = <0 0>;
+        rockchip,pvtm-thermal-zone = "soc-thermal";
+        rockchip,grf = <&pvtpll_core>;
+        rockchip,temp-hysteresis = <5000>;
+        rockchip,low-temp = <10000>;
+        rockchip,low-temp-min-volt = <900000>;
+
+        opp-600000000 {
+            opp-hz = /bits/ 64 <600000000>;
+            opp-microvolt = <850000 850000 1000000>;
+            clock-latency-ns = <40000>;
+            opp-suspend;
+            status = "okay";
+        };
+        opp-800000000 {
+            opp-hz = /bits/ 64 <800000000>;
+            opp-microvolt = <850000 850000 1000000>;
+            clock-latency-ns = <40000>;
+            status = "okay";
+        };
+        opp-1008000000 {
+            opp-hz = /bits/ 64 <1008000000>;
+            opp-microvolt = <850000 850000 1000000>;
+            opp-microvolt-L0 = <875000 875000 1000000>;
+            clock-latency-ns = <40000>;
+            status = "okay";
+        };
+        opp-1200000000 {
+            opp-hz = /bits/ 64 <1200000000>;
+            opp-microvolt = <850000 850000 1000000>;
+            opp-microvolt-L0 = <875000 875000 1000000>;
+            clock-latency-ns = <40000>;
+            status = "okay";
+        };
+    };
+};
+
 / {
     model = "IOTRouter EC100 (Nerves)";
     compatible = "iotrouter,ec100", "rockchip,rk3506";
@@ -39,15 +101,10 @@
         /delete-node/ drm-logo@0;
         /delete-node/ linux,cma;
 
-        /* Source-built OP-TEE placement, not vendor firmware reservations. */
-        optee@18000000 {
-            reg = <0x18000000 0x02000000>;
-            no-map;
-        };
-        optee-shmem@10000000 {
-            reg = <0x10000000 0x00080000>;
-            no-map;
-        };
+        /* Retain the vendor SoC trust@0 reservation. Additional secure
+         * memory is supplied by the official preloader through U-Boot's
+         * ATAG_TOS_MEM/bidram memory-bank fixup, not fixed EC100 addresses.
+         */
     };
 
     vcc12v_dc: vcc12v-dc {
@@ -67,6 +124,20 @@
         regulator-min-microvolt = <5000000>;
         regulator-max-microvolt = <5000000>;
         vin-supply = <&vcc12v_dc>;
+    };
+
+    /* Original EC100 CPU rail: PWM0 channel 0, inverse polarity. */
+    vdd_arm: vdd-arm {
+        compatible = "pwm-regulator";
+        pwms = <&pwm0_4ch_0 0 5000 1>;
+        regulator-name = "vdd_arm";
+        regulator-min-microvolt = <710000>;
+        regulator-max-microvolt = <1207000>;
+        regulator-init-microvolt = <1011000>;
+        regulator-always-on;
+        regulator-boot-on;
+        regulator-settling-time-up-us = <250>;
+        pwm-supply = <&vcc_sys>;
     };
 
     vcc_3v3: vcc-3v3 {
@@ -111,6 +182,21 @@
         regulator-min-microvolt = <5000000>;
         regulator-max-microvolt = <5000000>;
     };
+};
+
+&cpu0 {
+    cpu-supply = <&vdd_arm>;
+};
+
+&pwm0_4ch_0 {
+    pinctrl-names = "active";
+    pinctrl-0 = <&rm_io21_pwm0_ch0>;
+    status = "okay";
+};
+
+/* PVTM calibration requires the original board's thermal sensor. */
+&tsadc {
+    status = "okay";
 };
 
 /* Same UART/pins/baud as live FIQ debugger, using the standard Linux console. */

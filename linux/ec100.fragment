@@ -25,8 +25,22 @@ CONFIG_EARLY_PRINTK=y
 # Use the standard UART0 console, not the vendor FIQ wrapper.
 # CONFIG_FIQ_DEBUGGER is not set
 
-# Defer DVFS until the live CPU supply and OPP table are reconciled.
-# CONFIG_CPU_FREQ is not set
+# Original EC100 CPU supply/OPP/PVTM path. Keep 1200 MHz as the initial
+# comparison; select a lower supported OPP separately during hardware testing.
+CONFIG_CPU_FREQ=y
+CONFIG_CPUFREQ_DT=y
+CONFIG_ARM_ROCKCHIP_CPUFREQ=y
+CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE=y
+CONFIG_CPU_FREQ_GOV_POWERSAVE=y
+CONFIG_CPU_FREQ_GOV_USERSPACE=y
+CONFIG_PWM=y
+CONFIG_PWM_ROCKCHIP=y
+CONFIG_REGULATOR_PWM=y
+CONFIG_ROCKCHIP_OPP=y
+CONFIG_ROCKCHIP_SYSTEM_MONITOR=y
+CONFIG_THERMAL=y
+CONFIG_THERMAL_OF=y
+CONFIG_ROCKCHIP_THERMAL=y
 
 CONFIG_MMC=y
 CONFIG_MMC_BLOCK=y

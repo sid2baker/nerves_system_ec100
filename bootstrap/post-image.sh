@@ -2,26 +2,30 @@
 # Package only factory boot artifacts. Normal .fw upgrade tasks never reference them.
 set -eu
 UBOOT="$BUILD_DIR/uboot-custom"
-RKBIN="$BUILD_DIR/rockchip-rkbin-f43a462e7a1429a9d407ae52b4745033034a6cf9"
-DDR="$BINARIES_DIR/rk3506_ddr_750MHz_v1.05_115200.bin"
-DDR_SOURCE="$RKBIN/bin/rk35/rk3506_ddr_750MHz_v1.05.bin"
+RKBIN="$BUILD_DIR/rockchip-rkbin-3e288fe814e059dd06833495f845cab04ac20a5c"
+DDR="$BINARIES_DIR/rk3506_ddr_750MHz_v1.08_115200.bin"
+DDR_SOURCE="$RKBIN/bin/rk35/rk3506_ddr_750MHz_v1.08.bin"
+TEE_SOURCE="$RKBIN/bin/rk35/rk3506_tee_v2.50.bin"
 DDR_TOOL="$RKBIN/tools/ddrbin_tool.py"
 DDR_PARAMS="$(dirname "$0")/ddrbin-param.txt"
 INI="$RKBIN/RKBOOT/RK3506MINIALL.ini"
-for file in "$UBOOT/scripts/spl.sh" "$INI" "$DDR_SOURCE" "$DDR_TOOL" "$DDR_PARAMS" "$BINARIES_DIR/u-boot-spl.bin" "$BINARIES_DIR/tee-raw.bin"; do
+for file in "$UBOOT/scripts/spl.sh" "$INI" "$DDR_SOURCE" "$DDR_TOOL" "$DDR_PARAMS" "$TEE_SOURCE"; do
     test -f "$file" || { echo "Missing factory input: $file" >&2; exit 1; }
 done
+CHECKSUMS="$(cd "$(dirname "$0")" && pwd)/rkbin.sha256"
+(cd "$RKBIN" && sha256sum -c "$CHECKSUMS")
 # Only change UART speed, preserving DDR training and wiring parameters. The fixed
 # version label avoids the vendor tool's default wall-clock timestamp in artifacts.
 cp "$DDR_SOURCE" "$DDR"
-"$HOST_DIR/bin/python3" "$DDR_TOOL" rk3506 "$DDR_PARAMS" "$DDR" --verinfo_editable=ec100-115200
+"$HOST_DIR/bin/python3" "$DDR_TOOL" rk3506 "$DDR_PARAMS" "$DDR" --ver_edit=ec100-115200
 rm -f "$BINARIES_DIR/ddrbin-params.txt"
 "$HOST_DIR/bin/python3" "$DDR_TOOL" rk3506 -g "$BINARIES_DIR/ddrbin-params.txt" "$DDR"
 # The vendor tool can exit zero on error; independently check the result.
 grep -qx 'uart baudrate=115200' "$BINARIES_DIR/ddrbin-params.txt"
 (
     cd "$RKBIN"
-    "$UBOOT/scripts/spl.sh" --ini "$INI" --tpl "$DDR" --spl "$BINARIES_DIR/u-boot-spl.bin"
+    # Override DDR UART metadata only; official INI retains official SPL/USB.
+    "$UBOOT/scripts/spl.sh" --ini "$INI" --tpl "$DDR"
 )
 IDB=$(awk -F= '/^IDB_PATH=/{gsub(/\r/, "", $2); print $2}' "$INI")
 LOADER=$(awk -F= '/^PATH=/{gsub(/\r/, "", $2); print $2}' "$INI")
@@ -29,12 +33,13 @@ test -n "$IDB" && test -n "$LOADER"
 cp "$RKBIN/$IDB" "$BINARIES_DIR/idbloader.img"
 cp "$RKBIN/$LOADER" "$BINARIES_DIR/ec100-maskrom-loader.bin"
 
-# The selected source OP-TEE runs at 384 MiB, reserved in both board trees.
-# This SPL jumps directly to the FIT load address; it does not strip OPTE headers.
-cp "$BINARIES_DIR/tee-raw.bin" "$UBOOT/tee.bin"
+# Official RKTRUST/RK3506TOS.ini specifies the secure firmware load address.
+# Keep the vendor binary intact; do not strip headers or use source tee-raw.bin.
+grep -qx 'ADDR=0x1000' "$RKBIN/RKTRUST/RK3506TOS.ini"
+cp "$TEE_SOURCE" "$UBOOT/tee.bin"
 (
     cd "$UBOOT"
-    ./arch/arm/mach-rockchip/make_fit_optee.sh -t 0x18000000 > u-boot-ec100.its
+    ./arch/arm/mach-rockchip/make_fit_optee.sh -t 0x1000 > u-boot-ec100.its
     # BSP SPL rounds relative data-offset bases to 512 bytes, unlike modern
     # mkimage's 4-byte header alignment. Match BSP fit-core.sh: absolute positions.
     "$HOST_DIR/bin/mkimage" -f u-boot-ec100.its -E -p 0x1400 u-boot.itb

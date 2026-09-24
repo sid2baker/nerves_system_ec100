@@ -8,7 +8,10 @@ CONFIG_DEBUG_UART_BASE=0xff0a0000
 CONFIG_DEBUG_UART_CLOCK=24000000
 CONFIG_DEBUG_UART_SHIFT=2
 
-# DDR comes from rkbin; SPL, OP-TEE and U-Boot proper are source-built.
+# Official rkbin supplies DDR/SPL/TEE. Keep SPL_OPTEE for the BSP FIT
+# generator; any source SPL built as a dependency is never packaged.
+CONFIG_ROCKCHIP_PRELOADER_ATAGS=y
+CONFIG_BIDRAM=y
 # CONFIG_TPL is not set
 # CONFIG_TPL_RAM is not set
 CONFIG_SPL_RAM=y

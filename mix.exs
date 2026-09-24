@@ -59,6 +59,7 @@ defmodule NervesSystemEC100.MixProject do
       "ec100.its",
       "fwup_include",
       "linux",
+      "patches",
       "rootfs_overlay",
       "scripts",
       "LICENSE",
