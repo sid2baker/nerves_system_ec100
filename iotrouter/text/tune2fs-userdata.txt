@@ -1,0 +1,37 @@
+tune2fs 1.46.5 (30-Dec-2021)
+Filesystem volume name:   userdata
+Last mounted on:          <not available>
+Filesystem UUID:          7c13f8f7-9f34-4a26-a1db-19e08649adc8
+Filesystem magic number:  0xEF53
+Filesystem revision #:    1 (dynamic)
+Filesystem features:      ext_attr resize_inode dir_index filetype sparse_super large_file
+Filesystem flags:         signed_directory_hash 
+Default mount options:    user_xattr acl
+Filesystem state:         not clean
+Errors behavior:          Continue
+Filesystem OS type:       Linux
+Inode count:              2240
+Block count:              53243
+Reserved block count:     2657
+Free blocks:              53089
+Free inodes:              2226
+First block:              0
+Block size:               4096
+Fragment size:            4096
+Blocks per group:         32768
+Fragments per group:      32768
+Inodes per group:         1120
+Inode blocks per group:   35
+Filesystem created:       Fri Mar 20 18:46:32 2026
+Last mount time:          n/a
+Last write time:          Fri Aug 14 16:06:39 2026
+Mount count:              5
+Maximum mount count:      -1
+Last checked:             Fri Mar 20 18:46:32 2026
+Check interval:           0 (<none>)
+Reserved blocks uid:      0 (user root)
+Reserved blocks gid:      0 (group root)
+First inode:              11
+Inode size:	          128
+Default directory hash:   half_md4
+Directory Hash Seed:      5df72b0f-5b80-498f-bbc3-7004e35c0506

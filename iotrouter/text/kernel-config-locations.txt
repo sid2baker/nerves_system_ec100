@@ -1,0 +1,4 @@
+ls: 无法访问 '/proc/config.gz': 没有那个文件或目录
+ls: 无法访问 '/sys/kernel/kheaders.tar.xz': 没有那个文件或目录
+ls: 无法访问 '/boot/config-*': 没有那个文件或目录
+ls: 无法访问 '/lib/modules/6.1.99-rt36/build/.config': 没有那个文件或目录

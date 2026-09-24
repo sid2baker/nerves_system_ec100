@@ -1,0 +1,41 @@
+### /sys/bus/i2c/devices/0-0020
+pca9555
+of:NgpioT(null)Cnxp,pca9555
+OF_NAME=gpio
+OF_FULLNAME=/i2c@ff040000/gpio@20
+OF_COMPATIBLE_0=nxp,pca9555
+OF_COMPATIBLE_N=1
+OF_ALIAS_0=gpio5
+MODALIAS=of:NgpioT(null)Cnxp,pca9555
+/sys/firmware/devicetree/base/i2c@ff040000/gpio@20
+/sys/devices/platform/ff040000.i2c/i2c-0/0-0020/driver
+### /sys/bus/i2c/devices/0-0048
+lt8912b-hdmi
+of:Nlt8912bT(null)Clontium,lt8912b-hdmi
+OF_NAME=lt8912b
+OF_FULLNAME=/i2c@ff040000/lt8912b@48
+OF_COMPATIBLE_0=lontium,lt8912b-hdmi
+OF_COMPATIBLE_N=1
+MODALIAS=of:Nlt8912bT(null)Clontium,lt8912b-hdmi
+/sys/firmware/devicetree/base/i2c@ff040000/lt8912b@48
+/sys/devices/platform/ff040000.i2c/i2c-0/0-0048/driver
+### /sys/bus/i2c/devices/0-0068
+ds1307
+of:Nds1307T(null)Cdallas,ds1307
+OF_NAME=ds1307
+OF_FULLNAME=/i2c@ff040000/ds1307@68
+OF_COMPATIBLE_0=dallas,ds1307
+OF_COMPATIBLE_N=1
+MODALIAS=of:Nds1307T(null)Cdallas,ds1307
+/sys/firmware/devicetree/base/i2c@ff040000/ds1307@68
+/sys/devices/platform/ff040000.i2c/i2c-0/0-0068/driver
+### /sys/bus/i2c/devices/i2c-0
+rk3x-i2c
+OF_NAME=i2c
+OF_FULLNAME=/i2c@ff040000
+OF_COMPATIBLE_0=rockchip,rk3506-i2c
+OF_COMPATIBLE_1=rockchip,rk3399-i2c
+OF_COMPATIBLE_N=2
+OF_ALIAS_0=i2c0
+/sys/firmware/devicetree/base/i2c@ff040000
+/sys/devices/platform/ff040000.i2c/i2c-0/driver

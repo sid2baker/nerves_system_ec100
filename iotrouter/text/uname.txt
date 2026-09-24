@@ -1,0 +1,1 @@
+Linux IOTRouter 6.1.99-rt36 #6 SMP PREEMPT Wed Mar 25 14:56:54 CST 2026 armv7l armv7l armv7l GNU/Linux

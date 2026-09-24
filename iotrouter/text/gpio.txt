@@ -1,0 +1,19 @@
+gpiochip0: GPIOs 0-31, parent: platform/ff940000.gpio, gpio0:
+ gpio-5   (                    |heartbeat           ) out lo 
+ gpio-9   (                    |WDG_PI              ) out hi 
+ gpio-24  (                    |mmcio-gpio-supply   ) out lo 
+
+gpiochip1: GPIOs 32-63, parent: platform/ff870000.gpio, gpio1:
+ gpio-37  (                    |KEY_PI              ) in  hi 
+ gpio-39  (                    |LED_0               ) out lo 
+ gpio-48  (                    |pcie_power          ) out hi 
+ gpio-56  (                    |vcc5v0-otg0-regulato) out lo 
+ gpio-57  (                    |WWAN_RST_PI         ) out lo 
+
+gpiochip2: GPIOs 64-95, parent: platform/ff1c0000.gpio, gpio2:
+
+gpiochip3: GPIOs 96-127, parent: platform/ff1d0000.gpio, gpio3:
+
+gpiochip4: GPIOs 128-159, parent: platform/ff1e0000.gpio, gpio4:
+ gpio-138 (                    |user2-key           ) in  lo IRQ ACTIVE LOW
+ gpio-139 (                    |user-led0           ) out lo 

@@ -1,0 +1,1036 @@
+### /sys/kernel/debug/pinctrl/pinctrl-rockchip-pinctrl/gpio-ranges
+GPIO ranges handled:
+0: gpio0 GPIOS [0 - 31] PINS [0 - 31]
+0: gpio1 GPIOS [32 - 63] PINS [32 - 63]
+0: gpio2 GPIOS [64 - 95] PINS [64 - 95]
+0: gpio3 GPIOS [96 - 127] PINS [96 - 127]
+0: gpio4 GPIOS [128 - 159] PINS [128 - 159]
+### /sys/kernel/debug/pinctrl/pinctrl-rockchip-pinctrl/pinconf-groups
+Pin config settings per pin group
+Format: group (name): configs
+0 (dsm-audm0-pins): 
+1 (dsm-audm1-pins): 
+2 (dsm-audm0-iodown-pins): 
+3 (dsm-audm1-iodown-pins): 
+4 (dsmc-int-pins): 
+5 (dsmc-clk-pins): 
+6 (dsmc-csn-pins): 
+7 (dsmc-bus16-pins): 
+8 (dsmc-csn-pull-pins): 
+9 (dsmc-slv-csn0-pins): 
+10 (dsmc-slv-bus8-pins): 
+11 (dsmc-slv-csn0-pull-pins): 
+12 (eth-rmii0-miim-pins): 
+13 (eth-rmii0-rx-bus2-pins): 
+14 (eth-rmii0-tx-bus2-pins): 
+15 (eth-rmii0-clk-pins): 
+16 (eth-rmii1-miim-pins): 
+17 (eth-rmii1-rx-bus2-pins): 
+18 (eth-rmii1-tx-bus2-pins): 
+19 (eth-rmii1-clk-pins): 
+20 (flexbus0m1-pins): 
+21 (flexbus0-clk-pins): 
+22 (flexbus0-d0-pins): 
+23 (flexbus0-d1-pins): 
+24 (flexbus0-d2-pins): 
+25 (flexbus0-d3-pins): 
+26 (sai0-lrck-pins): 
+27 (sai0-sclk-pins): 
+28 (sai0-sdi0-pins): 
+29 (sai0-sdi1-pins): 
+30 (sai0-sdi2-pins): 
+31 (sai0-sdi3-pins): 
+32 (sai0-sdo-pins): 
+33 (sai2m0-lrck-pins): 
+34 (sai2m0-sclk-pins): 
+35 (sai2m0-sdi-pins): 
+36 (sai2m0-sdo-pins): 
+37 (sai3-lrck-pins): 
+38 (sai3-sclk-pins): 
+39 (sai3-sdi-pins): 
+40 (sai3-sdo-pins): 
+41 (sdmmc-bus4-pins): 
+42 (sdmmc-clk-pins): 
+43 (sdmmc-cmd-pins): 
+44 (vccio4_gpio): 
+45 (sd-det): 
+46 (uart0-xfer-pins): 
+47 (uart5m0-xfer-pins): 
+48 (uart5m0-ctsn-pins): 
+49 (rm-io9-idle-pins): 
+50 (rm-io10-idle-pins): 
+51 (rm-io11-idle-pins): 
+52 (rm-io12-idle-pins): 
+53 (rm-io0-uart4-rx): 
+54 (rm-io0-pdm-clk0): 
+55 (rm-io0-pdm-sdi0): 
+56 (rm-io0-pdm-sdi1): 
+57 (rm-io0-pdm-sdi2): 
+58 (rm-io0-pdm-sdi3): 
+59 (rm-io0-spdif-tx): 
+60 (rm-io0-spdif-rx): 
+61 (rm-io0-pdm-clk1): 
+62 (rm-io2-uart3-tx): 
+63 (rm-io3-uart3-rx): 
+64 (rm-io3-pwm0-ch2): 
+65 (rm-io4-i2c2-scl): 
+66 (rm-io5-i2c2-sda): 
+67 (rm-io6-i2c0-sda): 
+68 (rm-io7-i2c0-scl): 
+69 (rm-io8-uart4-tx): 
+70 (rm-io8-sai1-mclk): 
+71 (rm-io9-sai1-sclk): 
+72 (rm-io10-sai1-lrck): 
+73 (rm-io10-spi0-csn0): 
+74 (rm-io11-sai1-sdi): 
+75 (rm-io11-spi0-clk): 
+76 (rm-io12-sai1-sdo0): 
+77 (rm-io12-spi0-mosi): 
+78 (rm-io14-spi0-miso): 
+79 (rm-io17-can1-tx): 
+80 (rm-io18-uart1-tx): 
+81 (rm-io18-can1-rx): 
+82 (rm-io19-uart1-rx): 
+83 (rm-io19-can0-tx): 
+84 (rm-io20-can0-rx): 
+85 (rm-io20-pwm0-ch1): 
+86 (rm-io20-pwm1-ch0): 
+87 (rm-io21-pwm0-ch0): 
+88 (rm-io25-spi1-mosi): 
+89 (rm-io26-spi1-csn0): 
+90 (rm-io27-spi1-clk): 
+91 (rm-io28-spi1-miso): 
+92 (key-wake-up): 
+93 (wifi-enable-h): 
+94 (spk-ctrl): 
+95 (uart5-gpios): 
+96 (wifi-wake-host): 
+97 (vcc5v0-otg0-en): 
+98 (vcc5v0-otg1-en): 
+99 (som-led): 
+100 (user-led): 
+101 (user2-key): 
+### /sys/kernel/debug/pinctrl/pinctrl-rockchip-pinctrl/pinconf-pins
+Pin config settings per pin
+Format: pin (name): configs
+pin 0 (gpio0-0): input bias pull up (1 ohms), output drive strength (2 mA), input schmitt enabled
+pin 1 (gpio0-1): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 2 (gpio0-2): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 3 (gpio0-3): input bias pull up (1 ohms), output drive strength (2 mA), input schmitt enabled
+pin 4 (gpio0-4): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 5 (gpio0-5): input bias pull up (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 6 (gpio0-6): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 7 (gpio0-7): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 8 (gpio0-8): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 9 (gpio0-9): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (1 level)
+pin 10 (gpio0-10): input bias disabled, output drive strength (3 mA), input schmitt enabled
+pin 11 (gpio0-11): input bias disabled, output drive strength (3 mA), input schmitt enabled
+pin 12 (gpio0-12): input bias disabled, output drive strength (3 mA), input schmitt enabled
+pin 13 (gpio0-13): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 14 (gpio0-14): input bias disabled, output drive strength (3 mA), input schmitt enabled
+pin 15 (gpio0-15): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 16 (gpio0-16): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 17 (gpio0-17): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 18 (gpio0-18): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 19 (gpio0-19): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 20 (gpio0-20): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 21 (gpio0-21): input bias disabled, output drive strength (1 mA), input schmitt enabled
+pin 22 (gpio0-22): input bias pull up (1 ohms), output drive strength (2 mA), input schmitt enabled
+pin 23 (gpio0-23): input bias pull up (1 ohms), output drive strength (2 mA), input schmitt enabled
+pin 24 (gpio0-24): input bias disabled, output drive strength (1 mA), input schmitt enabled, pin output (0 level)
+pin 25 (gpio0-25): 
+pin 26 (gpio0-26): pin output (0 level)
+pin 27 (gpio0-27): pin output (0 level)
+pin 28 (gpio0-28): 
+pin 29 (gpio0-29): 
+pin 30 (gpio0-30): pin output (0 level)
+pin 31 (gpio0-31): pin output (0 level)
+pin 32 (gpio1-0): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 33 (gpio1-1): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 34 (gpio1-2): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (1 level)
+pin 35 (gpio1-3): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (1 level)
+pin 36 (gpio1-4): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 37 (gpio1-5): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (1 level)
+pin 38 (gpio1-6): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 39 (gpio1-7): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 40 (gpio1-8): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 41 (gpio1-9): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 42 (gpio1-10): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 43 (gpio1-11): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 44 (gpio1-12): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 45 (gpio1-13): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 46 (gpio1-14): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 47 (gpio1-15): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 48 (gpio1-16): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (1 level)
+pin 49 (gpio1-17): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 50 (gpio1-18): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 51 (gpio1-19): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 52 (gpio1-20): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 53 (gpio1-21): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 54 (gpio1-22): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 55 (gpio1-23): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 56 (gpio1-24): input bias disabled, output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 57 (gpio1-25): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 58 (gpio1-26): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 59 (gpio1-27): input bias pull down (1 ohms), output drive strength (2 mA), input schmitt enabled, pin output (0 level)
+pin 60 (gpio1-28): pin output (0 level)
+pin 61 (gpio1-29): pin output (0 level)
+pin 62 (gpio1-30): pin output (0 level)
+pin 63 (gpio1-31): pin output (0 level)
+pin 64 (gpio2-0): input bias pull up (1 ohms), output drive strength (2 mA), input schmitt enabled
+pin 65 (gpio2-1): input bias pull down (1 ohms), output drive strength (3 mA), input schmitt enabled
+pin 66 (gpio2-2): input bias pull up (1 ohms), output drive strength (2 mA), input schmitt enabled
+pin 67 (gpio2-3): input bias pull up (1 ohms), output drive strength (2 mA), input schmitt enabled
+pin 68 (gpio2-4): input bias pull up (1 ohms), output drive strength (2 mA), input schmitt enabled
+pin 69 (gpio2-5): input bias pull up (1 ohms), output drive strength (2 mA), input schmitt enabled
+pin 70 (gpio2-6): input bias disabled, input schmitt enabled, pin output (0 level)
+pin 71 (gpio2-7): input bias disabled, input schmitt enabled, pin output (0 level)
+pin 72 (gpio2-8): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 73 (gpio2-9): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 74 (gpio2-10): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 75 (gpio2-11): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 76 (gpio2-12): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 77 (gpio2-13): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 78 (gpio2-14): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 79 (gpio2-15): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 80 (gpio2-16): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 81 (gpio2-17): pin output (0 level)
+pin 82 (gpio2-18): pin output (0 level)
+pin 83 (gpio2-19): pin output (0 level)
+pin 84 (gpio2-20): pin output (0 level)
+pin 85 (gpio2-21): pin output (0 level)
+pin 86 (gpio2-22): pin output (0 level)
+pin 87 (gpio2-23): pin output (0 level)
+pin 88 (gpio2-24): pin output (0 level)
+pin 89 (gpio2-25): pin output (0 level)
+pin 90 (gpio2-26): pin output (0 level)
+pin 91 (gpio2-27): pin output (0 level)
+pin 92 (gpio2-28): pin output (0 level)
+pin 93 (gpio2-29): pin output (0 level)
+pin 94 (gpio2-30): pin output (0 level)
+pin 95 (gpio2-31): pin output (0 level)
+pin 96 (gpio3-0): input bias disabled, output drive strength (3 mA), input schmitt enabled
+pin 97 (gpio3-1): input bias pull up (1 ohms), output drive strength (2 mA), input schmitt enabled
+pin 98 (gpio3-2): input bias pull up (1 ohms), output drive strength (2 mA), input schmitt enabled
+pin 99 (gpio3-3): input bias pull up (1 ohms), output drive strength (2 mA), input schmitt enabled
+pin 100 (gpio3-4): input bias pull up (1 ohms), output drive strength (2 mA), input schmitt enabled
+pin 101 (gpio3-5): input bias pull up (1 ohms), output drive strength (2 mA), input schmitt enabled
+pin 102 (gpio3-6): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 103 (gpio3-7): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 104 (gpio3-8): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 105 (gpio3-9): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 106 (gpio3-10): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 107 (gpio3-11): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 108 (gpio3-12): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 109 (gpio3-13): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 110 (gpio3-14): input bias disabled, output drive strength (2 mA), input schmitt enabled
+pin 111 (gpio3-15): pin output (0 level)
+pin 112 (gpio3-16): pin output (0 level)
+pin 113 (gpio3-17): pin output (0 level)
+pin 114 (gpio3-18): pin output (0 level)
+pin 115 (gpio3-19): pin output (0 level)
+pin 116 (gpio3-20): pin output (0 level)
+pin 117 (gpio3-21): pin output (0 level)
+pin 118 (gpio3-22): pin output (0 level)
+pin 119 (gpio3-23): pin output (0 level)
+pin 120 (gpio3-24): pin output (0 level)
+pin 121 (gpio3-25): pin output (0 level)
+pin 122 (gpio3-26): pin output (0 level)
+pin 123 (gpio3-27): pin output (0 level)
+pin 124 (gpio3-28): pin output (0 level)
+pin 125 (gpio3-29): pin output (0 level)
+pin 126 (gpio3-30): pin output (0 level)
+pin 127 (gpio3-31): pin output (0 level)
+pin 128 (gpio4-0): pin output (0 level)
+pin 129 (gpio4-1): pin output (0 level)
+pin 130 (gpio4-2): pin output (0 level)
+pin 131 (gpio4-3): pin output (0 level)
+pin 132 (gpio4-4): pin output (0 level)
+pin 133 (gpio4-5): pin output (0 level)
+pin 134 (gpio4-6): pin output (0 level)
+pin 135 (gpio4-7): pin output (0 level)
+pin 136 (gpio4-8): input bias pull up (1 ohms), output drive strength (1 mA), input schmitt enabled, pin output (0 level)
+pin 137 (gpio4-9): input bias pull up (1 ohms), output drive strength (1 mA), input schmitt enabled, pin output (0 level)
+pin 138 (gpio4-10): input bias pull up (1 ohms), output drive strength (1 mA), input schmitt enabled, pin output (0 level)
+pin 139 (gpio4-11): input bias pull up (1 ohms), output drive strength (1 mA), input schmitt enabled, pin output (0 level)
+pin 140 (gpio4-12): pin output (0 level)
+pin 141 (gpio4-13): pin output (0 level)
+pin 142 (gpio4-14): pin output (0 level)
+pin 143 (gpio4-15): pin output (0 level)
+pin 144 (gpio4-16): pin output (0 level)
+pin 145 (gpio4-17): pin output (0 level)
+pin 146 (gpio4-18): pin output (0 level)
+pin 147 (gpio4-19): pin output (0 level)
+pin 148 (gpio4-20): pin output (0 level)
+pin 149 (gpio4-21): pin output (0 level)
+pin 150 (gpio4-22): pin output (0 level)
+pin 151 (gpio4-23): pin output (0 level)
+pin 152 (gpio4-24): pin output (0 level)
+pin 153 (gpio4-25): pin output (0 level)
+pin 154 (gpio4-26): pin output (0 level)
+pin 155 (gpio4-27): pin output (0 level)
+pin 156 (gpio4-28): pin output (0 level)
+pin 157 (gpio4-29): pin output (0 level)
+pin 158 (gpio4-30): pin output (0 level)
+pin 159 (gpio4-31): pin output (0 level)
+### /sys/kernel/debug/pinctrl/pinctrl-rockchip-pinctrl/pingroups
+registered pin groups:
+group: dsm-audm0-pins
+pin 56 (gpio1-24)
+pin 57 (gpio1-25)
+pin 49 (gpio1-17)
+pin 50 (gpio1-18)
+
+group: dsm-audm1-pins
+pin 78 (gpio2-14)
+pin 79 (gpio2-15)
+pin 76 (gpio2-12)
+pin 77 (gpio2-13)
+
+group: dsm-audm0-iodown-pins
+pin 56 (gpio1-24)
+pin 57 (gpio1-25)
+pin 49 (gpio1-17)
+pin 50 (gpio1-18)
+
+group: dsm-audm1-iodown-pins
+pin 78 (gpio2-14)
+pin 79 (gpio2-15)
+pin 76 (gpio2-12)
+pin 77 (gpio2-13)
+
+group: dsmc-int-pins
+pin 33 (gpio1-1)
+pin 48 (gpio1-16)
+
+group: dsmc-clk-pins
+pin 33 (gpio1-1)
+pin 48 (gpio1-16)
+
+group: dsmc-csn-pins
+pin 46 (gpio1-14)
+pin 41 (gpio1-9)
+pin 58 (gpio1-26)
+pin 59 (gpio1-27)
+
+group: dsmc-bus16-pins
+pin 32 (gpio1-0)
+pin 35 (gpio1-3)
+pin 36 (gpio1-4)
+pin 37 (gpio1-5)
+pin 38 (gpio1-6)
+pin 39 (gpio1-7)
+pin 40 (gpio1-8)
+pin 44 (gpio1-12)
+pin 45 (gpio1-13)
+pin 49 (gpio1-17)
+pin 50 (gpio1-18)
+pin 51 (gpio1-19)
+pin 52 (gpio1-20)
+pin 53 (gpio1-21)
+pin 54 (gpio1-22)
+pin 55 (gpio1-23)
+pin 56 (gpio1-24)
+pin 34 (gpio1-2)
+pin 57 (gpio1-25)
+pin 42 (gpio1-10)
+pin 43 (gpio1-11)
+pin 47 (gpio1-15)
+
+group: dsmc-csn-pull-pins
+pin 46 (gpio1-14)
+pin 41 (gpio1-9)
+pin 58 (gpio1-26)
+pin 59 (gpio1-27)
+
+group: dsmc-slv-csn0-pins
+pin 58 (gpio1-26)
+
+group: dsmc-slv-bus8-pins
+pin 48 (gpio1-16)
+pin 50 (gpio1-18)
+pin 51 (gpio1-19)
+pin 52 (gpio1-20)
+pin 53 (gpio1-21)
+pin 54 (gpio1-22)
+pin 55 (gpio1-23)
+pin 56 (gpio1-24)
+pin 57 (gpio1-25)
+pin 49 (gpio1-17)
+pin 33 (gpio1-1)
+pin 59 (gpio1-27)
+
+group: dsmc-slv-csn0-pull-pins
+pin 58 (gpio1-26)
+
+group: eth-rmii0-miim-pins
+pin 78 (gpio2-14)
+pin 79 (gpio2-15)
+
+group: eth-rmii0-rx-bus2-pins
+pin 72 (gpio2-8)
+pin 73 (gpio2-9)
+pin 80 (gpio2-16)
+
+group: eth-rmii0-tx-bus2-pins
+pin 75 (gpio2-11)
+pin 76 (gpio2-12)
+pin 77 (gpio2-13)
+
+group: eth-rmii0-clk-pins
+pin 74 (gpio2-10)
+
+group: eth-rmii1-miim-pins
+pin 108 (gpio3-12)
+pin 109 (gpio3-13)
+
+group: eth-rmii1-rx-bus2-pins
+pin 102 (gpio3-6)
+pin 103 (gpio3-7)
+pin 110 (gpio3-14)
+
+group: eth-rmii1-tx-bus2-pins
+pin 105 (gpio3-9)
+pin 106 (gpio3-10)
+pin 107 (gpio3-11)
+
+group: eth-rmii1-clk-pins
+pin 104 (gpio3-8)
+
+group: flexbus0m1-pins
+pin 42 (gpio1-10)
+
+group: flexbus0-clk-pins
+pin 49 (gpio1-17)
+
+group: flexbus0-d0-pins
+pin 59 (gpio1-27)
+
+group: flexbus0-d1-pins
+pin 58 (gpio1-26)
+
+group: flexbus0-d2-pins
+pin 57 (gpio1-25)
+
+group: flexbus0-d3-pins
+pin 56 (gpio1-24)
+
+group: sai0-lrck-pins
+pin 0 (gpio0-0)
+
+group: sai0-sclk-pins
+pin 1 (gpio0-1)
+
+group: sai0-sdi0-pins
+pin 4 (gpio0-4)
+
+group: sai0-sdi1-pins
+pin 5 (gpio0-5)
+
+group: sai0-sdi2-pins
+pin 6 (gpio0-6)
+
+group: sai0-sdi3-pins
+pin 7 (gpio0-7)
+
+group: sai0-sdo-pins
+pin 3 (gpio0-3)
+
+group: sai2m0-lrck-pins
+pin 105 (gpio3-9)
+
+group: sai2m0-sclk-pins
+pin 103 (gpio3-7)
+
+group: sai2m0-sdi-pins
+pin 102 (gpio3-6)
+
+group: sai2m0-sdo-pins
+pin 104 (gpio3-8)
+
+group: sai3-lrck-pins
+pin 77 (gpio2-13)
+
+group: sai3-sclk-pins
+pin 76 (gpio2-12)
+
+group: sai3-sdi-pins
+pin 78 (gpio2-14)
+
+group: sai3-sdo-pins
+pin 79 (gpio2-15)
+
+group: sdmmc-bus4-pins
+pin 98 (gpio3-2)
+pin 99 (gpio3-3)
+pin 100 (gpio3-4)
+pin 101 (gpio3-5)
+
+group: sdmmc-clk-pins
+pin 96 (gpio3-0)
+
+group: sdmmc-cmd-pins
+pin 97 (gpio3-1)
+
+group: vccio4_gpio
+pin 24 (gpio0-24)
+
+group: sd-det
+pin 8 (gpio0-8)
+
+group: uart0-xfer-pins
+pin 23 (gpio0-23)
+pin 22 (gpio0-22)
+
+group: uart5m0-xfer-pins
+pin 107 (gpio3-11)
+pin 108 (gpio3-12)
+
+group: uart5m0-ctsn-pins
+pin 106 (gpio3-10)
+
+group: rm-io9-idle-pins
+pin 9 (gpio0-9)
+
+group: rm-io10-idle-pins
+pin 10 (gpio0-10)
+
+group: rm-io11-idle-pins
+pin 11 (gpio0-11)
+
+group: rm-io12-idle-pins
+pin 12 (gpio0-12)
+
+group: rm-io0-uart4-rx
+pin 0 (gpio0-0)
+
+group: rm-io0-pdm-clk0
+pin 0 (gpio0-0)
+
+group: rm-io0-pdm-sdi0
+pin 0 (gpio0-0)
+
+group: rm-io0-pdm-sdi1
+pin 0 (gpio0-0)
+
+group: rm-io0-pdm-sdi2
+pin 0 (gpio0-0)
+
+group: rm-io0-pdm-sdi3
+pin 0 (gpio0-0)
+
+group: rm-io0-spdif-tx
+pin 0 (gpio0-0)
+
+group: rm-io0-spdif-rx
+pin 0 (gpio0-0)
+
+group: rm-io0-pdm-clk1
+pin 0 (gpio0-0)
+
+group: rm-io2-uart3-tx
+pin 2 (gpio0-2)
+
+group: rm-io3-uart3-rx
+pin 3 (gpio0-3)
+
+group: rm-io3-pwm0-ch2
+pin 3 (gpio0-3)
+
+group: rm-io4-i2c2-scl
+pin 4 (gpio0-4)
+
+group: rm-io5-i2c2-sda
+pin 5 (gpio0-5)
+
+group: rm-io6-i2c0-sda
+pin 6 (gpio0-6)
+
+group: rm-io7-i2c0-scl
+pin 7 (gpio0-7)
+
+group: rm-io8-uart4-tx
+pin 8 (gpio0-8)
+
+group: rm-io8-sai1-mclk
+pin 8 (gpio0-8)
+
+group: rm-io9-sai1-sclk
+pin 9 (gpio0-9)
+
+group: rm-io10-sai1-lrck
+pin 10 (gpio0-10)
+
+group: rm-io10-spi0-csn0
+pin 10 (gpio0-10)
+
+group: rm-io11-sai1-sdi
+pin 11 (gpio0-11)
+
+group: rm-io11-spi0-clk
+pin 11 (gpio0-11)
+
+group: rm-io12-sai1-sdo0
+pin 12 (gpio0-12)
+
+group: rm-io12-spi0-mosi
+pin 12 (gpio0-12)
+
+group: rm-io14-spi0-miso
+pin 14 (gpio0-14)
+
+group: rm-io17-can1-tx
+pin 17 (gpio0-17)
+
+group: rm-io18-uart1-tx
+pin 18 (gpio0-18)
+
+group: rm-io18-can1-rx
+pin 18 (gpio0-18)
+
+group: rm-io19-uart1-rx
+pin 19 (gpio0-19)
+
+group: rm-io19-can0-tx
+pin 19 (gpio0-19)
+
+group: rm-io20-can0-rx
+pin 20 (gpio0-20)
+
+group: rm-io20-pwm0-ch1
+pin 20 (gpio0-20)
+
+group: rm-io20-pwm1-ch0
+pin 20 (gpio0-20)
+
+group: rm-io21-pwm0-ch0
+pin 21 (gpio0-21)
+
+group: rm-io25-spi1-mosi
+pin 42 (gpio1-10)
+
+group: rm-io26-spi1-csn0
+pin 43 (gpio1-11)
+
+group: rm-io27-spi1-clk
+pin 50 (gpio1-18)
+
+group: rm-io28-spi1-miso
+pin 51 (gpio1-19)
+
+group: key-wake-up
+pin 17 (gpio0-17)
+
+group: wifi-enable-h
+pin 15 (gpio0-15)
+
+group: spk-ctrl
+pin 54 (gpio1-22)
+
+group: uart5-gpios
+pin 109 (gpio3-13)
+
+group: wifi-wake-host
+pin 16 (gpio0-16)
+
+group: vcc5v0-otg0-en
+pin 56 (gpio1-24)
+
+group: vcc5v0-otg1-en
+pin 56 (gpio1-24)
+
+group: som-led
+pin 5 (gpio0-5)
+
+group: user-led
+pin 139 (gpio4-11)
+
+group: user2-key
+pin 138 (gpio4-10)
+
+### /sys/kernel/debug/pinctrl/pinctrl-rockchip-pinctrl/pinmux-functions
+function 0: pcfg-pull-up, groups = [ ]
+function 1: pcfg-pull-down, groups = [ ]
+function 2: pcfg-pull-none, groups = [ ]
+function 3: pcfg-pull-none-drv-level-0, groups = [ ]
+function 4: pcfg-pull-none-drv-level-1, groups = [ ]
+function 5: pcfg-pull-none-drv-level-3, groups = [ ]
+function 6: pcfg-pull-none-drv-level-4, groups = [ ]
+function 7: pcfg-input-enable-pull-down, groups = [ ]
+function 8: dsm_aud, groups = [ dsm-audm0-pins dsm-audm1-pins dsm-audm0-iodown-pins dsm-audm1-iodown-pins ]
+function 9: dsmc, groups = [ dsmc-int-pins dsmc-clk-pins dsmc-csn-pins dsmc-bus16-pins dsmc-csn-pull-pins ]
+function 10: dsmc_slv, groups = [ dsmc-slv-csn0-pins dsmc-slv-bus8-pins dsmc-slv-csn0-pull-pins ]
+function 11: eth_rmii0, groups = [ eth-rmii0-miim-pins eth-rmii0-rx-bus2-pins eth-rmii0-tx-bus2-pins eth-rmii0-clk-pins ]
+function 12: eth_rmii1, groups = [ eth-rmii1-miim-pins eth-rmii1-rx-bus2-pins eth-rmii1-tx-bus2-pins eth-rmii1-clk-pins ]
+function 13: flexbus0, groups = [ flexbus0m1-pins flexbus0-clk-pins flexbus0-d0-pins flexbus0-d1-pins flexbus0-d2-pins flexbus0-d3-pins ]
+function 14: sai0, groups = [ sai0-lrck-pins sai0-sclk-pins sai0-sdi0-pins sai0-sdi1-pins sai0-sdi2-pins sai0-sdi3-pins sai0-sdo-pins ]
+function 15: sai2, groups = [ sai2m0-lrck-pins sai2m0-sclk-pins sai2m0-sdi-pins sai2m0-sdo-pins ]
+function 16: sai3, groups = [ sai3-lrck-pins sai3-sclk-pins sai3-sdi-pins sai3-sdo-pins ]
+function 17: sdmmc, groups = [ sdmmc-bus4-pins sdmmc-clk-pins sdmmc-cmd-pins vccio4_gpio sd-det ]
+function 18: uart0, groups = [ uart0-xfer-pins ]
+function 19: uart5, groups = [ uart5m0-xfer-pins uart5m0-ctsn-pins ]
+function 20: rm_io_idle, groups = [ rm-io9-idle-pins rm-io10-idle-pins rm-io11-idle-pins rm-io12-idle-pins ]
+function 21: rm_io0, groups = [ rm-io0-uart4-rx rm-io0-pdm-clk0 rm-io0-pdm-sdi0 rm-io0-pdm-sdi1 rm-io0-pdm-sdi2 rm-io0-pdm-sdi3 rm-io0-spdif-tx rm-io0-spdif-rx rm-io0-pdm-clk1 ]
+function 22: rm_io2, groups = [ rm-io2-uart3-tx ]
+function 23: rm_io3, groups = [ rm-io3-uart3-rx rm-io3-pwm0-ch2 ]
+function 24: rm_io4, groups = [ rm-io4-i2c2-scl ]
+function 25: rm_io5, groups = [ rm-io5-i2c2-sda ]
+function 26: rm_io6, groups = [ rm-io6-i2c0-sda ]
+function 27: rm_io7, groups = [ rm-io7-i2c0-scl ]
+function 28: rm_io8, groups = [ rm-io8-uart4-tx rm-io8-sai1-mclk ]
+function 29: rm_io9, groups = [ rm-io9-sai1-sclk ]
+function 30: rm_io10, groups = [ rm-io10-sai1-lrck rm-io10-spi0-csn0 ]
+function 31: rm_io11, groups = [ rm-io11-sai1-sdi rm-io11-spi0-clk ]
+function 32: rm_io12, groups = [ rm-io12-sai1-sdo0 rm-io12-spi0-mosi ]
+function 33: rm_io14, groups = [ rm-io14-spi0-miso ]
+function 34: rm_io17, groups = [ rm-io17-can1-tx ]
+function 35: rm_io18, groups = [ rm-io18-uart1-tx rm-io18-can1-rx ]
+function 36: rm_io19, groups = [ rm-io19-uart1-rx rm-io19-can0-tx ]
+function 37: rm_io20, groups = [ rm-io20-can0-rx rm-io20-pwm0-ch1 rm-io20-pwm1-ch0 ]
+function 38: rm_io21, groups = [ rm-io21-pwm0-ch0 ]
+function 39: rm_io25, groups = [ rm-io25-spi1-mosi ]
+function 40: rm_io26, groups = [ rm-io26-spi1-csn0 ]
+function 41: rm_io27, groups = [ rm-io27-spi1-clk ]
+function 42: rm_io28, groups = [ rm-io28-spi1-miso ]
+function 43: gpio-keys, groups = [ key-wake-up ]
+function 44: sdio-pwrseq, groups = [ wifi-enable-h ]
+function 45: speaker, groups = [ spk-ctrl ]
+function 46: wireless-bluetooth, groups = [ uart5-gpios ]
+function 47: wireless-wlan, groups = [ wifi-wake-host ]
+function 48: usb, groups = [ vcc5v0-otg0-en vcc5v0-otg1-en ]
+function 49: leds, groups = [ som-led user-led ]
+function 50: keys, groups = [ user2-key ]
+function 51: run-led, groups = [ ]
+function 52: led1, groups = [ ]
+function 53: led2, groups = [ ]
+function 54: user-reset, groups = [ ]
+function 55: wdt, groups = [ ]
+function 56: modem-reset-pin, groups = [ ]
+function 57: modem-power-pin, groups = [ ]
+function 58: spi0-int-pin, groups = [ ]
+### /sys/kernel/debug/pinctrl/pinctrl-rockchip-pinctrl/pinmux-pins
+Pinmux settings per pin
+Format: pin (name): mux_owner gpio_owner hog?
+pin 0 (gpio0-0): ff0e0000.serial (GPIO UNCLAIMED) function rm_io0 group rm-io0-uart4-rx
+pin 1 (gpio0-1): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 2 (gpio0-2): ff0d0000.serial (GPIO UNCLAIMED) function rm_io2 group rm-io2-uart3-tx
+pin 3 (gpio0-3): ff0d0000.serial (GPIO UNCLAIMED) function rm_io3 group rm-io3-uart3-rx
+pin 4 (gpio0-4): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 5 (gpio0-5): pinctrl gpio0:5 function leds group som-led
+pin 6 (gpio0-6): ff040000.i2c (GPIO UNCLAIMED) function rm_io6 group rm-io6-i2c0-sda
+pin 7 (gpio0-7): ff040000.i2c (GPIO UNCLAIMED) function rm_io7 group rm-io7-i2c0-scl
+pin 8 (gpio0-8): ff0e0000.serial (GPIO UNCLAIMED) function rm_io8 group rm-io8-uart4-tx
+pin 9 (gpio0-9): (MUX UNCLAIMED) gpio0:9
+pin 10 (gpio0-10): ff120000.spi (GPIO UNCLAIMED) function rm_io10 group rm-io10-spi0-csn0
+pin 11 (gpio0-11): ff120000.spi (GPIO UNCLAIMED) function rm_io11 group rm-io11-spi0-clk
+pin 12 (gpio0-12): ff120000.spi (GPIO UNCLAIMED) function rm_io12 group rm-io12-spi0-mosi
+pin 13 (gpio0-13): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 14 (gpio0-14): ff120000.spi (GPIO UNCLAIMED) function rm_io14 group rm-io14-spi0-miso
+pin 15 (gpio0-15): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 16 (gpio0-16): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 17 (gpio0-17): ff330000.can (GPIO UNCLAIMED) function rm_io17 group rm-io17-can1-tx
+pin 18 (gpio0-18): ff330000.can (GPIO UNCLAIMED) function rm_io18 group rm-io18-can1-rx
+pin 19 (gpio0-19): ff320000.can (GPIO UNCLAIMED) function rm_io19 group rm-io19-can0-tx
+pin 20 (gpio0-20): ff320000.can (GPIO UNCLAIMED) function rm_io20 group rm-io20-can0-rx
+pin 21 (gpio0-21): ff930000.pwm (GPIO UNCLAIMED) function rm_io21 group rm-io21-pwm0-ch0
+pin 22 (gpio0-22): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 23 (gpio0-23): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 24 (gpio0-24): mmcio-gpio-regulator gpio0:24 function sdmmc group vccio4_gpio
+pin 25 (gpio0-25): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 26 (gpio0-26): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 27 (gpio0-27): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 28 (gpio0-28): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 29 (gpio0-29): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 30 (gpio0-30): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 31 (gpio0-31): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 32 (gpio1-0): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 33 (gpio1-1): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 34 (gpio1-2): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 35 (gpio1-3): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 36 (gpio1-4): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 37 (gpio1-5): (MUX UNCLAIMED) gpio1:37
+pin 38 (gpio1-6): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 39 (gpio1-7): (MUX UNCLAIMED) gpio1:39
+pin 40 (gpio1-8): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 41 (gpio1-9): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 42 (gpio1-10): ff130000.spi (GPIO UNCLAIMED) function rm_io25 group rm-io25-spi1-mosi
+pin 43 (gpio1-11): ff130000.spi (GPIO UNCLAIMED) function rm_io26 group rm-io26-spi1-csn0
+pin 44 (gpio1-12): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 45 (gpio1-13): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 46 (gpio1-14): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 47 (gpio1-15): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 48 (gpio1-16): (MUX UNCLAIMED) gpio1:48
+pin 49 (gpio1-17): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 50 (gpio1-18): ff130000.spi (GPIO UNCLAIMED) function rm_io27 group rm-io27-spi1-clk
+pin 51 (gpio1-19): ff130000.spi (GPIO UNCLAIMED) function rm_io28 group rm-io28-spi1-miso
+pin 52 (gpio1-20): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 53 (gpio1-21): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 54 (gpio1-22): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 55 (gpio1-23): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 56 (gpio1-24): vcc5v0-otg0-regulator gpio1:56 function usb group vcc5v0-otg0-en
+pin 57 (gpio1-25): (MUX UNCLAIMED) gpio1:57
+pin 58 (gpio1-26): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 59 (gpio1-27): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 60 (gpio1-28): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 61 (gpio1-29): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 62 (gpio1-30): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 63 (gpio1-31): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 64 (gpio2-0): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 65 (gpio2-1): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 66 (gpio2-2): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 67 (gpio2-3): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 68 (gpio2-4): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 69 (gpio2-5): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 70 (gpio2-6): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 71 (gpio2-7): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 72 (gpio2-8): ff4c8000.ethernet (GPIO UNCLAIMED) function eth_rmii0 group eth-rmii0-rx-bus2-pins
+pin 73 (gpio2-9): ff4c8000.ethernet (GPIO UNCLAIMED) function eth_rmii0 group eth-rmii0-rx-bus2-pins
+pin 74 (gpio2-10): ff4c8000.ethernet (GPIO UNCLAIMED) function eth_rmii0 group eth-rmii0-clk-pins
+pin 75 (gpio2-11): ff4c8000.ethernet (GPIO UNCLAIMED) function eth_rmii0 group eth-rmii0-tx-bus2-pins
+pin 76 (gpio2-12): ff4c8000.ethernet (GPIO UNCLAIMED) function eth_rmii0 group eth-rmii0-tx-bus2-pins
+pin 77 (gpio2-13): ff4c8000.ethernet (GPIO UNCLAIMED) function eth_rmii0 group eth-rmii0-tx-bus2-pins
+pin 78 (gpio2-14): ff4c8000.ethernet (GPIO UNCLAIMED) function eth_rmii0 group eth-rmii0-miim-pins
+pin 79 (gpio2-15): ff4c8000.ethernet (GPIO UNCLAIMED) function eth_rmii0 group eth-rmii0-miim-pins
+pin 80 (gpio2-16): ff4c8000.ethernet (GPIO UNCLAIMED) function eth_rmii0 group eth-rmii0-rx-bus2-pins
+pin 81 (gpio2-17): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 82 (gpio2-18): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 83 (gpio2-19): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 84 (gpio2-20): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 85 (gpio2-21): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 86 (gpio2-22): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 87 (gpio2-23): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 88 (gpio2-24): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 89 (gpio2-25): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 90 (gpio2-26): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 91 (gpio2-27): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 92 (gpio2-28): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 93 (gpio2-29): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 94 (gpio2-30): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 95 (gpio2-31): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 96 (gpio3-0): ff480000.mmc (GPIO UNCLAIMED) function sdmmc group sdmmc-clk-pins
+pin 97 (gpio3-1): ff480000.mmc (GPIO UNCLAIMED) function sdmmc group sdmmc-cmd-pins
+pin 98 (gpio3-2): ff480000.mmc (GPIO UNCLAIMED) function sdmmc group sdmmc-bus4-pins
+pin 99 (gpio3-3): ff480000.mmc (GPIO UNCLAIMED) function sdmmc group sdmmc-bus4-pins
+pin 100 (gpio3-4): ff480000.mmc (GPIO UNCLAIMED) function sdmmc group sdmmc-bus4-pins
+pin 101 (gpio3-5): ff480000.mmc (GPIO UNCLAIMED) function sdmmc group sdmmc-bus4-pins
+pin 102 (gpio3-6): ff4d0000.ethernet (GPIO UNCLAIMED) function eth_rmii1 group eth-rmii1-rx-bus2-pins
+pin 103 (gpio3-7): ff4d0000.ethernet (GPIO UNCLAIMED) function eth_rmii1 group eth-rmii1-rx-bus2-pins
+pin 104 (gpio3-8): ff4d0000.ethernet (GPIO UNCLAIMED) function eth_rmii1 group eth-rmii1-clk-pins
+pin 105 (gpio3-9): ff4d0000.ethernet (GPIO UNCLAIMED) function eth_rmii1 group eth-rmii1-tx-bus2-pins
+pin 106 (gpio3-10): ff4d0000.ethernet (GPIO UNCLAIMED) function eth_rmii1 group eth-rmii1-tx-bus2-pins
+pin 107 (gpio3-11): ff4d0000.ethernet (GPIO UNCLAIMED) function eth_rmii1 group eth-rmii1-tx-bus2-pins
+pin 108 (gpio3-12): ff4d0000.ethernet (GPIO UNCLAIMED) function eth_rmii1 group eth-rmii1-miim-pins
+pin 109 (gpio3-13): ff4d0000.ethernet (GPIO UNCLAIMED) function eth_rmii1 group eth-rmii1-miim-pins
+pin 110 (gpio3-14): ff4d0000.ethernet (GPIO UNCLAIMED) function eth_rmii1 group eth-rmii1-rx-bus2-pins
+pin 111 (gpio3-15): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 112 (gpio3-16): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 113 (gpio3-17): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 114 (gpio3-18): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 115 (gpio3-19): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 116 (gpio3-20): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 117 (gpio3-21): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 118 (gpio3-22): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 119 (gpio3-23): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 120 (gpio3-24): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 121 (gpio3-25): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 122 (gpio3-26): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 123 (gpio3-27): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 124 (gpio3-28): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 125 (gpio3-29): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 126 (gpio3-30): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 127 (gpio3-31): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 128 (gpio4-0): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 129 (gpio4-1): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 130 (gpio4-2): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 131 (gpio4-3): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 132 (gpio4-4): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 133 (gpio4-5): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 134 (gpio4-6): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 135 (gpio4-7): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 136 (gpio4-8): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 137 (gpio4-9): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 138 (gpio4-10): gpio-keys gpio4:138 function keys group user2-key
+pin 139 (gpio4-11): leds gpio4:139 function leds group user-led
+pin 140 (gpio4-12): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 141 (gpio4-13): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 142 (gpio4-14): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 143 (gpio4-15): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 144 (gpio4-16): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 145 (gpio4-17): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 146 (gpio4-18): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 147 (gpio4-19): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 148 (gpio4-20): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 149 (gpio4-21): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 150 (gpio4-22): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 151 (gpio4-23): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 152 (gpio4-24): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 153 (gpio4-25): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 154 (gpio4-26): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 155 (gpio4-27): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 156 (gpio4-28): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 157 (gpio4-29): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 158 (gpio4-30): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+pin 159 (gpio4-31): (MUX UNCLAIMED) (GPIO UNCLAIMED)
+### /sys/kernel/debug/pinctrl/pinctrl-rockchip-pinctrl/pinmux-select
+### /sys/kernel/debug/pinctrl/pinctrl-rockchip-pinctrl/pins
+registered pins: 160
+pin 0 (gpio0-0) 0:gpio0 
+pin 1 (gpio0-1) 1:gpio0 
+pin 2 (gpio0-2) 2:gpio0 
+pin 3 (gpio0-3) 3:gpio0 
+pin 4 (gpio0-4) 4:gpio0 
+pin 5 (gpio0-5) 5:gpio0 
+pin 6 (gpio0-6) 6:gpio0 
+pin 7 (gpio0-7) 7:gpio0 
+pin 8 (gpio0-8) 8:gpio0 
+pin 9 (gpio0-9) 9:gpio0 
+pin 10 (gpio0-10) 10:gpio0 
+pin 11 (gpio0-11) 11:gpio0 
+pin 12 (gpio0-12) 12:gpio0 
+pin 13 (gpio0-13) 13:gpio0 
+pin 14 (gpio0-14) 14:gpio0 
+pin 15 (gpio0-15) 15:gpio0 
+pin 16 (gpio0-16) 16:gpio0 
+pin 17 (gpio0-17) 17:gpio0 
+pin 18 (gpio0-18) 18:gpio0 
+pin 19 (gpio0-19) 19:gpio0 
+pin 20 (gpio0-20) 20:gpio0 
+pin 21 (gpio0-21) 21:gpio0 
+pin 22 (gpio0-22) 22:gpio0 
+pin 23 (gpio0-23) 23:gpio0 
+pin 24 (gpio0-24) 24:gpio0 
+pin 25 (gpio0-25) 25:gpio0 
+pin 26 (gpio0-26) 26:gpio0 
+pin 27 (gpio0-27) 27:gpio0 
+pin 28 (gpio0-28) 28:gpio0 
+pin 29 (gpio0-29) 29:gpio0 
+pin 30 (gpio0-30) 30:gpio0 
+pin 31 (gpio0-31) 31:gpio0 
+pin 32 (gpio1-0) 0:gpio1 
+pin 33 (gpio1-1) 1:gpio1 
+pin 34 (gpio1-2) 2:gpio1 
+pin 35 (gpio1-3) 3:gpio1 
+pin 36 (gpio1-4) 4:gpio1 
+pin 37 (gpio1-5) 5:gpio1 
+pin 38 (gpio1-6) 6:gpio1 
+pin 39 (gpio1-7) 7:gpio1 
+pin 40 (gpio1-8) 8:gpio1 
+pin 41 (gpio1-9) 9:gpio1 
+pin 42 (gpio1-10) 10:gpio1 
+pin 43 (gpio1-11) 11:gpio1 
+pin 44 (gpio1-12) 12:gpio1 
+pin 45 (gpio1-13) 13:gpio1 
+pin 46 (gpio1-14) 14:gpio1 
+pin 47 (gpio1-15) 15:gpio1 
+pin 48 (gpio1-16) 16:gpio1 
+pin 49 (gpio1-17) 17:gpio1 
+pin 50 (gpio1-18) 18:gpio1 
+pin 51 (gpio1-19) 19:gpio1 
+pin 52 (gpio1-20) 20:gpio1 
+pin 53 (gpio1-21) 21:gpio1 
+pin 54 (gpio1-22) 22:gpio1 
+pin 55 (gpio1-23) 23:gpio1 
+pin 56 (gpio1-24) 24:gpio1 
+pin 57 (gpio1-25) 25:gpio1 
+pin 58 (gpio1-26) 26:gpio1 
+pin 59 (gpio1-27) 27:gpio1 
+pin 60 (gpio1-28) 28:gpio1 
+pin 61 (gpio1-29) 29:gpio1 
+pin 62 (gpio1-30) 30:gpio1 
+pin 63 (gpio1-31) 31:gpio1 
+pin 64 (gpio2-0) 0:gpio2 
+pin 65 (gpio2-1) 1:gpio2 
+pin 66 (gpio2-2) 2:gpio2 
+pin 67 (gpio2-3) 3:gpio2 
+pin 68 (gpio2-4) 4:gpio2 
+pin 69 (gpio2-5) 5:gpio2 
+pin 70 (gpio2-6) 6:gpio2 
+pin 71 (gpio2-7) 7:gpio2 
+pin 72 (gpio2-8) 8:gpio2 
+pin 73 (gpio2-9) 9:gpio2 
+pin 74 (gpio2-10) 10:gpio2 
+pin 75 (gpio2-11) 11:gpio2 
+pin 76 (gpio2-12) 12:gpio2 
+pin 77 (gpio2-13) 13:gpio2 
+pin 78 (gpio2-14) 14:gpio2 
+pin 79 (gpio2-15) 15:gpio2 
+pin 80 (gpio2-16) 16:gpio2 
+pin 81 (gpio2-17) 17:gpio2 
+pin 82 (gpio2-18) 18:gpio2 
+pin 83 (gpio2-19) 19:gpio2 
+pin 84 (gpio2-20) 20:gpio2 
+pin 85 (gpio2-21) 21:gpio2 
+pin 86 (gpio2-22) 22:gpio2 
+pin 87 (gpio2-23) 23:gpio2 
+pin 88 (gpio2-24) 24:gpio2 
+pin 89 (gpio2-25) 25:gpio2 
+pin 90 (gpio2-26) 26:gpio2 
+pin 91 (gpio2-27) 27:gpio2 
+pin 92 (gpio2-28) 28:gpio2 
+pin 93 (gpio2-29) 29:gpio2 
+pin 94 (gpio2-30) 30:gpio2 
+pin 95 (gpio2-31) 31:gpio2 
+pin 96 (gpio3-0) 0:gpio3 
+pin 97 (gpio3-1) 1:gpio3 
+pin 98 (gpio3-2) 2:gpio3 
+pin 99 (gpio3-3) 3:gpio3 
+pin 100 (gpio3-4) 4:gpio3 
+pin 101 (gpio3-5) 5:gpio3 
+pin 102 (gpio3-6) 6:gpio3 
+pin 103 (gpio3-7) 7:gpio3 
+pin 104 (gpio3-8) 8:gpio3 
+pin 105 (gpio3-9) 9:gpio3 
+pin 106 (gpio3-10) 10:gpio3 
+pin 107 (gpio3-11) 11:gpio3 
+pin 108 (gpio3-12) 12:gpio3 
+pin 109 (gpio3-13) 13:gpio3 
+pin 110 (gpio3-14) 14:gpio3 
+pin 111 (gpio3-15) 15:gpio3 
+pin 112 (gpio3-16) 16:gpio3 
+pin 113 (gpio3-17) 17:gpio3 
+pin 114 (gpio3-18) 18:gpio3 
+pin 115 (gpio3-19) 19:gpio3 
+pin 116 (gpio3-20) 20:gpio3 
+pin 117 (gpio3-21) 21:gpio3 
+pin 118 (gpio3-22) 22:gpio3 
+pin 119 (gpio3-23) 23:gpio3 
+pin 120 (gpio3-24) 24:gpio3 
+pin 121 (gpio3-25) 25:gpio3 
+pin 122 (gpio3-26) 26:gpio3 
+pin 123 (gpio3-27) 27:gpio3 
+pin 124 (gpio3-28) 28:gpio3 
+pin 125 (gpio3-29) 29:gpio3 
+pin 126 (gpio3-30) 30:gpio3 
+pin 127 (gpio3-31) 31:gpio3 
+pin 128 (gpio4-0) 0:gpio4 
+pin 129 (gpio4-1) 1:gpio4 
+pin 130 (gpio4-2) 2:gpio4 
+pin 131 (gpio4-3) 3:gpio4 
+pin 132 (gpio4-4) 4:gpio4 
+pin 133 (gpio4-5) 5:gpio4 
+pin 134 (gpio4-6) 6:gpio4 
+pin 135 (gpio4-7) 7:gpio4 
+pin 136 (gpio4-8) 8:gpio4 
+pin 137 (gpio4-9) 9:gpio4 
+pin 138 (gpio4-10) 10:gpio4 
+pin 139 (gpio4-11) 11:gpio4 
+pin 140 (gpio4-12) 12:gpio4 
+pin 141 (gpio4-13) 13:gpio4 
+pin 142 (gpio4-14) 14:gpio4 
+pin 143 (gpio4-15) 15:gpio4 
+pin 144 (gpio4-16) 16:gpio4 
+pin 145 (gpio4-17) 17:gpio4 
+pin 146 (gpio4-18) 18:gpio4 
+pin 147 (gpio4-19) 19:gpio4 
+pin 148 (gpio4-20) 20:gpio4 
+pin 149 (gpio4-21) 21:gpio4 
+pin 150 (gpio4-22) 22:gpio4 
+pin 151 (gpio4-23) 23:gpio4 
+pin 152 (gpio4-24) 24:gpio4 
+pin 153 (gpio4-25) 25:gpio4 
+pin 154 (gpio4-26) 26:gpio4 
+pin 155 (gpio4-27) 27:gpio4 
+pin 156 (gpio4-28) 28:gpio4 
+pin 157 (gpio4-29) 29:gpio4 
+pin 158 (gpio4-30) 30:gpio4 
+pin 159 (gpio4-31) 31:gpio4 

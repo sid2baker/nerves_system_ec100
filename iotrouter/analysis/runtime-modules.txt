@@ -1,0 +1,521 @@
+### runtime-evidence-20260830T053014Z: loaded modules
+spi_nor 60071 0 - Live 0xaf8f6000
+morse 251848 0 - Live 0xaf89d000
+dot11ah 52100 1 morse, Live 0xaf888000
+aic_btusb 30973 0 - Live 0xaf87a000
+aic8800_fdrv 338430 0 - Live 0xaf811000
+aic_load_fw 40798 1 aic8800_fdrv, Live 0xaf800000
+
+### kernel/drivers/bluetooth/aic_btusb.ko
+/work/vendor/stock/runtime-evidence-20260830T053014Z/lib/modules/6.1.99-rt36/kernel/drivers/bluetooth/aic_btusb.ko: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), BuildID[sha1]=67ca1c90c10f5fdfdcd8b9a674fd2e0741c86740, with debug_info, not stripped
+
+String dump of section '.modinfo':
+  [     0]  license=GPL
+  [     c]  version=2.1.0
+  [    1a]  description=AicSemi Bluetooth USB driver version
+  [    4b]  author=AicSemi Corporation
+  [    66]  import_ns=VFS_internal_I_am_really_a_filesystem_and_am_NOT_a_driver
+  [    aa]  parm=mp_drv_mode:0: NORMAL; 1: MP MODE
+  [    d1]  parmtype=mp_drv_mode:int
+  [    ea]  parmtype=bt_support:int
+  [   102]  parmtype=btdual:int
+  [   116]  srcversion=9CE6659F8BDA212AACCDA43
+  [   139]  alias=usb:v368Bp8D91d*dc*dsc*dp*icE0isc01ip01in*
+  [   16a]  alias=usb:vA69Cp88DCd*dc*dsc*dp*icE0isc01ip01in*
+  [   19b]  alias=usb:vA69Cp8D81d*dc*dsc*dp*icE0isc01ip01in*
+  [   1cc]  alias=usb:vA69Cp8801d*dc*dsc*dp*icE0isc01ip01in*
+  [   1fd]  depends=
+  [   206]  intree=Y
+  [   20f]  name=aic_btusb
+  [   21e]  vermagic=6.1.99-rt36 SMP preempt mod_unload ARMv7 thumb2 p2v8 
+
+/opt/tronlong/RK3506/ec100_rk3506_linux6.1_release_v1.1.0/kernel-6.1
+
+### kernel/drivers/mtd/spi-nor/spi-nor.ko
+/work/vendor/stock/runtime-evidence-20260830T053014Z/lib/modules/6.1.99-rt36/kernel/drivers/mtd/spi-nor/spi-nor.ko: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), BuildID[sha1]=56d63a584eb2a650036473a81da538c0bc5f37d7, with debug_info, not stripped
+
+String dump of section '.modinfo':
+  [     0]  description=framework for SPI NOR
+  [    22]  author=Mike Lavender
+  [    37]  author=Huang Shijie <shijie8@gmail.com>
+  [    5f]  license=GPL v2
+  [    6e]  alias=of:N*T*Cjedec,spi-norC*
+  [    8c]  alias=of:N*T*Cjedec,spi-nor
+  [    a8]  alias=spi:mr25h40
+  [    ba]  alias=spi:mr25h10
+  [    cc]  alias=spi:mr25h256
+  [    df]  alias=spi:mr25h128
+  [    f2]  alias=spi:m25p128-nonjedec
+  [   10d]  alias=spi:m25p64-nonjedec
+  [   127]  alias=spi:m25p32-nonjedec
+  [   141]  alias=spi:m25p16-nonjedec
+  [   15b]  alias=spi:m25p80-nonjedec
+  [   175]  alias=spi:m25p40-nonjedec
+  [   18f]  alias=spi:m25p20-nonjedec
+  [   1a9]  alias=spi:m25p10-nonjedec
+  [   1c3]  alias=spi:m25p05-nonjedec
+  [   1dd]  alias=spi:w25q256
+  [   1ef]  alias=spi:w25q128
+  [   201]  alias=spi:w25q80bl
+  [   214]  alias=spi:w25q32dw
+  [   227]  alias=spi:w25q32
+  [   238]  alias=spi:w25x32
+  [   249]  alias=spi:w25x80
+  [   25a]  alias=spi:m25p128
+  [   26c]  alias=spi:m25p64
+  [   27d]  alias=spi:m25p32
+  [   28e]  alias=spi:m25p16
+  [   29f]  alias=spi:m25p80
+  [   2b0]  alias=spi:m25p40
+  [   2c1]  alias=spi:sst25wf040
+  [   2d6]  alias=spi:sst25vf032b
+  [   2ec]  alias=spi:sst25vf016b
+  [   302]  alias=spi:sst25vf040b
+  [   318]  alias=spi:s25fl064k
+  [   32c]  alias=spi:s25fl008k
+  [   340]  alias=spi:s25sl12801
+  [   355]  alias=spi:s25fl512s
+  [   369]  alias=spi:s25fl256s1
+  [   37e]  alias=spi:n25q512a
+  [   391]  alias=spi:n25q128a13
+  [   3a6]  alias=spi:n25q128a11
+  [   3bb]  alias=spi:n25q064
+  [   3cd]  alias=spi:mx66l51235l
+  [   3e3]  alias=spi:mx25l25635e
+  [   3f9]  alias=spi:mx25l12805d
+  [   40f]  alias=spi:mx25l6405d
+  [   424]  alias=spi:mx25l1606e
+  [   439]  alias=spi:mx25l4005a
+  [   44e]  alias=spi:at26df081a
+  [   463]  alias=spi:at25df641
+  [   477]  alias=spi:at25df321a
+  [   48c]  alias=spi:m25px64
+  [   49e]  alias=spi:m25p10
+  [   4af]  alias=spi:w25x16
+  [   4c0]  alias=spi:s25sl064a
+  [   4d4]  alias=spi:spi-nor
+  [   4e6]  depends=
+  [   4ef]  intree=Y
+  [   4f8]  name=spi_nor
+  [   505]  vermagic=6.1.99-rt36 SMP preempt mod_unload ARMv7 thumb2 p2v8 
+
+/opt/tronlong/RK3506/ec100_rk3506_linux6.1_release_v1.1.0/kernel-6.1
+
+### kernel/drivers/net/wireless/aic8800/aic8800_fdrv/aic8800_fdrv.ko
+/work/vendor/stock/runtime-evidence-20260830T053014Z/lib/modules/6.1.99-rt36/kernel/drivers/net/wireless/aic8800/aic8800_fdrv/aic8800_fdrv.ko: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), BuildID[sha1]=7bacc8889aadfba72b20732d2dcaf7feda544b8e, with debug_info, not stripped
+
+String dump of section '.modinfo':
+  [     0]  parmtype=reorder_timeout:int
+  [    1d]  license=GPL
+  [    29]  author=Copyright(c) 2015-2017 RivieraWaves RivieraWaves S.A.S
+  [    67]  version=6.4.3.0
+  [    77]  description=RivieraWaves 11nac driver for Linux cfg80211
+  [    b0]  firmware=rwnx_settings.ini
+  [    cb]  import_ns=VFS_internal_I_am_really_a_filesystem_and_am_NOT_a_driver
+  [   10f]  parm=wifi_mac_addr:Configures mac addr.
+  [   137]  parmtype=wifi_mac_addr:charp
+  [   154]  parmtype=aicwf_dbg_level:int
+  [   171]  parmtype=ccode_channels:string
+  [   190]  parmtype=country_code:string
+  [   1ad]  parm=dpsm:Enable Dynamic PowerSaving (Default: 1-Enabled)
+  [   1e7]  parmtype=dpsm:bool
+  [   1fa]  parm=ftl:Firmware trace level  (Default: "")
+  [   227]  parmtype=ftl:charp
+  [   23a]  parm=auto_reply:Enable Monitor MacAddr Auto-Reply (Default: 0-Disabled)
+  [   282]  parmtype=auto_reply:bool
+  [   29b]  parm=uf:Enable Unsupported HT Frame Logging (Default: 0-Disabled)
+  [   2dd]  parmtype=uf:bool
+  [   2ee]  parm=tdls:Enable TDLS (Default: 1-Enabled)
+  [   319]  parmtype=tdls:bool
+  [   32c]  parm=lp_clk_ppm:Low Power Clock accuracy of the local device
+  [   369]  parmtype=lp_clk_ppm:int
+  [   381]  parm=listen_bcmc:Wait for BC/MC traffic following DTIM beacon
+  [   3bf]  parmtype=listen_bcmc:bool
+  [   3d9]  parm=listen_itv:Maximum listen interval
+  [   401]  parmtype=listen_itv:int
+  [   419]  parm=roc_dur_max:Maximum Remain on Channel duration
+  [   44d]  parmtype=roc_dur_max:int
+  [   466]  parm=mutx_on:Enable MU-MIMO transmissions (Default: 1-Enabled)
+  [   4a5]  parmtype=mutx_on:bool
+  [   4bb]  parm=mutx:Enable MU-MIMO TX Capability (Default: 1-Enabled)
+  [   4f7]  parmtype=mutx:bool
+  [   50a]  parm=murx:Enable MU-MIMO RX Capability (Default: 1-Enabled)
+  [   546]  parmtype=murx:bool
+  [   559]  parm=mesh:Enable Meshing Capability (Default: 1-Enabled)
+  [   592]  parmtype=mesh:bool
+  [   5a5]  parm=bfmer:Enable Beamformer Capability (Default: 0-Disabled)
+  [   5e3]  parmtype=bfmer:bool
+  [   5f7]  parm=bfmee:Enable Beamformee Capability (Default: 1-Enabled)
+  [   634]  parmtype=bfmee:bool
+  [   648]  parm=amsdu_rx_max:0 <= amsdu_rx_max <= 2 : Maximum A-MSDU size supported in RX\n
+                    0: 3895 bytes\n
+                    1: 7991 bytes\n
+                    2: 11454 bytes\n
+                    This value might be reduced according to the FW capabilities.\n
+                    Default: 2
+  [   733]  parmtype=amsdu_rx_max:int
+  [   74d]  parm=nss:1 <= nss <= 2 : Supported number of Spatial Streams (Default: 1)
+  [   797]  parmtype=nss:int
+  [   7a8]  parm=custchan:Extend channel set to non-standard channels (for testing ONLY) (Default: 0)
+  [   802]  parmtype=custchan:bool
+  [   819]  parm=custregd:Use permissive custom regulatory rules (for testing ONLY) (Default: 0)
+  [   86e]  parmtype=custregd:bool
+  [   885]  parm=use_80:Enable 80MHz (Default: 1)
+  [   8ab]  parmtype=use_80:bool
+  [   8c0]  parm=use_2040:Use tweaked 20-40MHz mode (Default: 1)
+  [   8f5]  parmtype=use_2040:bool
+  [   90c]  parm=sgi80:Advertise Short Guard Interval support for 80MHz (Default: 1)
+  [   955]  parmtype=sgi80:bool
+  [   969]  parm=sgi:Advertise Short Guard Interval support (Default: 1)
+  [   9a6]  parmtype=sgi:bool
+  [   9b8]  parm=ap_uapsd_on:Enable UAPSD in AP mode (Default: 1)
+  [   9ee]  parmtype=ap_uapsd_on:bool
+  [   a08]  parm=uapsd_queues:UAPSD Queues, integer value, must be seen as a bitfield\n
+                    Bit 0 = VO\n
+                    Bit 1 = VI\n
+                    Bit 2 = BK\n
+                    Bit 3 = BE\n
+                 -> uapsd_queues=7 will enable uapsd for VO, VI and BK queues
+  [   ae0]  parmtype=uapsd_queues:int
+  [   afa]  parm=uapsd_timeout:UAPSD Timer timeout, in ms (Default: 300). If 0, UAPSD is disabled
+  [   b50]  parmtype=uapsd_timeout:int
+  [   b6b]  parm=phycfg:0 <= phycfg <= 5 : RF Channel Conf (Default: 2(C0-A1-B2))
+  [   bb1]  parmtype=phycfg:int
+  [   bc5]  parm=gf_rx_on:Enable HT greenfield in reception (Default: 1)
+  [   c02]  parmtype=gf_rx_on:bool
+  [   c19]  parm=stbc_on:Enable STBC in RX (Default: 1)
+  [   c45]  parmtype=stbc_on:bool
+  [   c5b]  parm=ldpc_on:Enable LDPC (Default: 1)
+  [   c81]  parmtype=ldpc_on:bool
+  [   c97]  parm=tx_lft:Tx lifetime (ms) - setting it to 0 disables retries (Default: 1000)
+  [   ce7]  parmtype=tx_lft:int
+  [   cfb]  parm=ps_on:Enable PowerSaving (Default: 1-Enabled)
+  [   d2e]  parmtype=ps_on:bool
+  [   d42]  parm=amsdu_maxnb:Maximum number of MSDUs inside an A-MSDU in TX: (Default: NX_TX_PAYLOAD_MAX)
+  [   da0]  parmtype=amsdu_maxnb:int
+  [   db9]  parm=he_ul_on:Enable HE OFDMA UL (Default: 0)
+  [   de7]  parmtype=he_ul_on:bool
+  [   dfe]  parm=he_mcs_map:HE MCS map value  0: MCS0_7, 1: MCS0_9, 2: MCS0_11 (Default: 2)
+  [   e4e]  parmtype=he_mcs_map:int
+  [   e66]  parm=mcs_map:VHT MCS map value  0: MCS0_7, 1: MCS0_8, 2: MCS0_9 (Default: 2)
+  [   eb3]  parmtype=mcs_map:int
+  [   ec8]  parm=he_on:Enable HE (Default: 1)
+  [   eea]  parmtype=he_on:bool
+  [   efe]  parm=vht_on:Enable VHT (Default: 1)
+  [   f22]  parmtype=vht_on:bool
+  [   f37]  parm=ht_on:Enable HT (Default: 1)
+  [   f59]  parmtype=ht_on:bool
+  [   f6d]  parm=ant_div:Enable Antenna Diversity (Default: 1)
+  [   fa0]  parmtype=ant_div:bool
+  [   fb6]  firmware=fmacfw.bin
+  [   fca]  firmware=fmacfw.ihex
+  [   fdf]  firmware=ldpcram.bin
+  [   ff4]  firmware=fcuram.bin
+  [  1008]  firmware=agcram.bin
+  [  101c]  parmtype=align_param:int
+  [  1035]  parmtype=busrx_thread_prio:int
+  [  1054]  parmtype=bustx_thread_prio:int
+  [  1073]  srcversion=D8E8ACFADC2A059346C69D9
+  [  1096]  alias=usb:v368Bp8D99d*dc*dsc*dp*ic*isc*ip*in*
+  [  10c4]  alias=usb:v368Bp8D91d*dc*dsc*dp*icFFiscFFipFFin*
+  [  10f5]  alias=usb:vA69Cp88DDd*dc*dsc*dp*ic*isc*ip*in*
+  [  1123]  alias=usb:vA69Cp88DCd*dc*dsc*dp*icFFiscFFipFFin*
+  [  1154]  alias=usb:vA69Cp8D41d*dc*dsc*dp*icFFiscFFipFFin*
+  [  1185]  alias=usb:vA69Cp8D81d*dc*dsc*dp*icFFiscFFipFFin*
+  [  11b6]  alias=usb:vA69Cp8801d*dc*dsc*dp*icFFiscFFipFFin*
+  [  11e7]  depends=aic_load_fw
+  [  11fb]  intree=Y
+  [  1204]  name=aic8800_fdrv
+  [  1216]  vermagic=6.1.99-rt36 SMP preempt mod_unload ARMv7 thumb2 p2v8 
+
+/opt/tronlong/RK3506/ec100_rk3506_linux6.1_release_v1.1.0/kernel-6.1
+
+### kernel/drivers/net/wireless/aic8800/aic_load_fw/aic_load_fw.ko
+/work/vendor/stock/runtime-evidence-20260830T053014Z/lib/modules/6.1.99-rt36/kernel/drivers/net/wireless/aic8800/aic_load_fw/aic_load_fw.ko: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), BuildID[sha1]=6a656fa58a1a2c8825d7eff423f25dc9c95036d7, with debug_info, not stripped
+
+String dump of section '.modinfo':
+  [     0]  license=GPL
+  [     c]  author=Copyright(c) 2015-2020 AICSemi AICSemi
+  [    3a]  version=1.0
+  [    46]  description=AIC BLUETOOTH
+  [    60]  firmware=fw.bin
+  [    70]  import_ns=VFS_internal_I_am_really_a_filesystem_and_am_NOT_a_driver
+  [    b4]  parmtype=flash_erase_len:int
+  [    d1]  parmtype=paringid:string
+  [    ea]  parmtype=adap_test:int
+  [   101]  parmtype=testmode:int
+  [   117]  parmtype=ble_scan_wakeup_reboot_time:int
+  [   140]  parmtype=aicwf_dbg_level:int
+  [   15d]  parmtype=aic_fw_path:string
+  [   179]  parmtype=rx_buff_list_ava:int
+  [   197]  srcversion=745F244D4305C042479834F
+  [   1ba]  alias=usb:v368Bp8D99d*dc*dsc*dp*ic*isc*ip*in*
+  [   1e8]  alias=usb:v368Bp8D91d*dc*dsc*dp*ic*isc*ip*in*
+  [   216]  alias=usb:v368Bp8D90d*dc*dsc*dp*ic*isc*ip*in*
+  [   244]  alias=usb:vA69Cp8D41d*dc*dsc*dp*ic*isc*ip*in*
+  [   272]  alias=usb:vA69Cp8D40d*dc*dsc*dp*ic*isc*ip*in*
+  [   2a0]  alias=usb:vA69Cp8D81d*dc*dsc*dp*ic*isc*ip*in*
+  [   2ce]  alias=usb:vA69Cp8D80d*dc*dsc*dp*ic*isc*ip*in*
+  [   2fc]  alias=usb:vA69Cp8801d*dc*dsc*dp*ic*isc*ip*in*
+  [   32a]  alias=usb:vA69Cp8800d*dc*dsc*dp*ic*isc*ip*in*
+  [   358]  depends=
+  [   361]  intree=Y
+  [   36a]  name=aic_load_fw
+  [   37b]  vermagic=6.1.99-rt36 SMP preempt mod_unload ARMv7 thumb2 p2v8 
+
+/opt/tronlong/RK3506/ec100_rk3506_linux6.1_release_v1.1.0/kernel-6.1
+
+### kernel/drivers/net/wireless/fgh100m/dot11ah/dot11ah.ko
+/work/vendor/stock/runtime-evidence-20260830T053014Z/lib/modules/6.1.99-rt36/kernel/drivers/net/wireless/fgh100m/dot11ah/dot11ah.ko: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), BuildID[sha1]=47e682d958f3b35484b843b2c63e03ed62a12a65, with debug_info, not stripped
+
+String dump of section '.modinfo':
+  [     0]  version=0-rel_1_16_4_2025_Sep_18
+  [    21]  license=Dual BSD/GPL
+  [    36]  description=S1G support for Morse Micro drivers
+  [    66]  author=Morse Micro
+  [    79]  srcversion=9C28300098204317BFE7E00
+  [    9c]  depends=
+  [    a5]  intree=Y
+  [    ae]  name=dot11ah
+  [    bb]  vermagic=6.1.99-rt36 SMP preempt mod_unload ARMv7 thumb2 p2v8 
+
+/opt/tronlong/RK3506/ec100_rk3506_linux6.1_release_v1.1.0/kernel-6.1
+
+### kernel/drivers/net/wireless/fgh100m/morse.ko
+/work/vendor/stock/runtime-evidence-20260830T053014Z/lib/modules/6.1.99-rt36/kernel/drivers/net/wireless/fgh100m/morse.ko: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), BuildID[sha1]=33e28d7f59b3bfb30e264dfebbb2161a51ca90c6, with debug_info, not stripped
+
+String dump of section '.modinfo':
+  [     0]  parm=slow_clock_mode:Slow clock source selection mode
+  [    36]  parmtype=slow_clock_mode:uint
+  [    54]  parm=enable_1mhz_probes:Enable sending all probe requests at 1MHz
+  [    96]  parmtype=enable_1mhz_probes:bool
+  [    b7]  parm=enable_sched_scan:Enable scheduled scanning
+  [    e8]  parmtype=enable_sched_scan:bool
+  [   108]  parm=enable_hw_scan:Enable SoftMAC hardware scan support
+  [   141]  parmtype=enable_hw_scan:bool
+  [   15e]  parm=enable_pv1:Enable PV1 frame support (dev only)
+  [   192]  parmtype=enable_pv1:bool
+  [   1ab]  parm=enable_page_slicing:Enable page slicing
+  [   1d8]  parmtype=enable_page_slicing:bool
+  [   1fa]  parm=log_modparams_on_boot:Log all module parameters during boot
+  [   23b]  parmtype=log_modparams_on_boot:bool
+  [   25f]  parm=enable_mcast_rate_control:Enable multicast rate control tracking to transmit at highest possible rate, bandwidth and GI
+  [   2dc]  parmtype=enable_mcast_rate_control:bool
+  [   304]  parm=enable_mcast_whitelist:Enable multicast whitelisting
+  [   33e]  parmtype=enable_mcast_whitelist:bool
+  [   363]  parm=ocs_type:OCS Type (0: use QoS Null frames, 1: use RAW)
+  [   39f]  parmtype=ocs_type:uint
+  [   3b6]  parm=enable_wiphy:Enable FullMAC (Wiphy) interface
+  [   3e9]  parmtype=enable_wiphy:bool
+  [   404]  parm=enable_auto_mpsw:Enable automatic minimum packet spacing window setting
+  [   451]  parmtype=enable_auto_mpsw:bool
+  [   470]  parm=duty_cycle_probe_retry_threshold:Duty Cycle threshold at which to disable retries for probe requests and responses
+  [   4e8]  parmtype=duty_cycle_probe_retry_threshold:uint
+  [   517]  parm=duty_cycle_mode:Duty cycle mode when automatic duty cycling enabled
+  [   560]  parmtype=duty_cycle_mode:uint
+  [   57e]  parm=enable_auto_duty_cycle:Enable automatic duty cycling setting
+  [   5c0]  parmtype=enable_auto_duty_cycle:bool
+  [   5e5]  parm=dhcpc_lease_update_script:Path to script called on DHCP lease updates
+  [   630]  parmtype=dhcpc_lease_update_script:string
+  [   65a]  parm=enable_ibss_probe_filtering:Enable IBSS probe request filtering in firmware
+  [   6ab]  parmtype=enable_ibss_probe_filtering:bool
+  [   6d5]  parm=enable_dhcpc_offload:Enable DHCP client offload
+  [   70a]  parmtype=enable_dhcpc_offload:bool
+  [   72d]  parm=enable_arp_offload:Enable ARP offload
+  [   758]  parmtype=enable_arp_offload:bool
+  [   779]  parm=enable_bcn_change_seq_monitor:Enable monitoring of Change Sequence field in S1G Beacon
+  [   7d5]  parmtype=enable_bcn_change_seq_monitor:bool
+  [   801]  parm=enable_cac:Enable Centralized Authentication Control (CAC)
+  [   841]  parmtype=enable_cac:bool
+  [   85a]  parm=max_mc_frames:Maximum multicast frames after DTIM (0 for unlimited)
+  [   8a3]  parmtype=max_mc_frames:uint
+  [   8bf]  parm=tx_max_power_mbm:Maximum transmitted power in mbm
+  [   8f6]  parmtype=tx_max_power_mbm:int
+  [   914]  parm=enable_twt:Enable TWT support
+  [   937]  parmtype=enable_twt:bool
+  [   950]  parm=enable_mac80211_connection_monitor:Enable mac80211 connection monitor
+  [   99b]  parmtype=enable_mac80211_connection_monitor:bool
+  [   9cc]  parm=enable_airtime_fairness:Enable mac80211 pull interface for airtime fairness
+  [   a1d]  parmtype=enable_airtime_fairness:bool
+  [   a43]  parm=enable_raw:Enable RAW
+  [   a5e]  parmtype=enable_raw:bool
+  [   a77]  parm=max_aggregation_count:Maximum number of aggregated packets we can receive
+  [   ac6]  parmtype=max_aggregation_count:uint
+  [   aea]  parm=max_rate_tries:Maximum retries per rate
+  [   b17]  parmtype=max_rate_tries:uint
+  [   b34]  parm=max_rates:Maximum number of rates to try
+  [   b62]  parmtype=max_rates:uint
+  [   b7a]  parm=enable_watchdog_reset:Enable driver reset from watchdog
+  [   bb7]  parmtype=enable_watchdog_reset:bool
+  [   bdb]  parm=watchdog_interval_secs:Watchdog interval in seconds
+  [   c14]  parmtype=watchdog_interval_secs:uint
+  [   c39]  parm=enable_watchdog:Enable watchdog
+  [   c5e]  parmtype=enable_watchdog:bool
+  [   c7c]  parm=country:The ISO/IEC alpha2 country code for the country in which this device is currently operating.
+  [   ce6]  parmtype=country:string
+  [   cfe]  parm=enable_cts_to_self:Use CTS-to-self in place of RTS/CTS
+  [   d3a]  parmtype=enable_cts_to_self:bool
+  [   d5b]  parm=enable_rts_8mhz:Enable RTS/CTS protection for 8MHz
+  [   d93]  parmtype=enable_rts_8mhz:bool
+  [   db1]  parm=enable_trav_pilot:Enable travelling pilots
+  [   de1]  parmtype=enable_trav_pilot:bool
+  [   e01]  parm=enable_sgi_rc:Enable SGI use in rate control
+  [   e33]  parmtype=enable_sgi_rc:bool
+  [   e4f]  parm=enable_mbssid_ie:Enable MBSSID IE support in beacon and probe responses
+  [   e9c]  parmtype=enable_mbssid_ie:bool
+  [   ebb]  parm=virtual_sta_max:Virtual STA test mode (max virtual STAs or 0 to disable)
+  [   f09]  parmtype=virtual_sta_max:uint
+  [   f27]  parm=thin_lmac:Thin LMAC mode
+  [   f45]  parmtype=thin_lmac:bool
+  [   f5d]  parm=enable_dynamic_ps_offload:Enable dynamic PS firmware offload
+  [   f9f]  parmtype=enable_dynamic_ps_offload:bool
+  [   fc7]  parm=enable_ps:Enable PS
+  [   fe0]  parmtype=enable_ps:uint
+  [   ff8]  parm=enable_subbands:Enable subband transmission
+  [  1029]  parmtype=enable_subbands:uint
+  [  1047]  parm=enable_survey:Enable channel survey
+  [  1070]  parmtype=enable_survey:bool
+  [  108c]  parm=mcs10_mode:MCS10 mode
+  [  10a7]  parmtype=mcs10_mode:uint
+  [  10c0]  parm=mcs_mask:Supported MCS mask, e.g. MCS0-2 use mask 0x07
+  [  10fc]  parmtype=mcs_mask:uint
+  [  1113]  parm=no_hwcrypt:Disable on-chip hardware encryption
+  [  1147]  parmtype=no_hwcrypt:bool
+  [  1160]  version=0-rel_1_16_4_2025_Sep_18
+  [  1181]  license=Dual BSD/GPL
+  [  1196]  description=Driver support for Morse Micro SDIO/SPI devices
+  [  11d2]  author=Morse Micro
+  [  11e5]  parm=enable_ext_xtal_init:Enable external xtal init sequence (MM610x)
+  [  122b]  parmtype=enable_ext_xtal_init:bool
+  [  124e]  parm=enable_otp_check:Enable validation of device OTP
+  [  1284]  parmtype=enable_otp_check:bool
+  [  12a3]  parm=bcf:BCF filename to load
+  [  12c1]  parmtype=bcf:string
+  [  12d5]  parm=serial:Override board ID in chip with this value
+  [  130b]  parmtype=serial:string
+  [  1322]  parm=debug_mask:The logging debug mask (bit 0 - 3, debug, info, warn, error)
+  [  136f]  parmtype=debug_mask:uint
+  [  1388]  parm=tx_status_lifetime_ms:Maximum lifetime (ms) for pending Tx packets before considered dropped
+  [  13ea]  parmtype=tx_status_lifetime_ms:uint
+  [  140e]  parm=tx_queued_lifetime_ms:Maximum lifetime (ms) for queued Tx packets before dropping
+  [  1465]  parmtype=tx_queued_lifetime_ms:uint
+  [  1489]  parm=max_txq_len:Maximum number of queued TX packets
+  [  14be]  parmtype=max_txq_len:uint
+  [  14d8]  firmware=morse/mm8108b2-flm-rl.bin
+  [  14fb]  firmware=morse/mm8108b1-flm-rl.bin
+  [  151e]  firmware=morse/mm8108b0-flm-rl.bin
+  [  1541]  firmware=morse/mm8108b2-rl.bin
+  [  1560]  firmware=morse/mm8108b1-rl.bin
+  [  157f]  firmware=morse/mm8108b0-rl.bin
+  [  159e]  firmware=morse/mm6108-vst.bin
+  [  15bc]  firmware=morse/mm6108-tlm.bin
+  [  15da]  firmware=morse/mm6108.bin
+  [  15f4]  parm=default_cmd_timeout_ms:Default command timeout (in ms)
+  [  1630]  parmtype=default_cmd_timeout_ms:uint
+  [  1655]  parm=reattach_hw:Do not reset hardware state during module exit, attempt to reattach during module init
+  [  16bd]  parmtype=reattach_hw:bool
+  [  16d7]  parm=hw_reload_after_stop:Reload HW after a stop notification. Abort if stop events are less than this seconds apart (-1 to disable)
+  [  175c]  parmtype=hw_reload_after_stop:int
+  [  177e]  parm=enable_short_bcn_as_dtim_override:Override enable for short beacon to be the DTIM beacon (experimental)
+  [  17eb]  parmtype=enable_short_bcn_as_dtim_override:int
+  [  181a]  parm=fw_bin_file:Firmware binary filename to load
+  [  184c]  parmtype=fw_bin_file:string
+  [  1868]  parm=sdio_reset_time:Time to wait (in ms) after SDIO reset
+  [  18a3]  parmtype=sdio_reset_time:uint
+  [  18c1]  parm=macaddr_suffix:MAC address octets 4, 5, and 6 (the default 00:00:00 randomises the value) - ignored if hardware MAC address present
+  [  194a]  parmtype=macaddr_suffix:string
+  [  1969]  parm=macaddr_octet:MAC address octet 6 (0xFF for a random value) - ignored if hardware MAC address present
+  [  19d4]  parmtype=macaddr_octet:byte
+  [  19f0]  parm=max_total_vendor_ie_bytes:Max total bytes for runtime vendor IEs
+  [  1a36]  parmtype=max_total_vendor_ie_bytes:uint
+  [  1a5e]  parm=coredump_include:Bitfield describing optional data to include in the coredump
+  [  1ab1]  parmtype=coredump_include:ulong
+  [  1ad1]  parm=coredump_method:Method of coredump creation
+  [  1b02]  parmtype=coredump_method:uint
+  [  1b20]  parm=enable_coredump:Enable coredump creation on chip failure
+  [  1b5e]  parmtype=enable_coredump:bool
+  [  1b7c]  parm=spi_use_edge_irq:Enable compatibility for edge IRQs on SPI
+  [  1bbc]  parmtype=spi_use_edge_irq:bool
+  [  1bdb]  parm=spi_clock_speed:SPI clock speed in Hz
+  [  1c06]  parmtype=spi_clock_speed:uint
+  [  1c24]  parm=enable_mm_vendor_ie:Allow insertion of Morse vendor IEs
+  [  1c61]  parmtype=enable_mm_vendor_ie:bool
+  [  1c83]  parm=fixed_guard:Fixed guard interval (only used when enable_fixed_rate is on)
+  [  1cd2]  parmtype=fixed_guard:int
+  [  1ceb]  parm=fixed_ss:Fixed spatial streams (only used when enable_fixed_rate is on)
+  [  1d38]  parmtype=fixed_ss:int
+  [  1d4e]  parm=fixed_bw:Fixed bandwidth (only used when enable_fixed_rate is on)
+  [  1d95]  parmtype=fixed_bw:int
+  [  1dab]  parm=fixed_mcs:Fixed MCS (only used when enable_fixed_rate is on)
+  [  1ded]  parmtype=fixed_mcs:int
+  [  1e04]  parm=enable_fixed_rate:Enable the fixed rate
+  [  1e31]  parmtype=enable_fixed_rate:bool
+  [  1e51]  srcversion=4B9CA2642121BC2AB407112
+  [  1e74]  alias=of:N*T*Cmorse,mm810x-spiC*
+  [  1e95]  alias=of:N*T*Cmorse,mm810x-spi
+  [  1eb4]  alias=of:N*T*Cmorse,mm610x-spiC*
+  [  1ed5]  alias=of:N*T*Cmorse,mm610x-spi
+  [  1ef4]  alias=spi:mm810x-spi
+  [  1f09]  alias=spi:mm610x-spi
+  [  1f1e]  depends=dot11ah
+  [  1f2e]  intree=Y
+  [  1f37]  name=morse
+  [  1f42]  vermagic=6.1.99-rt36 SMP preempt mod_unload ARMv7 thumb2 p2v8 
+
+/opt/tronlong/RK3506/ec100_rk3506_linux6.1_release_v1.1.0/kernel-6.1
+
+### kernel/fs/ntfs3/ntfs3.ko
+/work/vendor/stock/runtime-evidence-20260830T053014Z/lib/modules/6.1.99-rt36/kernel/fs/ntfs3/ntfs3.ko: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), BuildID[sha1]=3c9e68749e1c5f056003d795de7e650578023abf, with debug_info, not stripped
+
+String dump of section '.modinfo':
+  [     0]  alias=fs-ntfs3
+  [     f]  author=Konstantin Komarov
+  [    29]  description=ntfs3 read/write filesystem
+  [    51]  license=GPL
+  [    5d]  depends=
+  [    66]  intree=Y
+  [    6f]  name=ntfs3
+  [    7a]  vermagic=6.1.99-rt36 SMP preempt mod_unload ARMv7 thumb2 p2v8 
+
+/opt/tronlong/RK3506/ec100_rk3506_linux6.1_release_v1.1.0/kernel-6.1
+
+### kernel/net/ipv6/ipcomp6.ko
+/work/vendor/stock/runtime-evidence-20260830T053014Z/lib/modules/6.1.99-rt36/kernel/net/ipv6/ipcomp6.ko: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), BuildID[sha1]=9c4900b04f386810ff6f7500979b603c7efbfa34, with debug_info, not stripped
+
+String dump of section '.modinfo':
+  [     0]  alias=xfrm-type-10-108
+  [    17]  author=Mitsuru KANDA <mk@linux-ipv6.org>
+  [    40]  description=IP Payload Compression Protocol (IPComp) for IPv6 - RFC3173
+  [    88]  license=GPL
+  [    94]  depends=xfrm6_tunnel
+  [    a9]  intree=Y
+  [    b2]  name=ipcomp6
+  [    bf]  vermagic=6.1.99-rt36 SMP preempt mod_unload ARMv7 thumb2 p2v8 
+
+/opt/tronlong/RK3506/ec100_rk3506_linux6.1_release_v1.1.0/kernel-6.1
+
+### kernel/net/ipv6/tunnel6.ko
+/work/vendor/stock/runtime-evidence-20260830T053014Z/lib/modules/6.1.99-rt36/kernel/net/ipv6/tunnel6.ko: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), BuildID[sha1]=391d7f52136933d0574ba237f11a3933360e16bf, with debug_info, not stripped
+
+String dump of section '.modinfo':
+  [     0]  license=GPL
+  [     c]  depends=
+  [    15]  intree=Y
+  [    1e]  name=tunnel6
+  [    2b]  vermagic=6.1.99-rt36 SMP preempt mod_unload ARMv7 thumb2 p2v8 
+
+/opt/tronlong/RK3506/ec100_rk3506_linux6.1_release_v1.1.0/kernel-6.1
+
+### kernel/net/ipv6/xfrm6_tunnel.ko
+/work/vendor/stock/runtime-evidence-20260830T053014Z/lib/modules/6.1.99-rt36/kernel/net/ipv6/xfrm6_tunnel.ko: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), BuildID[sha1]=cf12cede3c49d6decef8b9b83fef0b23cce09766, with debug_info, not stripped
+
+String dump of section '.modinfo':
+  [     0]  alias=xfrm-type-10-41
+  [    16]  license=GPL
+  [    22]  depends=tunnel6
+  [    32]  intree=Y
+  [    3b]  name=xfrm6_tunnel
+  [    4d]  vermagic=6.1.99-rt36 SMP preempt mod_unload ARMv7 thumb2 p2v8 
+
+/opt/tronlong/RK3506/ec100_rk3506_linux6.1_release_v1.1.0/kernel-6.1
+

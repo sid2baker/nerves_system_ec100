@@ -1,0 +1,5 @@
+### /proc/device-tree/model
+RK3506-EVM-EMMC-EC100
+### /proc/device-tree/compatible
+vendor,tl3506-evm-emmc-ec100
+rockchip,rk3506

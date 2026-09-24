@@ -1,0 +1,22 @@
+# /lib/systemd/system/iotrouter.service
+[Unit]
+Description=iotrouter service
+After=network.target
+Wants=iotrouter-web.service 
+Before=iotrouter-web.service
+
+[Service]
+Type=simple
+User=root
+StateDirectory=iotrouter 
+StateDirectoryMode=0755
+WorkingDirectory=/var/lib/iotrouter
+ExecStart=/bin/bash -c "exec /usr/local/src/iotrouter/iotrouter"
+Restart=on-failure
+RestartSec=5
+StartLimitInterval=60
+StartLimitBurst=3
+
+[Install]
+WantedBy=multi-user.target
+

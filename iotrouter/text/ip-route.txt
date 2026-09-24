@@ -1,0 +1,16 @@
+default via 192.168.19.1 dev eth0 proto dhcp src 192.168.19.88 metric 1 
+192.168.19.0/24 dev eth0 proto kernel scope link src 192.168.19.88 metric 1 
+192.168.19.1 dev eth0 proto dhcp scope link src 192.168.19.88 metric 1 
+192.168.88.0/24 dev br-lan proto kernel scope link src 192.168.88.1 linkdown 
+local 127.0.0.0/8 dev lo table local proto kernel scope host src 127.0.0.1 
+local 127.0.0.1 dev lo table local proto kernel scope host src 127.0.0.1 
+broadcast 127.255.255.255 dev lo table local proto kernel scope link src 127.0.0.1 
+local 192.168.19.88 dev eth0 table local proto kernel scope host src 192.168.19.88 
+broadcast 192.168.19.255 dev eth0 table local proto kernel scope link src 192.168.19.88 
+local 192.168.88.1 dev br-lan table local proto kernel scope host src 192.168.88.1 
+broadcast 192.168.88.255 dev br-lan table local proto kernel scope link src 192.168.88.1 linkdown 
+local ::1 dev lo proto kernel metric 0 pref medium
+::1 dev lo proto kernel metric 256 pref medium
+local fe80::ec8a:55ff:febb:8541 dev eth0 proto kernel metric 0 pref medium
+fe80::/64 dev eth0 proto kernel metric 256 pref medium
+multicast ff00::/8 dev eth0 proto kernel metric 256 pref medium

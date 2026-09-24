@@ -1,0 +1,3 @@
+### /sys/class/watchdog/watchdog0 -> /sys/devices/virtual/watchdog/watchdog0
+crw------- 1 root root  10, 130  8月 26  2025 /dev/watchdog
+crw------- 1 root root 244,   0  8月 26  2025 /dev/watchdog0

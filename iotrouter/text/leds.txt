@@ -1,0 +1,16 @@
+d 755 0 /sys/class/leds -> 
+l 777 0 /sys/class/leds/heartbeat -> ../../devices/platform/leds/leds/heartbeat
+l 777 0 /sys/class/leds/pcie_power -> ../../devices/platform/leds/leds/pcie_power
+l 777 0 /sys/class/leds/user-led0 -> ../../devices/platform/leds/leds/user-led0
+### /sys/class/leds/heartbeat
+brightness=0
+max_brightness=1
+trigger=none rfkill-any rfkill-none kbd-scrolllock kbd-numlock kbd-capslock kbd-kanalock kbd-shiftlock kbd-altgrlock kbd-ctrllock kbd-altlock kbd-shiftllock kbd-shiftrlock kbd-ctrlllock kbd-ctrlrlock mmc0 mmc1 [heartbeat]
+### /sys/class/leds/pcie_power
+brightness=1
+max_brightness=1
+trigger=[none] rfkill-any rfkill-none kbd-scrolllock kbd-numlock kbd-capslock kbd-kanalock kbd-shiftlock kbd-altgrlock kbd-ctrllock kbd-altlock kbd-shiftllock kbd-shiftrlock kbd-ctrlllock kbd-ctrlrlock mmc0 mmc1 heartbeat
+### /sys/class/leds/user-led0
+brightness=0
+max_brightness=1
+trigger=[none] rfkill-any rfkill-none kbd-scrolllock kbd-numlock kbd-capslock kbd-kanalock kbd-shiftlock kbd-altgrlock kbd-ctrllock kbd-altlock kbd-shiftllock kbd-shiftrlock kbd-ctrlllock kbd-ctrlrlock mmc0 mmc1 heartbeat

@@ -1,0 +1,43 @@
+FIT description: FIT Image with ATF/OP-TEE/U-Boot/MCU
+Created:         Fri Mar 20 08:12:57 2026
+ Image 0 (uboot)
+  Description:  U-Boot
+  Created:      Fri Mar 20 08:12:57 2026
+  Type:         Standalone Program
+  Compression:  uncompressed
+  Data Size:    809304 Bytes = 790.34 KiB = 0.77 MiB
+  Architecture: ARM
+  Load Address: 0x00200000
+  Entry Point:  unavailable
+  Hash algo:    sha256
+  Hash value:   298f2de94b0493378ad37c015a5b9af4d1a99a12275767045190932b6a5aabff
+ Image 1 (optee)
+  Description:  OP-TEE
+  Created:      Fri Mar 20 08:12:57 2026
+  Type:         Firmware
+  Compression:  uncompressed
+  Data Size:    125904 Bytes = 122.95 KiB = 0.12 MiB
+  Architecture: ARM
+  OS:           Unknown OS
+  Load Address: 0x00001000
+  Hash algo:    sha256
+  Hash value:   93603ca22cdf22e47ac130e4ac386cdf9474443ab076039807dfc2d5d30b7ecd
+ Image 2 (fdt)
+  Description:  U-Boot dtb
+  Created:      Fri Mar 20 08:12:57 2026
+  Type:         Flat Device Tree
+  Compression:  uncompressed
+  Data Size:    6385 Bytes = 6.24 KiB = 0.01 MiB
+  Architecture: ARM
+  Hash algo:    sha256
+  Hash value:   55ba14e6c41eeffcd3c7fcf5c5b27d69c13a08e1509e24d76fd71dd2d415b14f
+ Default Configuration: 'conf'
+ Configuration 0 (conf)
+  Description:  rk3506-evb
+  Kernel:       unavailable
+  Firmware:     optee
+  FDT:          fdt
+  Loadables:    uboot
+  Sign algo:    sha256,rsa2048:dev
+  Sign value:   unavailable
+  Timestamp:    unavailable

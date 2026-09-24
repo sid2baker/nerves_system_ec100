@@ -1,0 +1,98 @@
+  UNIT                                               LOAD      ACTIVE   SUB     DESCRIPTION
+  alsa-restore.service                               loaded    active   exited  Save/Restore Sound Card State
+  alsa-state.service                                 loaded    inactive dead    Manage Sound Card State (restore and store)
+  apparmor.service                                   loaded    inactive dead    Load AppArmor profiles
+  apt-daily-upgrade.service                          loaded    inactive dead    Daily apt upgrade and clean activities
+  apt-daily.service                                  loaded    inactive dead    Daily apt download activities
+● auditd.service                                     not-found inactive dead    auditd.service
+  auth-rpcgss-module.service                         loaded    inactive dead    Kernel Module supporting RPCSEC_GSS
+● connman.service                                    not-found inactive dead    connman.service
+  cron.service                                       loaded    active   running Regular background program processing daemon
+  dbus.service                                       loaded    active   running D-Bus System Message Bus
+● display-manager.service                            not-found inactive dead    display-manager.service
+  dpkg-db-backup.service                             loaded    inactive dead    Daily dpkg database backup service
+  e2scrub_all.service                                loaded    inactive dead    Online ext4 Metadata Check for All Filesystems
+  e2scrub_reap.service                               loaded    inactive dead    Remove Stale Online ext4 Metadata Check Snapshots
+  emergency.service                                  loaded    inactive dead    Emergency Shell
+  fstrim.service                                     loaded    inactive dead    Discard unused blocks on filesystems from /etc/fstab
+  getty-static.service                               loaded    inactive dead    getty on tty2-tty6 if dbus and logind are not available
+  getty@tty1.service                                 loaded    active   running Getty on tty1
+● gssproxy.service                                   not-found inactive dead    gssproxy.service
+  iotrouter-web.service                              loaded    active   running IoT Router Web Service
+  iotrouter.service                                  loaded    active   running iotrouter service
+  isc-dhcp-server.service                            loaded    active   running ISC DHCP IPv4 server
+● isc-dhcp-server6.service                           loaded    failed   failed  ISC DHCP IPv6 server
+  kmod-static-nodes.service                          loaded    inactive dead    Create List of Static Device Nodes
+  loadcpufreq.service                                loaded    active   exited  LSB: Load kernel modules needed to enable cpufreq scaling
+  logrotate.service                                  loaded    inactive dead    Rotate log files
+● lxc.service                                        not-found inactive dead    lxc.service
+  modprobe@drm.service                               loaded    inactive dead    Load Kernel Module drm
+  modprobe@efi_pstore.service                        loaded    inactive dead    Load Kernel Module efi_pstore
+  modprobe@fuse.service                              loaded    inactive dead    Load Kernel Module fuse
+  motd-news.service                                  loaded    inactive dead    Message of the Day
+  networkd-dispatcher.service                        loaded    active   running Dispatcher daemon for systemd-networkd
+● NetworkManager.service                             not-found inactive dead    NetworkManager.service
+  neuronex.service                                   loaded    active   running neuronex service
+● nfs-server.service                                 not-found inactive dead    nfs-server.service
+  nfs-utils.service                                  loaded    inactive dead    NFS server and client services
+  node-red.service                                   loaded    active   running node-red
+  openvpn.service                                    loaded    active   exited  OpenVPN service
+● plymouth-quit-wait.service                         not-found inactive dead    plymouth-quit-wait.service
+● plymouth-start.service                             not-found inactive dead    plymouth-start.service
+  rc-local.service                                   loaded    inactive dead    /etc/rc.local Compatibility
+  rescue.service                                     loaded    inactive dead    Rescue Shell
+  resize_partition.service                           loaded    active   exited  Resize partition
+  rpc-gssd.service                                   loaded    inactive dead    RPC security service for NFS client and server
+  rpc-statd-notify.service                           loaded    active   exited  Notify NFS peers of a restart
+  rpc-svcgssd.service                                loaded    inactive dead    RPC security service for NFS server
+  serial-getty@ttyFIQ0.service                       loaded    active   running Serial Getty on ttyFIQ0
+  ssh.service                                        loaded    active   running OpenBSD Secure Shell server
+  strongswan-starter.service                         loaded    inactive dead    strongSwan IPsec IKEv1/IKEv2 daemon using ipsec.conf
+● syslog.service                                     not-found inactive dead    syslog.service
+  systemd-ask-password-console.service               loaded    inactive dead    Dispatch Password Requests to Console
+  systemd-ask-password-wall.service                  loaded    inactive dead    Forward Password Requests to Wall
+● systemd-backlight@backlight:ff640000.dsi.0.service masked    inactive dead    systemd-backlight@backlight:ff640000.dsi.0.service
+  systemd-binfmt.service                             loaded    inactive dead    Set Up Additional Binary Formats
+  systemd-boot-system-token.service                  loaded    inactive dead    Store a System Token in an EFI Variable
+  systemd-fsck-root.service                          loaded    inactive dead    File System Check on Root Device
+  systemd-fsckd.service                              loaded    inactive dead    File System Check Daemon to report status
+  systemd-hostnamed.service                          loaded    active   running Hostname Service
+● systemd-hwdb-update.service                        not-found inactive dead    systemd-hwdb-update.service
+  systemd-initctl.service                            loaded    inactive dead    initctl Compatibility Daemon
+  systemd-journal-flush.service                      loaded    active   exited  Flush Journal to Persistent Storage
+  systemd-journald.service                           loaded    active   running Journal Service
+  systemd-logind.service                             loaded    active   running User Login Management
+  systemd-machine-id-commit.service                  loaded    inactive dead    Commit a transient machine-id on disk
+  systemd-modules-load.service                       loaded    active   exited  Load Kernel Modules
+  systemd-network-generator.service                  loaded    active   exited  Generate network units from Kernel command line
+  systemd-networkd-wait-online.service               loaded    active   exited  Wait for Network to be Configured
+  systemd-networkd.service                           loaded    active   running Network Configuration
+  systemd-pstore.service                             loaded    inactive dead    Platform Persistent Storage Archival
+  systemd-random-seed.service                        loaded    active   exited  Load/Save Random Seed
+  systemd-remount-fs.service                         loaded    active   exited  Remount Root and Kernel File Systems
+  systemd-resolved.service                           loaded    active   running Network Name Resolution
+  systemd-rfkill.service                             loaded    inactive dead    Load/Save RF Kill Switch Status
+  systemd-sysctl.service                             loaded    active   exited  Apply Kernel Variables
+  systemd-sysusers.service                           loaded    active   exited  Create System Users
+  systemd-timesyncd.service                          loaded    active   running Network Time Synchronization
+  systemd-tmpfiles-clean.service                     loaded    inactive dead    Cleanup of Temporary Directories
+  systemd-tmpfiles-setup-dev.service                 loaded    active   exited  Create Static Device Nodes in /dev
+  systemd-tmpfiles-setup.service                     loaded    active   exited  Create Volatile Files and Directories
+  systemd-udev-trigger.service                       loaded    active   exited  Coldplug All udev Devices
+  systemd-udevd.service                              loaded    active   running Rule-based Manager for Device Events and Files
+● systemd-update-done.service                        not-found inactive dead    systemd-update-done.service
+  systemd-update-utmp-runlevel.service               loaded    inactive dead    Record Runlevel Change in UTMP
+  systemd-update-utmp.service                        loaded    active   exited  Record System Boot/Shutdown in UTMP
+  systemd-user-sessions.service                      loaded    active   exited  Permit User Sessions
+● systemd-vconsole-setup.service                     not-found inactive dead    systemd-vconsole-setup.service
+  ubuntu-fan.service                                 loaded    active   exited  Ubuntu FAN network setup
+  udhcpd.service                                     loaded    active   exited  LSB: Start busybox udhcpd at boot time
+  usb-mount@mmcblk1p7.service                        loaded    active   exited  Mount USB Drive on mmcblk1p7
+  user-runtime-dir@0.service                         loaded    active   exited  User Runtime Directory /run/user/0
+  user@0.service                                     loaded    active   running User Manager for UID 0
+
+LOAD   = Reflects whether the unit definition was properly loaded.
+ACTIVE = The high-level unit activation state, i.e. generalization of SUB.
+SUB    = The low-level unit activation state, values depend on unit type.
+91 loaded units listed.
+To show all installed unit files use 'systemctl list-unit-files'.

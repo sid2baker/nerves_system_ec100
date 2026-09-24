@@ -1,0 +1,17 @@
+KERNEL_RAW_SHA256=ba7251fc158586493060e9bf0f8422f1908c3177d7d14386d6c5050a00987d6c
+KALLSYMS_FUNCTION=b09e8998 T early_init_dt_scan_chosen
+KERNEL_VIRTUAL_BASE=0xb0108000
+EMBEDDED_CMDLINE_OFFSETS=0x7c7f81,0x8e8e94
+EMBEDDED_CMDLINE_POINTER=0xb08cff81
+POLICY=CONFIG_CMDLINE_FORCE
+INITRAMFS_RUNTIME_PATH=AVAILABLE
+
+The exact captured function first copies the FDT /chosen/bootargs at
+0xb09e8a8c. It then loads the literal pointer to the embedded command line at
+0xb09e8a90 and unconditionally calls the same strscpy routine at 0xb09e8a98.
+Linux 6.1 drivers/of/fdt.c implements this sequence for CONFIG_CMDLINE_FORCE;
+the default branch tests for an empty command line and the EXTEND branch
+concatenates instead. Therefore transient U-Boot bootargs cannot select NFS
+root with this exact stock kernel. Runtime symbols confirm that the same normal
+kernel can load and unpack an initramfs, allowing a RAM-root /init without
+changing the forced command line.

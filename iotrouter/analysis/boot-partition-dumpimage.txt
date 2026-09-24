@@ -1,0 +1,41 @@
+FIT description: U-Boot FIT source file for arm
+Created:         Tue Mar 31 03:11:36 2026
+ Image 0 (fdt)
+  Description:  unavailable
+  Created:      Tue Mar 31 03:11:36 2026
+  Type:         Flat Device Tree
+  Compression:  uncompressed
+  Data Size:    42747 Bytes = 41.75 KiB = 0.04 MiB
+  Architecture: ARM
+  Load Address: 0xffffff00
+  Hash algo:    sha256
+  Hash value:   f0b8b67302191de35780c0df914e4ad8492c6c2d07fbcce12a25cd2427d5c116
+ Image 1 (kernel)
+  Description:  unavailable
+  Created:      Tue Mar 31 03:11:36 2026
+  Type:         Kernel Image
+  Compression:  uncompressed
+  Data Size:    6828864 Bytes = 6668.81 KiB = 6.51 MiB
+  Architecture: ARM
+  OS:           Linux
+  Load Address: 0xffffff01
+  Entry Point:  0xffffff01
+  Hash algo:    sha256
+  Hash value:   8ef8d162c0f58c53c84f0c66e7aa11dafdb098ccb318d62f72fdb12d982af20c
+ Image 2 (resource)
+  Description:  unavailable
+  Created:      Tue Mar 31 03:11:36 2026
+  Type:         Multi-File Image
+  Compression:  uncompressed
+  Data Size:    80896 Bytes = 79.00 KiB = 0.08 MiB
+  Hash algo:    sha256
+  Hash value:   7f504351755f80aa2c1815902bc2e2cde9842d12d54f2cf9115a2538847e5d2f
+ Default Configuration: 'conf'
+ Configuration 0 (conf)
+  Description:  unavailable
+  Kernel:       kernel
+  FDT:          fdt
+  Sign algo:    sha256,rsa2048:dev
+  Sign padding: pss
+  Sign value:   unavailable
+  Timestamp:    unavailable

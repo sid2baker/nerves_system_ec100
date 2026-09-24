@@ -1,0 +1,31 @@
+### /sys/bus/spi/devices/spi0.0
+spi:mm610x-spi
+OF_NAME=mm6108
+OF_FULLNAME=/spi@ff120000/mm6108@0
+OF_COMPATIBLE_0=morse,mm610x-spi
+OF_COMPATIBLE_N=1
+MODALIAS=spi:mm610x-spi
+/sys/firmware/devicetree/base/spi@ff120000/mm6108@0
+/sys/devices/platform/ff120000.spi/spi_master/spi0/spi0.0/driver
+l 0 /sys/bus/spi/devices/spi0.0 -> ../../../devices/platform/ff120000.spi/spi_master/spi0/spi0.0
+### /sys/bus/spi/devices/spi1.0
+spi:mmc-spi-slot
+DRIVER=mmc_spi
+OF_NAME=mmc-slot
+OF_FULLNAME=/spi@ff130000/mmc-slot@0
+OF_COMPATIBLE_0=mmc-spi-slot
+OF_COMPATIBLE_N=1
+MODALIAS=spi:mmc-spi-slot
+/sys/firmware/devicetree/base/spi@ff130000/mmc-slot@0
+/sys/bus/spi/drivers/mmc_spi
+l 0 /sys/bus/spi/devices/spi1.0 -> ../../../devices/platform/ff130000.spi/spi_master/spi1/spi1.0
+### /sys/bus/spi/devices/spi2.0
+spi:spi-nor
+OF_NAME=flash
+OF_FULLNAME=/spi@ff488000/flash@0
+OF_COMPATIBLE_0=jedec,spi-nor
+OF_COMPATIBLE_N=1
+MODALIAS=spi:spi-nor
+/sys/firmware/devicetree/base/spi@ff488000/flash@0
+/sys/devices/platform/ff488000.spi/spi_master/spi2/spi2.0/driver
+l 0 /sys/bus/spi/devices/spi2.0 -> ../../../devices/platform/ff488000.spi/spi_master/spi2/spi2.0

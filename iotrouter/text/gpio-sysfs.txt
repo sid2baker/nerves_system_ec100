@@ -1,0 +1,14 @@
+d 755 0 /sys/bus/gpio/devices -> 
+d 755 0 /sys/class/gpio -> 
+f 200 4096 /sys/class/gpio/export -> 
+f 200 4096 /sys/class/gpio/unexport -> 
+l 777 0 /sys/bus/gpio/devices/gpiochip0 -> ../../../devices/platform/pinctrl/ff940000.gpio/gpiochip0
+l 777 0 /sys/bus/gpio/devices/gpiochip1 -> ../../../devices/platform/pinctrl/ff870000.gpio/gpiochip1
+l 777 0 /sys/bus/gpio/devices/gpiochip2 -> ../../../devices/platform/pinctrl/ff1c0000.gpio/gpiochip2
+l 777 0 /sys/bus/gpio/devices/gpiochip3 -> ../../../devices/platform/pinctrl/ff1d0000.gpio/gpiochip3
+l 777 0 /sys/bus/gpio/devices/gpiochip4 -> ../../../devices/platform/pinctrl/ff1e0000.gpio/gpiochip4
+l 777 0 /sys/class/gpio/gpiochip0 -> ../../devices/platform/pinctrl/ff940000.gpio/gpio/gpiochip0
+l 777 0 /sys/class/gpio/gpiochip128 -> ../../devices/platform/pinctrl/ff1e0000.gpio/gpio/gpiochip128
+l 777 0 /sys/class/gpio/gpiochip32 -> ../../devices/platform/pinctrl/ff870000.gpio/gpio/gpiochip32
+l 777 0 /sys/class/gpio/gpiochip64 -> ../../devices/platform/pinctrl/ff1c0000.gpio/gpio/gpiochip64
+l 777 0 /sys/class/gpio/gpiochip96 -> ../../devices/platform/pinctrl/ff1d0000.gpio/gpio/gpiochip96

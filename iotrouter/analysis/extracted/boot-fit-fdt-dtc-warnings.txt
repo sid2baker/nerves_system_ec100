@@ -1,0 +1,26 @@
+<stdout>: Warning (unit_address_vs_reg): /adc-keys1/user_key@1: node has a unit name, but no reg or ranges property
+<stdout>: Warning (simple_bus_reg): /clocks/clk-rc: missing or empty reg/ranges property
+<stdout>: Warning (simple_bus_reg): /clocks/xin24m: missing or empty reg/ranges property
+<stdout>: Warning (simple_bus_reg): /clocks/xin32k: missing or empty reg/ranges property
+<stdout>: Warning (simple_bus_reg): /clocks/clk-spdifrx-to-asrc: missing or empty reg/ranges property
+<stdout>: Warning (simple_bus_reg): /clocks/mclkin-sai0: missing or empty reg/ranges property
+<stdout>: Warning (simple_bus_reg): /clocks/mclkin-sai1: missing or empty reg/ranges property
+<stdout>: Warning (simple_bus_reg): /clocks/mclkin-sai2: missing or empty reg/ranges property
+<stdout>: Warning (simple_bus_reg): /clocks/mclkin-sai3: missing or empty reg/ranges property
+<stdout>: Warning (simple_bus_reg): /clocks/sai0-fs: missing or empty reg/ranges property
+<stdout>: Warning (simple_bus_reg): /clocks/sai1-fs: missing or empty reg/ranges property
+<stdout>: Warning (simple_bus_reg): /clocks/sai2-fs: missing or empty reg/ranges property
+<stdout>: Warning (simple_bus_reg): /clocks/sai3-fs: missing or empty reg/ranges property
+<stdout>: Warning (unique_unit_address): /clocks/mclkout-sai0@ff910004: duplicate unit-address (also used in node /clocks/mclkout-sai1@ff910004)
+<stdout>: Warning (unique_unit_address): /clocks/mclkout-sai2@ff288004: duplicate unit-address (also used in node /clocks/mclkout-sai3@ff288004)
+<stdout>: Warning (unique_unit_address): /reserved-memory/trust@0: duplicate unit-address (also used in node /reserved-memory/drm-logo@0)
+<stdout>: Warning (interrupt_provider): /pinctrl/gpio@ff940000: Missing #address-cells in interrupt provider
+<stdout>: Warning (interrupt_provider): /pinctrl/gpio@ff870000: Missing #address-cells in interrupt provider
+<stdout>: Warning (interrupt_provider): /pinctrl/gpio@ff1c0000: Missing #address-cells in interrupt provider
+<stdout>: Warning (interrupt_provider): /pinctrl/gpio@ff1d0000: Missing #address-cells in interrupt provider
+<stdout>: Warning (interrupt_provider): /pinctrl/gpio@ff1e0000: Missing #address-cells in interrupt provider
+<stdout>: Warning (alias_paths): /aliases:spi3: aliases property is not a valid node (/flexbus@ff880000/fspi)
+<stdout>: Warning (alias_paths): /aliases:spi4: aliases property is not a valid node (/flexbus@ff880000/spi)
+<stdout>: Warning (graph_child_address): /dsi@ff640000/ports/port@0: graph node has single child node 'endpoint@0', #address-cells/#size-cells are not necessary
+<stdout>: Warning (graph_child_address): /dsi@ff640000/panel@0/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary
+<stdout>: Warning (graph_endpoint): /vop@ff600000/port/endpoint@0:remote-endpoint: graph phandle is not valid

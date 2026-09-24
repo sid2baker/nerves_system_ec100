@@ -1,0 +1,15 @@
+### /sys/class/rtc
+d 755 0 /sys/class/rtc -> 
+### /sys/class/hwmon
+### /sys/class/thermal
+d 755 0 /sys/class/thermal -> 
+l 777 0 /sys/class/thermal/thermal_zone0 -> ../../devices/virtual/thermal/thermal_zone0
+### /sys/class/input
+d 755 0 /sys/class/input -> 
+l 777 0 /sys/class/input/event0 -> ../../devices/platform/adc-keys0/input/input0/event0
+l 777 0 /sys/class/input/event1 -> ../../devices/platform/adc-keys1/input/input1/event1
+l 777 0 /sys/class/input/event2 -> ../../devices/platform/gpio-keys/input/input2/event2
+l 777 0 /sys/class/input/input0 -> ../../devices/platform/adc-keys0/input/input0
+l 777 0 /sys/class/input/input1 -> ../../devices/platform/adc-keys1/input/input1
+l 777 0 /sys/class/input/input2 -> ../../devices/platform/gpio-keys/input/input2
+l 777 0 /sys/class/input/mice -> ../../devices/virtual/input/mice

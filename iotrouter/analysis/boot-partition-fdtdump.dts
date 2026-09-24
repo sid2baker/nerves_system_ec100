@@ -1,0 +1,74 @@
+/dts-v1/;
+// magic:		0xd00dfeed
+// totalsize:		0x600 (1536)
+// off_dt_struct:	0x58
+// off_dt_strings:	0x438
+// off_mem_rsvmap:	0x28
+// version:		17
+// last_comp_version:	16
+// boot_cpuid_phys:	0x0
+// size_dt_strings:	0xbe
+// size_dt_struct:	0x3e0
+
+/memreserve/ 0x7fa8163c8000 0x600;
+/memreserve/ 0x7fa8163c7000 0x600;
+/ {
+    version = <0x00000000>;
+    totalsize = <0x006a2400>;
+    timestamp = <0x69cb3b68>;
+    description = "U-Boot FIT source file for arm";
+    images {
+        fdt {
+            data-size = <0x0000a6fb>;
+            data-position = <0x00000800>;
+            type = "flat_dt";
+            arch = "arm";
+            compression = "none";
+            load = <0xffffff00>;
+            hash {
+                value = <0xf0b8b673 0x02191de3 0x5780c0df 0x914e4ad8 0x492c6c2d 0x07fbcce1 0x2a25cd24 0x27d5c116>;
+                algo = "sha256";
+            };
+        };
+        kernel {
+            data-size = <0x00683340>;
+            data-position = <0x0000b000>;
+            type = "kernel";
+            arch = "arm";
+            os = "linux";
+            compression = "none";
+            entry = <0xffffff01>;
+            load = <0xffffff01>;
+            hash {
+                value = <0x8ef8d162 0xc0f58c53 0xc84f0c66 0xe7aa11da 0xfdb098cc 0xb318d62f 0x72fdb12d 0x982af20c>;
+                algo = "sha256";
+            };
+        };
+        resource {
+            data-size = <0x00013c00>;
+            data-position = <0x0068e400>;
+            type = "multi";
+            arch = "arm";
+            compression = "none";
+            hash {
+                value = <0x7f504351 0x755f80aa 0x2c181590 0x2bc2e2cd 0xe9842d12 0xd54f2cf9 0x115a2538 0x847e5d2f>;
+                algo = "sha256";
+            };
+        };
+    };
+    configurations {
+        default = "conf";
+        conf {
+            rollback-index = <0x00000000>;
+            fdt = "fdt";
+            kernel = "kernel";
+            multi = "resource";
+            signature {
+                algo = "sha256,rsa2048";
+                padding = "pss";
+                key-name-hint = "dev";
+                sign-images = "fdt", "kernel", "multi";
+            };
+        };
+    };
+};

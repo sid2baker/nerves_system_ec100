@@ -1,0 +1,28 @@
+EC100_STOCK_UBOOT_ENVIRONMENT_V1
+UBOOT_COMPONENT_SHA256=298f2de94b0493378ad37c015a5b9af4d1a99a12275767045190932b6a5aabff
+ENVIRONMENT_BACKEND=ENV_BLK
+ENVIRONMENT_DRIVER_LOCATION_ENUM=12
+ENVIRONMENT_OFFSET=0x003f8000
+ENVIRONMENT_OFFSET_DECIMAL=4161536
+ENVIRONMENT_START_SECTOR=8128
+ENVIRONMENT_SIZE=0x00008000
+ENVIRONMENT_SIZE_DECIMAL=32768
+ENVIRONMENT_SECTOR_COUNT=64
+ENVIRONMENT_REDUNDANT=no
+ENVIRONMENT_SAVE_CALLBACK=present
+SAVEENV_COMMAND_STRING=present
+CAPTURED_RANGE_SHA256=c35020473aed1b4642cd726cad727b63fff2824ad68cedd7ffb73c7cbd890479
+CAPTURED_RANGE_ALL_ZERO=yes
+CAPTURED_STORED_CRC32_LE=00000000
+CAPTURED_CALCULATED_CRC32=b52d2b04
+CAPTURED_ENVIRONMENT_VALID=no
+ACTIVE_ENVIRONMENT_SOURCE=compiled-defaults
+STATUS=HASH_GATED_DISASSEMBLY_AND_PHYSICAL_RANGE_PROOF
+
+The exact binary links one ENV_BLK driver with load and save callbacks.
+Its non-redundant 32 KiB range is byte offset 0x003f8000 of the boot
+device. The independently captured range is entirely zero and has no
+valid environment CRC, so this unit boots compiled defaults. saveenv
+would persistently modify the pre-partition area and must not be used.
+No fw_env.config is authorized; production slot state belongs in the
+separately reviewed misc metadata design.

@@ -1,0 +1,33 @@
+### ttyS3
+4:67
+/sys/devices/platform/ff0d0000.serial
+/sys/bus/platform/drivers/dw-apb-uart
+/sys/firmware/devicetree/base/serial@ff0d0000
+DRIVER=dw-apb-uart
+OF_NAME=serial
+OF_FULLNAME=/serial@ff0d0000
+OF_COMPATIBLE_0=rockchip,rk3506-uart
+OF_COMPATIBLE_1=snps,dw-apb-uart
+OF_COMPATIBLE_N=2
+OF_ALIAS_0=serial3
+MODALIAS=of:NserialT(null)Crockchip,rk3506-uartCsnps,dw-apb-uart
+### ttyS4
+4:68
+/sys/devices/platform/ff0e0000.serial
+/sys/bus/platform/drivers/dw-apb-uart
+/sys/firmware/devicetree/base/serial@ff0e0000
+DRIVER=dw-apb-uart
+OF_NAME=serial
+OF_FULLNAME=/serial@ff0e0000
+OF_COMPATIBLE_0=rockchip,rk3506-uart
+OF_COMPATIBLE_1=snps,dw-apb-uart
+OF_COMPATIBLE_N=2
+OF_ALIAS_0=serial4
+MODALIAS=of:NserialT(null)Crockchip,rk3506-uartCsnps,dw-apb-uart
+### ttyFIQ0
+253:0
+/sys/devices/platform/fiq_debugger.0
+/sys/bus/platform/drivers/fiq_debugger
+/sys/devices/platform/fiq_debugger.0/of_node
+DRIVER=fiq_debugger
+MODALIAS=platform:fiq_debugger

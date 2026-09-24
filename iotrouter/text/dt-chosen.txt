@@ -1,0 +1,4 @@
+### /proc/device-tree/chosen/bootargs
+storagemedia=emmc androidboot.storagemedia=emmc androidboot.mode=normal  rootwait console=ttyFIQ0 root=/dev/mmcblk0p6 androidboot.fwver=ddr-v1.06-d27ac532c4,tee-v2.10,uboot-03/20/2026
+### /proc/device-tree/chosen/name
+chosen

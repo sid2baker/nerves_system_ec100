@@ -1,0 +1,232 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Minimal EC100 hardware, reconciled against iotrouter/live-device-tree.dts.
+ * See docs/ec100-hardware-map.md for provenance and deferred peripherals.
+ * This is not the vendor userspace/partition/clock policy.
+ */
+
+/dts-v1/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/rockchip.h>
+
+/* Reservations must precede the root nodes in the included SoC tree. */
+/memreserve/ 0x00063000 0x0000b000;
+
+#include "rk3506.dtsi"
+
+/ {
+    model = "IOTRouter EC100 (Nerves)";
+    compatible = "iotrouter,ec100", "rockchip,rk3506";
+
+    aliases {
+        serial0 = &uart0;
+        /* SPI MMC is not enabled: boot eMMC is the Nerves mmcblk0. */
+        mmc0 = &mmc;
+    };
+
+    chosen {
+        stdout-path = "serial0:115200n8";
+        bootargs = "earlycon=uart8250,mmio32,0xff0a0000 console=ttyS0,115200 rootwait ro";
+    };
+
+    memory@0 {
+        device_type = "memory";
+        reg = <0x00000000 0x20000000>;
+    };
+
+    reserved-memory {
+        /delete-node/ drm-logo@0;
+        /delete-node/ linux,cma;
+
+        /* Source-built OP-TEE placement, not vendor firmware reservations. */
+        optee@18000000 {
+            reg = <0x18000000 0x02000000>;
+            no-map;
+        };
+        optee-shmem@10000000 {
+            reg = <0x10000000 0x00080000>;
+            no-map;
+        };
+    };
+
+    vcc12v_dc: vcc12v-dc {
+        compatible = "regulator-fixed";
+        regulator-name = "vcc12v_dc";
+        regulator-always-on;
+        regulator-boot-on;
+        regulator-min-microvolt = <12000000>;
+        regulator-max-microvolt = <12000000>;
+    };
+
+    vcc_sys: vcc-sys {
+        compatible = "regulator-fixed";
+        regulator-name = "vcc_sys";
+        regulator-always-on;
+        regulator-boot-on;
+        regulator-min-microvolt = <5000000>;
+        regulator-max-microvolt = <5000000>;
+        vin-supply = <&vcc12v_dc>;
+    };
+
+    vcc_3v3: vcc-3v3 {
+        compatible = "regulator-fixed";
+        regulator-name = "vcc_3v3";
+        regulator-always-on;
+        regulator-boot-on;
+        regulator-min-microvolt = <3300000>;
+        regulator-max-microvolt = <3300000>;
+        vin-supply = <&vcc_sys>;
+    };
+
+    mmcio: mmcio-gpio-regulator {
+        compatible = "regulator-gpio";
+        regulator-name = "mmcio-gpio-supply";
+        regulator-min-microvolt = <1800000>;
+        regulator-max-microvolt = <3300000>;
+        pinctrl-names = "default";
+        pinctrl-0 = <&mmcio_voltage_pin>;
+        gpios = <&gpio0 RK_PD0 GPIO_ACTIVE_HIGH>;
+        gpios-states = <0>;
+        states = <3300000 1>, <1800000 0>;
+        startup-delay-us = <100000>;
+    };
+
+    vcc5v0_otg0: vcc5v0-otg0-regulator {
+        compatible = "regulator-fixed";
+        regulator-name = "vcc5v0_otg0";
+        regulator-min-microvolt = <5000000>;
+        regulator-max-microvolt = <5000000>;
+        enable-active-high;
+        gpio = <&gpio1 RK_PD0 GPIO_ACTIVE_HIGH>;
+        pinctrl-names = "default";
+        pinctrl-0 = <&vcc5v0_otg0_en>;
+    };
+
+    vcc5v0_otg1: vcc5v0-otg1-regulator {
+        compatible = "regulator-fixed";
+        regulator-name = "vcc5v0_otg1";
+        regulator-boot-on;
+        regulator-always-on;
+        regulator-min-microvolt = <5000000>;
+        regulator-max-microvolt = <5000000>;
+    };
+};
+
+/* Same UART/pins/baud as live FIQ debugger, using the standard Linux console. */
+&uart0 {
+    pinctrl-names = "default";
+    pinctrl-0 = <&uart0_xfer_pins>;
+    status = "okay";
+};
+
+&mmc {
+    bus-width = <4>;
+    cap-mmc-highspeed;
+    mmc-hs200-1_8v;
+    max-frequency = <150000000>;
+    non-removable;
+    no-sd;
+    no-sdio;
+    vmmc-supply = <&vcc_3v3>;
+    vqmmc-supply = <&mmcio>;
+    pinctrl-names = "default";
+    pinctrl-0 = <&sdmmc_clk_pins &sdmmc_cmd_pins &sdmmc_bus4_pins>;
+    status = "okay";
+};
+
+&gmac0 {
+    phy-mode = "rmii";
+    clock_in_out = "input";
+    snps,reset-gpio = <&gpio1 RK_PA3 GPIO_ACTIVE_LOW>;
+    snps,reset-active-low;
+    snps,reset-delays-us = <20000 20000 20000>;
+    pinctrl-names = "default";
+    pinctrl-0 = <&eth_rmii0_miim_pins &eth_rmii0_tx_bus2_pins
+                 &eth_rmii0_rx_bus2_pins &eth_rmii0_clk_pins>;
+    phy-handle = <&phy0>;
+    status = "okay";
+};
+
+&mdio0 {
+    phy0: ethernet-phy@0 {
+        compatible = "ethernet-phy-ieee802.3-c22";
+        reg = <0>;
+    };
+};
+
+&gmac1 {
+    phy-mode = "rmii";
+    clock_in_out = "input";
+    snps,reset-gpio = <&gpio1 RK_PA2 GPIO_ACTIVE_LOW>;
+    snps,reset-active-low;
+    snps,reset-delays-us = <20000 20000 20000>;
+    pinctrl-names = "default";
+    pinctrl-0 = <&eth_rmii1_miim_pins &eth_rmii1_tx_bus2_pins
+                 &eth_rmii1_rx_bus2_pins &eth_rmii1_clk_pins>;
+    phy-handle = <&phy1>;
+    status = "okay";
+};
+
+&mdio1 {
+    phy1: ethernet-phy@0 {
+        compatible = "ethernet-phy-ieee802.3-c22";
+        reg = <0>;
+    };
+};
+
+&usb2phy {
+    status = "okay";
+};
+
+&u2phy_otg0 {
+    /delete-property/ rockchip,low-power-mode;
+    vbus-supply = <&vcc5v0_otg0>;
+    status = "okay";
+};
+
+&u2phy_otg1 {
+    phy-supply = <&vcc5v0_otg1>;
+    status = "okay";
+};
+
+/* Bring-up workaround: OTG role switching panics in gadget DMA mapping.
+ * Keep the tested RAM-DTB disablement until that driver path is fixed.
+ * The separate USB host controller and BootROM MASKROM recovery still work.
+ */
+&usb20_otg0 {
+    dr_mode = "otg";
+    status = "disabled";
+};
+
+&usb20_otg1 {
+    dr_mode = "host";
+    status = "okay";
+};
+
+&pinctrl {
+    mmcio {
+        mmcio_voltage_pin: mmcio-voltage-pin {
+            rockchip,pins = <0 RK_PD0 RK_FUNC_GPIO &pcfg_pull_none>;
+        };
+    };
+
+    usb {
+        vcc5v0_otg0_en: vcc5v0-otg0-en {
+            rockchip,pins = <1 RK_PD0 RK_FUNC_GPIO &pcfg_pull_none>;
+        };
+    };
+};
+
+/*
+ * GPIO0_B1 is observed as WDG_PI and toggles in vendor runtime, but the
+ * supervisor protocol/timeout is not captured. Do not invent a gpio-wdt or
+ * assume the internal WDT covers it. Resolve before unattended operation.
+ */
+&wdt0 {
+    status = "disabled";
+};
+
+&wdt1 {
+    status = "disabled";
+};

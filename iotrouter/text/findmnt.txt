@@ -1,0 +1,22 @@
+TARGET                                        SOURCE         FSTYPE     OPTIONS
+/                                             /dev/mmcblk1p6 ext4       rw,relatime
+├─/dev                                        devtmpfs       devtmpfs   rw,relatime,size=242172k,nr_inodes=60543,mode=755
+│ ├─/dev/shm                                  tmpfs          tmpfs      rw,nosuid,nodev,noexec
+│ ├─/dev/pts                                  devpts         devpts     rw,relatime,gid=5,mode=620,ptmxmode=000
+│ └─/dev/mqueue                               mqueue         mqueue     rw,nosuid,nodev,noexec,relatime
+├─/proc                                       proc           proc       rw,relatime
+├─/sys                                        sysfs          sysfs      rw,nosuid,nodev,noexec,relatime
+│ ├─/sys/fs/cgroup                            cgroup2        cgroup2    rw,nosuid,nodev,noexec,relatime,nsdelegate,memory_recursiveprot
+│ ├─/sys/fs/pstore                            pstore         pstore     rw,nosuid,nodev,noexec,relatime
+│ ├─/sys/fs/bpf                               bpf            bpf        rw,nosuid,nodev,noexec,relatime,mode=700
+│ ├─/sys/kernel/config                        configfs       configfs   rw,relatime
+│ ├─/sys/kernel/debug                         debugfs        debugfs    rw,relatime
+│ └─/sys/fs/fuse/connections                  fusectl        fusectl    rw,nosuid,nodev,noexec,relatime
+├─/run                                        tmpfs          tmpfs      rw,nosuid,nodev,size=96912k,nr_inodes=819200,mode=755
+│ ├─/run/lock                                 tmpfs          tmpfs      rw,nosuid,nodev,noexec,relatime,size=5120k
+│ ├─/run/credentials/systemd-sysusers.service ramfs          ramfs      ro,nosuid,nodev,noexec,relatime,mode=700
+│ ├─/run/rpc_pipefs                           sunrpc         rpc_pipefs rw,relatime
+│ ├─/run/user/0                               tmpfs          tmpfs      rw,nosuid,nodev,relatime,size=48456k,nr_inodes=12114,mode=700
+│ └─/run/media/userdata                       /dev/mmcblk1p7 ext2       rw,relatime,errors=continue
+├─/tmp                                        tmpfs          tmpfs      rw,relatime
+└─/var/log                                    tmpfs          tmpfs      rw,nosuid,nodev,relatime,mode=755

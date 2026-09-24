@@ -1,0 +1,185 @@
+### /etc/systemd/network/br-lan.netdev
+[NetDev]
+Name=br-lan
+Kind=bridge
+### /etc/systemd/network/lan-eth.network
+[Match]
+Name=eth1
+
+[Link]
+ActivationPolicy=always
+RequiredForOnline=yes
+
+[Network]
+Bridge=br-lan
+ConfigureWithoutCarrier=yes
+### /etc/systemd/network/lan.network
+[Match]
+Name=br-lan
+
+[Link]
+ActivationPolicy=always
+RequiredForOnline=yes
+
+[Network]
+Address=192.168.88.1/24
+ConfigureWithoutCarrier=yes
+
+### /etc/systemd/network/wan.network
+[Match]
+Name=eth0
+
+[Link]
+ActivationPolicy=always
+RequiredForOnline=yes
+
+[Network]
+DHCP=yes
+
+[DHCP]
+RouteMetric=1
+### /lib/systemd/network/80-container-host0.network
+#  SPDX-License-Identifier: LGPL-2.1-or-later
+#
+#  This file is part of systemd.
+#
+#  systemd is free software; you can redistribute it and/or modify it
+#  under the terms of the GNU Lesser General Public License as published by
+#  the Free Software Foundation; either version 2.1 of the License, or
+#  (at your option) any later version.
+
+# This network file matches the container-side of the virtual Ethernet link
+# created by systemd-nspawn's --network-veth switch. See systemd-nspawn(1) for
+# details.
+
+[Match]
+Virtualization=container
+Name=host0
+
+[Network]
+DHCP=yes
+LinkLocalAddressing=yes
+LLDP=yes
+EmitLLDP=customer-bridge
+
+[DHCP]
+UseTimezone=yes
+### /lib/systemd/network/80-container-ve.network
+#  SPDX-License-Identifier: LGPL-2.1-or-later
+#
+#  This file is part of systemd.
+#
+#  systemd is free software; you can redistribute it and/or modify it
+#  under the terms of the GNU Lesser General Public License as published by
+#  the Free Software Foundation; either version 2.1 of the License, or
+#  (at your option) any later version.
+
+# This network file matches the host-side of the virtual Ethernet link
+# created by systemd-nspawn's --network-veth switch. See systemd-nspawn(1) for
+# details.
+
+[Match]
+Name=ve-*
+Driver=veth
+
+[Network]
+# Default to using a /28 prefix, giving up to 13 addresses per container.
+Address=0.0.0.0/28
+LinkLocalAddressing=yes
+DHCPServer=yes
+IPMasquerade=both
+LLDP=yes
+EmitLLDP=customer-bridge
+IPv6SendRA=yes
+### /lib/systemd/network/80-container-vz.network
+#  SPDX-License-Identifier: LGPL-2.1-or-later
+#
+#  This file is part of systemd.
+#
+#  systemd is free software; you can redistribute it and/or modify it
+#  under the terms of the GNU Lesser General Public License as published by
+#  the Free Software Foundation; either version 2.1 of the License, or
+#  (at your option) any later version.
+
+# This network file matches the bridge interface created by systemd-nspawn's
+# --network-zone= switch. See systemd-nspawn(1) for details.
+
+[Match]
+Name=vz-*
+Driver=bridge
+
+[Network]
+# Default to using a /24 prefix, giving up to 253 addresses per virtual network.
+Address=0.0.0.0/24
+LinkLocalAddressing=yes
+DHCPServer=yes
+IPMasquerade=both
+LLDP=yes
+EmitLLDP=customer-bridge
+IPv6SendRA=yes
+### /lib/systemd/network/80-vm-vt.network
+#  SPDX-License-Identifier: LGPL-2.1-or-later
+#
+#  This file is part of systemd.
+#
+#  systemd is free software; you can redistribute it and/or modify it
+#  under the terms of the GNU Lesser General Public License as published by
+#  the Free Software Foundation; either version 2.1 of the License, or
+#  (at your option) any later version.
+
+# This network file matches vt-* TUN/TAP devices and applies a similar
+# configuration as ve-* to provide NAT/DHCP to VMs.
+
+[Match]
+Name=vt-*
+Driver=tun
+
+[Network]
+# Default to using a /28 prefix, giving up to 13 addresses per VM.
+Address=0.0.0.0/28
+LinkLocalAddressing=yes
+DHCPServer=yes
+IPMasquerade=both
+LLDP=yes
+EmitLLDP=customer-bridge
+IPv6SendRA=yes
+### /lib/systemd/network/80-wifi-adhoc.network
+[Match]
+Type=wlan
+WLANInterfaceType=ad-hoc
+
+[Network]
+LinkLocalAddressing=yes
+### /lib/systemd/network/80-wifi-ap.network.example
+[Match]
+Type=wlan
+WLANInterfaceType=ap
+
+[Network]
+Address=0.0.0.0/24
+DHCPServer=yes
+IPMasquerade=both
+### /lib/systemd/network/80-wifi-station.network.example
+[Match]
+Type=wlan
+WLANInterfaceType=station
+
+[Network]
+DHCP=yes
+### /lib/systemd/network/99-default.link
+#  SPDX-License-Identifier: LGPL-2.1-or-later
+#
+#  This file is part of systemd.
+#
+#  systemd is free software; you can redistribute it and/or modify it
+#  under the terms of the GNU Lesser General Public License as published by
+#  the Free Software Foundation; either version 2.1 of the License, or
+#  (at your option) any later version.
+
+[Match]
+OriginalName=*
+
+[Link]
+NamePolicy=keep kernel database onboard slot path
+AlternativeNamesPolicy=database onboard slot path
+MACAddressPolicy=persistent

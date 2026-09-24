@@ -1,0 +1,3 @@
+serinfo:1.0 driver revision:
+3: uart:16550A mmio:0xFF0D0000 irq:47 tx:0 rx:0
+4: uart:16550A mmio:0xFF0E0000 irq:48 tx:0 rx:0

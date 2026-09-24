@@ -1,0 +1,2 @@
+192.168.19.1 dev eth0 lladdr e0:63:da:29:bc:30 REACHABLE
+192.168.19.134 dev eth0 lladdr 54:8d:5a:ee:8c:c0 REACHABLE

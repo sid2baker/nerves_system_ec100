@@ -1,0 +1,41 @@
+           CPU0       CPU1       CPU2       
+ 27:     127475      95111     104893 GIC-0  27 Level     arch_timer
+ 34:          0          0          0 GIC-0 147 Edge      debug-signal
+ 35:          0          0          0 GIC-0  66 Level     debug
+ 36:          0          0          0 GIC-0  90 Level     rockchip_thermal
+ 37:          0          0          0 GIC-0 109 Level     rockchip_usb2phy_ls
+ 38:          0          0          0 GIC-0 107 Level     rockchip_usb2phy_bvalid
+ 39:          0          0          0 GIC-0 108 Level     rockchip_usb2phy_id
+ 40:          1          0          0 GIC-0 114 Level     rockchip_usb2phy_ls
+ 41:          0          0          0 GIC-0  54 Level     rk_pwm_irq
+ 42:          0          0          0 GIC-0  55 Level     rk_pwm_irq
+ 43:          0          0          0 GIC-0 148 Level     ff000000.dma-controller
+ 44:          0          0          0 GIC-0 149 Level     ff000000.dma-controller
+ 45:          0          0          0 GIC-0 150 Level     ff008000.dma-controller
+ 46:          0          0          0 GIC-0 151 Level     ff008000.dma-controller
+ 49:        299          0          0 GIC-0  91 Level     ff600000.vop
+ 50:          7          0          0 GIC-0  75 Level     ff120000.spi
+ 51:     142164          0          0 GIC-0  76 Level     ff130000.spi
+ 52:          0          0          0 GIC-0 117 Level     ff488000.spi
+ 53:          0          0          0 GIC-0  77 Level     can0
+ 54:          0          0          0 GIC-0  78 Level     can1
+ 55:       3041          0          0 GIC-0  98 Level     eth0
+ 56:          0          0          0 GIC-0 101 Level     eth0
+ 57:          0          0          0 GIC-0 102 Level     eth1
+ 58:          0          0          0 GIC-0 105 Level     eth1
+ 59:          0          0          0 GIC-0 106 Level     ff740000.usb, ff740000.usb, dwc2_hsotg:usb1
+ 60:          0          0          0 GIC-0 111 Level     ff780000.usb, dwc2_hsotg:usb2
+ 61:          2          0          0 GIC-0  72 Level     ff040000.i2c
+ 62:      37286          0          0 GIC-0 118 Level     dw-mci
+ 63:      14406          0          0 GIC-0  89 Level     ff4e8000.adc
+ 64:          0          0          0 GIC-0  86 Level     sai
+ 65:          0          0          0 GIC-0  93 Level     rga2
+ 66:          0          0          0  rockchip_gpio_irq  10 Edge      user2-key
+IPI0:          0          0          0  CPU wakeup interrupts
+IPI1:          0          0          0  Timer broadcast interrupts
+IPI2:        892        854        838  Rescheduling interrupts
+IPI3:      23453      47771      56556  Function call interrupts
+IPI4:          0          0          0  CPU stop interrupts
+IPI5:          0          0          0  IRQ work interrupts
+IPI6:          0          0          0  completion interrupts
+Err:          0

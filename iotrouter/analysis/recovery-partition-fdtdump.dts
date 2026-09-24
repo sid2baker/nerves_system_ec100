@@ -1,0 +1,88 @@
+/dts-v1/;
+// magic:		0xd00dfeed
+// totalsize:		0x800 (2048)
+// off_dt_struct:	0x48
+// off_dt_strings:	0x558
+// off_mem_rsvmap:	0x28
+// version:		17
+// last_comp_version:	16
+// boot_cpuid_phys:	0x0
+// size_dt_strings:	0xc6
+// size_dt_struct:	0x510
+
+/memreserve/ 0x7f4c830bd000 0x800;
+/ {
+    version = <0x00000000>;
+    totalsize = <0x01566e00>;
+    timestamp = <0x69bd2586>;
+    description = "U-Boot FIT source file for arm";
+    images {
+        fdt {
+            data-size = <0x0000a5dc>;
+            data-position = <0x00000800>;
+            type = "flat_dt";
+            arch = "arm";
+            compression = "none";
+            load = <0x00063000>;
+            hash {
+                value = <0x831adc72 0x0a743a26 0xe21efa50 0xebec8e8f 0xac85d8d9 0x3d32159e 0xec099f9e 0x376dfa23>;
+                algo = "sha256";
+            };
+        };
+        kernel {
+            data-size = <0x006707e0>;
+            data-position = <0x0000ae00>;
+            type = "kernel";
+            arch = "arm";
+            os = "linux";
+            compression = "none";
+            entry = <0x01100000>;
+            load = <0x01100000>;
+            hash {
+                value = <0x8eabbd3c 0x70157685 0xcc940ee5 0x0b942a38 0xa6983f98 0xef73100c 0x8c80cabe 0xefd612e4>;
+                algo = "sha256";
+            };
+        };
+        ramdisk {
+            data-size = <0x00ed79bd>;
+            data-position = <0x0067b600>;
+            type = "ramdisk";
+            arch = "arm";
+            os = "linux";
+            compression = "none";
+            load = <0x01800000>;
+            hash {
+                value = <0xaa8c05d7 0x61b3d25c 0x2de24bf1 0xc183aa7b 0x950822f0 0x0357925d 0x27eb14a2 0x57c4fffd>;
+                algo = "sha256";
+            };
+        };
+        resource {
+            data-size = <0x00013a00>;
+            data-position = <0x01553000>;
+            type = "multi";
+            arch = "arm";
+            compression = "none";
+            hash {
+                value = <0xe883bff6 0x7d587a72 0x55fe066b 0x26a2d073 0x28a88fc3 0x493d3ddf 0x0e8876cb 0x1437da8d>;
+                algo = "sha256";
+            };
+        };
+    };
+    configurations {
+        default = "conf";
+        conf {
+            description = "Boot Linux kernel with FDT blob and ramdisk";
+            rollback-index = <0x00000000>;
+            fdt = "fdt";
+            kernel = "kernel";
+            ramdisk = "ramdisk";
+            multi = "resource";
+            signature {
+                algo = "sha256,rsa2048";
+                padding = "pss";
+                key-name-hint = "dev";
+                sign-images = "fdt", "kernel", "ramdisk", "multi";
+            };
+        };
+    };
+};

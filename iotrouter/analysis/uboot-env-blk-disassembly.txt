@@ -1,0 +1,129 @@
+
+/work/vendor/stock/analysis/extracted/uboot-fit-uboot.bin:     file format binary
+
+
+Disassembly of section .data:
+
+00253a08 <.data+0x53a08>:
+  253a08:	e92d 45f0 	stmdb	sp!, {r4, r5, r6, r7, r8, sl, lr}
+  253a0c:	f5ad 4d00 	sub.w	sp, sp, #32768	@ 0x8000
+  253a10:	b091      	sub	sp, #68	@ 0x44
+  253a12:	f10d 083f 	add.w	r8, sp, #63	@ 0x3f
+  253a16:	f7ae f975 	bl	0x201d04
+  253a1a:	f028 083f 	bic.w	r8, r8, #63	@ 0x3f
+  253a1e:	4605      	mov	r5, r0
+  253a20:	b950      	cbnz	r0, 0x253a38
+  253a22:	f06f 0404 	mvn.w	r4, #4
+  253a26:	4820      	ldr	r0, [pc, #128]	@ (0x253aa8)
+  253a28:	f7bf fddc 	bl	0x2135e4
+  253a2c:	4620      	mov	r0, r4
+  253a2e:	f50d 4d00 	add.w	sp, sp, #32768	@ 0x8000
+  253a32:	b011      	add	sp, #68	@ 0x44
+  253a34:	e8bd 85f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, sl, pc}
+  253a38:	4640      	mov	r0, r8
+  253a3a:	f7ff fbc7 	bl	0x2531cc
+  253a3e:	4604      	mov	r4, r0
+  253a40:	2800      	cmp	r0, #0
+  253a42:	d1f3      	bne.n	0x253a2c
+  253a44:	4819      	ldr	r0, [pc, #100]	@ (0x253aac)
+  253a46:	f7b9 ff49 	bl	0x20d8dc
+  253a4a:	4606      	mov	r6, r0
+  253a4c:	4818      	ldr	r0, [pc, #96]	@ (0x253ab0)
+  253a4e:	f7b9 ff45 	bl	0x20d8dc
+  253a52:	4632      	mov	r2, r6
+  253a54:	4603      	mov	r3, r0
+  253a56:	4917      	ldr	r1, [pc, #92]	@ (0x253ab4)
+  253a58:	4817      	ldr	r0, [pc, #92]	@ (0x253ab8)
+  253a5a:	f017 fd9e 	bl	0x26b59a
+  253a5e:	69ae      	ldr	r6, [r5, #24]
+  253a60:	f506 40ff 	add.w	r0, r6, #32640	@ 0x7f80
+  253a64:	f1c6 0a00 	rsb	sl, r6, #0
+  253a68:	307f      	adds	r0, #127	@ 0x7f
+  253a6a:	4631      	mov	r1, r6
+  253a6c:	ea00 000a 	and.w	r0, r0, sl
+  253a70:	f01a e9a0 	blx	0x26ddb4
+  253a74:	4607      	mov	r7, r0
+  253a76:	4811      	ldr	r0, [pc, #68]	@ (0x253abc)
+  253a78:	4631      	mov	r1, r6
+  253a7a:	4430      	add	r0, r6
+  253a7c:	ea00 000a 	and.w	r0, r0, sl
+  253a80:	f01a e998 	blx	0x26ddb4
+  253a84:	4643      	mov	r3, r8
+  253a86:	4601      	mov	r1, r0
+  253a88:	463a      	mov	r2, r7
+  253a8a:	4628      	mov	r0, r5
+  253a8c:	f7e4 fd7c 	bl	0x238588
+  253a90:	4287      	cmp	r7, r0
+  253a92:	d103      	bne.n	0x253a9c
+  253a94:	480a      	ldr	r0, [pc, #40]	@ (0x253ac0)
+  253a96:	f7bf fda5 	bl	0x2135e4
+  253a9a:	e7c7      	b.n	0x253a2c
+  253a9c:	4809      	ldr	r0, [pc, #36]	@ (0x253ac4)
+  253a9e:	2401      	movs	r4, #1
+  253aa0:	f7bf fda0 	bl	0x2135e4
+  253aa4:	e7c2      	b.n	0x253a2c
+  253aa6:	bf00      	nop
+  253aa8:	7ace      	ldrb	r6, [r1, #11]
+  253aaa:	0028      	movs	r0, r5
+  253aac:	22ee      	movs	r2, #238	@ 0xee
+  253aae:	0028      	movs	r0, r5
+  253ab0:	49f1      	ldr	r1, [pc, #964]	@ (0x253e78)
+  253ab2:	0028      	movs	r0, r5
+  253ab4:	85fd      	strh	r5, [r7, #46]	@ 0x2e
+  253ab6:	0029      	movs	r1, r5
+  253ab8:	7ae2      	ldrb	r2, [r4, #11]
+  253aba:	0028      	movs	r0, r5
+  253abc:	7fff      	ldrb	r7, [r7, #31]
+  253abe:	003f      	movs	r7, r7
+  253ac0:	843d      	strh	r5, [r7, #32]
+  253ac2:	0029      	movs	r1, r5
+  253ac4:	aad2      	add	r2, sp, #840	@ 0x348
+  253ac6:	0028      	movs	r0, r5
+  253ac8:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
+  253acc:	f5ad 4d00 	sub.w	sp, sp, #32768	@ 0x8000
+  253ad0:	b090      	sub	sp, #64	@ 0x40
+  253ad2:	f10d 063f 	add.w	r6, sp, #63	@ 0x3f
+  253ad6:	f7ae f915 	bl	0x201d04
+  253ada:	f026 063f 	bic.w	r6, r6, #63	@ 0x3f
+  253ade:	4604      	mov	r4, r0
+  253ae0:	b928      	cbnz	r0, 0x253aee
+  253ae2:	4817      	ldr	r0, [pc, #92]	@ (0x253b40)
+  253ae4:	f7bf fd7e 	bl	0x2135e4
+  253ae8:	f06f 0004 	mvn.w	r0, #4
+  253aec:	e01f      	b.n	0x253b2e
+  253aee:	6985      	ldr	r5, [r0, #24]
+  253af0:	f505 40ff 	add.w	r0, r5, #32640	@ 0x7f80
+  253af4:	f1c5 0800 	rsb	r8, r5, #0
+  253af8:	307f      	adds	r0, #127	@ 0x7f
+  253afa:	4629      	mov	r1, r5
+  253afc:	ea00 0008 	and.w	r0, r0, r8
+  253b00:	f01a e958 	blx	0x26ddb4
+  253b04:	4607      	mov	r7, r0
+  253b06:	480f      	ldr	r0, [pc, #60]	@ (0x253b44)
+  253b08:	4629      	mov	r1, r5
+  253b0a:	4428      	add	r0, r5
+  253b0c:	ea00 0008 	and.w	r0, r0, r8
+  253b10:	f01a e950 	blx	0x26ddb4
+  253b14:	4633      	mov	r3, r6
+  253b16:	4601      	mov	r1, r0
+  253b18:	463a      	mov	r2, r7
+  253b1a:	4620      	mov	r0, r4
+  253b1c:	f7e4 fd17 	bl	0x23854e
+  253b20:	4287      	cmp	r7, r0
+  253b22:	d109      	bne.n	0x253b38
+  253b24:	4630      	mov	r0, r6
+  253b26:	2101      	movs	r1, #1
+  253b28:	f7ff fb0e 	bl	0x253148
+  253b2c:	2000      	movs	r0, #0
+  253b2e:	f50d 4d00 	add.w	sp, sp, #32768	@ 0x8000
+  253b32:	b010      	add	sp, #64	@ 0x40
+  253b34:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
+  253b38:	4803      	ldr	r0, [pc, #12]	@ (0x253b48)
+  253b3a:	f7ff fa83 	bl	0x253044
+  253b3e:	e7d3      	b.n	0x253ae8
+  253b40:	7ace      	ldrb	r6, [r1, #11]
+  253b42:	0028      	movs	r0, r5
+  253b44:	7fff      	ldrb	r7, [r7, #31]
+  253b46:	003f      	movs	r7, r7
+  253b48:	7ac1      	ldrb	r1, [r0, #11]
+  253b4a:	0028      	movs	r0, r5
