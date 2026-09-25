@@ -1,6 +1,4 @@
-# Build the RK3506 kernel as a small, deterministic Nerves kernel.
-# The vendor rk3506_defconfig enables WERROR and many optional modules intended
-# for evaluation images; neither is useful for Nerves bring-up.
+# EC100 kernel: built-in drivers, with compiler warnings kept nonfatal.
 # CONFIG_WERROR is not set
 # CONFIG_MODULES is not set
 
@@ -25,8 +23,7 @@ CONFIG_EARLY_PRINTK=y
 # Use the standard UART0 console, not the vendor FIQ wrapper.
 # CONFIG_FIQ_DEBUGGER is not set
 
-# Original EC100 CPU supply/OPP/PVTM path. Keep 1200 MHz as the initial
-# comparison; select a lower supported OPP separately during hardware testing.
+# EC100 CPU supply, operating points, and PVTM calibration.
 CONFIG_CPU_FREQ=y
 CONFIG_CPUFREQ_DT=y
 CONFIG_ARM_ROCKCHIP_CPUFREQ=y
@@ -62,10 +59,16 @@ CONFIG_CLK_RK3506=y
 CONFIG_WATCHDOG=y
 CONFIG_WATCHDOG_CORE=y
 CONFIG_WATCHDOG_NOWAYOUT=y
+# External supervisor on GPIO0_B1, exposed through the standard watchdog API.
+CONFIG_GPIO_WATCHDOG=y
+# CONFIG_SOFT_WATCHDOG is not set
 CONFIG_DW_WATCHDOG=y
 
 CONFIG_NET=y
 CONFIG_INET=y
+# VintageNet uses policy routing for per-interface routes and failover.
+CONFIG_IP_ADVANCED_ROUTER=y
+CONFIG_IP_MULTIPLE_TABLES=y
 CONFIG_NETDEVICES=y
 CONFIG_STMMAC_ETH=y
 CONFIG_STMMAC_PLATFORM=y

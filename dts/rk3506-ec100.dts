@@ -1,9 +1,5 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-/*
- * Minimal EC100 hardware, reconciled against iotrouter/live-device-tree.dts.
- * See docs/ec100-hardware-map.md for provenance and deferred peripherals.
- * This is not the vendor userspace/partition/clock policy.
- */
+/* IOTRouter EC100 board configuration. */
 
 /dts-v1/;
 
@@ -15,7 +11,7 @@
 
 #include "rk3506.dtsi"
 
-/* Replace newer BSP OPP policy with the captured EC100 table below. */
+/* Use the EC100 CPU operating-point table. */
 /delete-node/ &cpu0_opp_table;
 
 / {
@@ -106,6 +102,19 @@
          */
     };
 
+    external_watchdog: external-watchdog {
+        compatible = "linux,wdt-gpio";
+        pinctrl-names = "default";
+        pinctrl-0 = <&external_watchdog_pin>;
+        gpios = <&gpio0 RK_PB1 GPIO_ACTIVE_HIGH>;
+        hw_algo = "toggle";
+        /* Provisional feeding budget, NOT a measured hardware timeout.
+         * Linux normally feeds at half this interval (about 5 seconds).
+         */
+        hw_margin_ms = <10000>;
+        always-running;
+    };
+
     vcc12v_dc: vcc12v-dc {
         compatible = "regulator-fixed";
         regulator-name = "vcc12v_dc";
@@ -125,7 +134,7 @@
         vin-supply = <&vcc12v_dc>;
     };
 
-    /* Original EC100 CPU rail: PWM0 channel 0, inverse polarity. */
+    /* EC100 CPU rail: PWM0 channel 0, inverse polarity. */
     vdd_arm: vdd-arm {
         compatible = "pwm-regulator";
         pwms = <&pwm0_4ch_0 0 5000 1>;
@@ -193,12 +202,12 @@
     status = "okay";
 };
 
-/* PVTM calibration requires the original board's thermal sensor. */
+/* PVTM calibration requires the board's thermal sensor. */
 &tsadc {
     status = "okay";
 };
 
-/* Same UART/pins/baud as live FIQ debugger, using the standard Linux console. */
+/* UART0 serial console: 115200 baud. */
 &uart0 {
     pinctrl-names = "default";
     pinctrl-0 = <&uart0_xfer_pins>;
@@ -290,6 +299,12 @@
 };
 
 &pinctrl {
+    external-watchdog {
+        external_watchdog_pin: external-watchdog-pin {
+            rockchip,pins = <0 RK_PB1 RK_FUNC_GPIO &pcfg_pull_none>;
+        };
+    };
+
     mmcio {
         mmcio_voltage_pin: mmcio-voltage-pin {
             rockchip,pins = <0 RK_PD0 RK_FUNC_GPIO &pcfg_pull_none>;
@@ -303,11 +318,7 @@
     };
 };
 
-/*
- * GPIO0_B1 is observed as WDG_PI and toggles in vendor runtime, but the
- * supervisor protocol/timeout is not captured. Do not invent a gpio-wdt or
- * assume the internal WDT covers it. Resolve before unattended operation.
- */
+/* Use the external GPIO watchdog only. Internal reset coverage is untested. */
 &wdt0 {
     status = "disabled";
 };

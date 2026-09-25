@@ -1,7 +1,0 @@
- Static hostname: IOTRouter
-       Icon name: computer
-      Machine ID: c27bf7d22146412da9c84c0f24cb79a8
-         Boot ID: 74dd4494f2ae4d418ccdc291d8e1c49d
-Operating System: Ubuntu 22.04 LTS
-          Kernel: Linux 6.1.99-rt36
-    Architecture: arm

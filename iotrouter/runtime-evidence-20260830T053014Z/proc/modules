@@ -1,6 +1,0 @@
-spi_nor 60071 0 - Live 0xaf8f6000
-morse 251848 0 - Live 0xaf89d000
-dot11ah 52100 1 morse, Live 0xaf888000
-aic_btusb 30973 0 - Live 0xaf87a000
-aic8800_fdrv 338430 0 - Live 0xaf811000
-aic_load_fw 40798 1 aic8800_fdrv, Live 0xaf800000

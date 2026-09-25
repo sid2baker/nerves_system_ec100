@@ -1,3 +1,0 @@
-5: eth1: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 master br-lan state disabled priority 32 cost 100 
-    hairpin off guard off root_block off fastleave off learning on flood on mcast_flood on mcast_to_unicast off neigh_suppress off vlan_tunnel off isolated off 
-8: br-lan: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 master br-lan 

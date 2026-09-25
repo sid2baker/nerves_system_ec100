@@ -4,5 +4,8 @@
 /.nerves/
 /build.log
 /resources/logs/
+/.expert/
+/docs/
+/iotrouter/
 *.img
 *.fw

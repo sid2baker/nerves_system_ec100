@@ -1,2 +1,0 @@
-booted=2026-08-30 01:08:24
-uptime_after_watchdog_observation=986.58 2739.27

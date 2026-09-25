@@ -1,5 +1,0 @@
-platform/ff931000.pwm, 1 PWM device
- pwm-0   ((null)              ): period: 0 ns duty: 0 ns polarity: normal
-
-platform/ff930000.pwm, 1 PWM device
- pwm-0   (vdd-arm             ): requested enabled period: 5000 ns duty: 1650 ns polarity: inverse

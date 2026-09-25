@@ -1,5 +1,0 @@
-
-**** fdtdump is a low-level debugging tool, not meant for general use.
-**** If you want to decompile a dtb, you probably want
-****     dtc -I dtb -O dts <filename>
-

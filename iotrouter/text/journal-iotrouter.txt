@@ -1,6 +1,0 @@
-8月 14 16:06:40 IOTRouter systemd[1]: Started iotrouter service.
-8月 14 16:06:40 IOTRouter bash[352]: ASSERT/[2026-08-14 16:06:40] (main:99)
-8月 14 16:06:40 IOTRouter bash[352]: #################################################
-8月 14 16:06:40 IOTRouter bash[352]: EC100A:[2026-08-14 16:06:40]START UP
-8月 14 16:06:40 IOTRouter bash[352]: #################################################
-8月 14 16:06:42 IOTRouter bash[352]: ASSERT/[2026-08-14 16:06:41] (zh_sys_init:1826)Get Board->SN[E1003885DC768C94]-Version[2X11]-CompileTime[2604211644]
