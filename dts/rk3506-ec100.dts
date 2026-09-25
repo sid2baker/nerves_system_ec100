@@ -349,7 +349,10 @@
 
 &u2phy_otg0 {
     /delete-property/ rockchip,low-power-mode;
-    vbus-supply = <&vcc5v0_otg0>;
+    /* Peripheral-only: never let the PHY enable the host VBUS supply.
+     * Keep the fixed regulator registered with its GPIO defaulting off.
+     */
+    /delete-property/ vbus-supply;
     status = "okay";
 };
 
@@ -358,13 +361,12 @@
     status = "okay";
 };
 
-/* Bring-up workaround: OTG role switching panics in gadget DMA mapping.
- * Keep the tested RAM-DTB disablement until that driver path is fixed.
- * The separate USB host controller and BootROM MASKROM recovery still work.
+/* Fixed device mode avoids automatic OTG role switching during bring-up.
+ * Gadget DMA operation still requires hardware qualification.
  */
 &usb20_otg0 {
-    dr_mode = "otg";
-    status = "disabled";
+    dr_mode = "peripheral";
+    status = "okay";
 };
 
 &usb20_otg1 {

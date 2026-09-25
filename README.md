@@ -134,8 +134,9 @@ terminals. UART0 remains the boot console.
 
 The SPI SD slot has passed card detection, read-only FAT mounting, directory
 listing, and unmounting, with eMMC numbering preserved. SD file contents and
-writes remain untested. Both CAN interfaces register, but physical CAN traffic
-has not been tested.
+writes remain untested. Reboot with an inserted SD card works with the included
+[MMC regulator fix](https://github.com/armbian/linux-rockchip/issues/563).
+Both CAN interfaces register, but physical CAN traffic has not been tested.
 
 ## User controls
 
@@ -145,6 +146,55 @@ has not been tested.
   (code 148). Press/release events have been verified. No reset action is bound.
 
 
+## USB commissioning
+
+USB0 (`ff740000`) is configured as a fixed peripheral, not automatic OTG.
+The PHY is disconnected from the host VBUS supply; its fixed regulator remains
+registered with GPIO1_D0 defaulting off. The second SoC controller remains
+unchanged; this does not imply a second external connector. The board's USB
+connector serves MASKROM flashing first, then USB networking after Linux boots.
+Basic USB Ethernet operation has been verified on hardware in fixed peripheral
+mode. Automatic role switching and sustained reconnect testing remain
+unqualified. Keep UART logs and MASKROM recovery available.
+
+First boot without a PC connected and check in IEx:
+
+```elixir
+File.ls("/sys/class/udc")
+File.read("/sys/firmware/devicetree/base/usb@ff740000/dr_mode")
+```
+
+Expect controller `ff740000.usb` and mode `"peripheral\0"`. Inspect kernel logs
+for controller/PHY failures. Before connecting a PC, verify the OTG connector is
+not sourcing VBUS; software configuration is not an electrical measurement.
+
+The built-in Ethernet gadget automatically binds a CDC ECM function and exposes
+`usb0`. Linux/macOS hosts support ECM; Windows support is not configured.
+The application needs `nerves_pack`, SSH authorized keys, and this VintageNet
+configuration (already present in the standard template):
+
+```elixir
+{"usb0", %{type: VintageNetDirect}}
+```
+
+VintageNetDirect assigns the device a private address and serves DHCP to the
+connected computer. Leave the computer's USB Ethernet connection on automatic
+IPv4/DHCP. It does not provide Internet routing. Ethernet `eth0` configuration
+is independent. With the default mDNS configuration and only one Nerves device
+advertising that name, connect from the computer with:
+
+```sh
+ssh nerves.local
+```
+
+This opens Nerves IEx, not a Linux shell. If mDNS is unavailable, obtain the USB
+address over UART with `VintageNet.get(["interface", "usb0", "addresses"])` and
+SSH to that address. Existing SSH authorization also governs the USB link.
+Use the same address with the application's OTA upload script.
+
+Test enumeration, DHCP, SSH, and cable reconnects before relying on USB
+commissioning. BootROM MASKROM recovery is independent of this configuration.
+
 ## Hardware limits
 
 - GPIO0_B1 feeds the external watchdog through the Linux GPIO watchdog driver.
@@ -152,7 +202,8 @@ has not been tested.
   10-second hardware margin is provisional, not a measured reset timeout.
 - External watchdog reset behavior and J1 jumper semantics are unverified. Do not
   rely on watchdog recovery until the physical circuit has been tested.
-- USB OTG0 is disabled. Automatic A/B rollback, power-loss recovery, and long-term
+- USB0 fixed peripheral mode is experimental; automatic OTG role switching is
+  not enabled. Automatic A/B rollback, power-loss recovery, and long-term
   stability still require hardware qualification.
 
 ## Configuration

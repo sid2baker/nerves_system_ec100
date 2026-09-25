@@ -91,6 +91,12 @@ CONFIG_MOTORCOMM_PHY=y
 
 CONFIG_USB=y
 CONFIG_USB_DWC2=y
+# One DWC2 controller is a peripheral; the other remains a host.
+CONFIG_USB_DWC2_DUAL_ROLE=y
+CONFIG_USB_GADGET=y
+# Bind a CDC ECM network gadget at boot for USB commissioning on Linux/macOS.
+CONFIG_USB_ETH=y
+# CONFIG_USB_ETH_RNDIS is not set
 CONFIG_PHY_ROCKCHIP_INNO_USB2=y
 CONFIG_USB_STORAGE=y
 
