@@ -4,7 +4,7 @@
 the Rockchip RK3506J (ARM Cortex-A7).
 
 - Source-built U-Boot and Linux with pinned Rockchip DDR, SPL, and secure firmware
-- A/B firmware updates with manual validation and boot-count rollback
+- A/B firmware updates with application validation and boot-count rollback
 - Shared ext4 application storage at `/data` (`/root`)
 - Ethernet, eMMC, and a **115200 8N1** serial console (no flow control)
 
@@ -77,7 +77,9 @@ Nerves.Runtime.KV.get_all_active()
 Nerves.Runtime.KV.get_all() |> Map.take(["nerves_fw_active", "upgrade_available", "bootcount"])
 ```
 
-After checking application health, confirm it:
+The standard Nerves application's StartupGuard validates automatically after
+startup. For an application configured for manual validation, check its health
+and then confirm it:
 
 ```elixir
 Nerves.Runtime.validate_firmware()
@@ -101,7 +103,47 @@ and clears the trial flag and counter. Keep data migrations rollback-compatible.
 
 Root filesystems are read-only SquashFS. Nerves initializes the shared ext4 data
 partition on first use and mounts it at `/root`; `/data` is an alias. Raw FIT slots
-are outside the MBR partitions.
+are outside the MBR partitions. The kernel supports both gzip and XZ SquashFS.
+
+## SD, CAN, and serial ports
+
+| Interface | Linux device | Board pins |
+| --- | --- | --- |
+| SPI SD slot | `mmcblk1` when a card is present | SPI1: GPIO1_B3 CS, B2 MOSI, C2 clock, C3 MISO |
+| UART3 | `/dev/ttyS3` | GPIO0_A2 TX, A3 RX |
+| UART4 | `/dev/ttyS4` | GPIO0_B0 TX, A0 RX |
+| CAN0 | `can0` (verify controller mapping) | GPIO0_C3 TX, C4 RX |
+| CAN1 | `can1` (verify controller mapping) | GPIO0_C1 TX, C2 RX |
+
+The SD slot uses 3.3 V, a maximum 20 MHz SPI clock, and card-detect polling.
+Explicit MMC aliases keep eMMC at `mmcblk0` and the SPI slot at `mmcblk1`.
+Verify `/proc/partitions` and `/sys/class/block/mmcblk1/device/type` before mounting
+an SD partition read-only. Never format a guessed device. Test booting both with
+and without an inserted card before relying on this setup.
+
+CAN controllers are enabled but not automatically brought up. Set the bitrate to
+match the peer, verify connector mapping, and use correct bus termination. An
+internal loopback test does not verify the transceivers or connector wiring.
+
+UART3/4 use TX/RX without DE GPIO, RTS polarity, or boot-time RS485 mode settings.
+A two-port Modbus RTU write/read test passed with both client/server orientations
+at 9600 baud, 8N1, without software direction control. This supports using the
+hardware's automatic direction handling at these settings; other speeds and bus
+loads remain unqualified. Do not connect a TTL UART adapter directly to RS485 A/B
+terminals. UART0 remains the boot console.
+
+The SPI SD slot has passed card detection, read-only FAT mounting, directory
+listing, and unmounting, with eMMC numbering preserved. SD file contents and
+writes remain untested. Both CAN interfaces register, but physical CAN traffic
+has not been tested.
+
+## User controls
+
+- Run LED: GPIO1_A7, `/sys/class/leds/ec100:run/brightness`. Values `0` and `1`
+  control the output; the physical on/off polarity is not yet recorded.
+- User button: GPIO1_A5, active-low, exposed by `gpio-keys` as `KEY_PROG1`
+  (code 148). Press/release events have been verified. No reset action is bound.
+
 
 ## Hardware limits
 

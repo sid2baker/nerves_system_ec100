@@ -79,6 +79,8 @@ BR2_PACKAGE_E2FSPROGS=y
 BR2_PACKAGE_CA_CERTIFICATES=y
 BR2_PACKAGE_DTC=y
 BR2_PACKAGE_LIBMNL=y
+# Required by vintage_net_wifi, included in the standard nerves_pack template.
+BR2_PACKAGE_LIBNL=y
 
 # Needed to build the EC100 FIT image in post-createfs.sh
 BR2_PACKAGE_HOST_UBOOT_TOOLS=y

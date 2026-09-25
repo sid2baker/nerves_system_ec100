@@ -4,6 +4,7 @@
 /dts-v1/;
 
 #include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
 #include <dt-bindings/pinctrl/rockchip.h>
 
 /* Reservations must precede the root nodes in the included SoC tree. */
@@ -79,8 +80,9 @@
 
     aliases {
         serial0 = &uart0;
-        /* SPI MMC is not enabled: boot eMMC is the Nerves mmcblk0. */
+        /* Keep boot eMMC numbering independent of SD-card probe order. */
         mmc0 = &mmc;
+        mmc1 = &sd_slot;
     };
 
     chosen {
@@ -100,6 +102,31 @@
         /* Inherit the vendor trust@0 reservation: base 0, size 0x62000.
          * The official small TEE does not require a dynamic TOS memory tag.
          */
+    };
+
+    leds {
+        compatible = "gpio-leds";
+        pinctrl-names = "default";
+        pinctrl-0 = <&run_led_pin>;
+
+        run {
+            label = "ec100:run";
+            /* Raw high/low control until LED polarity is verified on hardware. */
+            gpios = <&gpio1 RK_PA7 GPIO_ACTIVE_HIGH>;
+            default-state = "keep";
+        };
+    };
+
+    gpio-keys {
+        compatible = "gpio-keys";
+        pinctrl-names = "default";
+        pinctrl-0 = <&user_button_pin>;
+
+        user {
+            label = "User button";
+            linux,code = <KEY_PROG1>;
+            gpios = <&gpio1 RK_PA5 GPIO_ACTIVE_LOW>;
+        };
     };
 
     external_watchdog: external-watchdog {
@@ -214,6 +241,53 @@
     status = "okay";
 };
 
+/* TX/RX only; RS485 transceiver direction control is not established. */
+&uart3 {
+    pinctrl-names = "default";
+    pinctrl-0 = <&rm_io3_uart3_rx &rm_io2_uart3_tx>;
+    status = "okay";
+};
+
+&uart4 {
+    pinctrl-names = "default";
+    pinctrl-0 = <&rm_io0_uart4_rx &rm_io8_uart4_tx>;
+    status = "okay";
+};
+
+&spi1 {
+    pinctrl-names = "default";
+    pinctrl-0 = <&rm_io26_spi1_csn0 &rm_io25_spi1_mosi
+                 &rm_io27_spi1_clk &rm_io28_spi1_miso>;
+    status = "okay";
+
+    sd_slot: mmc-slot@0 {
+        compatible = "mmc-spi-slot";
+        reg = <0>;
+        spi-max-frequency = <20000000>;
+        voltage-ranges = <3300 3300>;
+        broken-cd;
+        no-1-8-v;
+        vmmc-supply = <&vcc_3v3>;
+        vqmmc-supply = <&vcc_3v3>;
+    };
+};
+
+&can0 {
+    pinctrl-names = "default";
+    pinctrl-0 = <&rm_io19_can0_tx &rm_io20_can0_rx>;
+    assigned-clocks = <&cru CLK_CAN0>;
+    assigned-clock-rates = <300000000>;
+    status = "okay";
+};
+
+&can1 {
+    pinctrl-names = "default";
+    pinctrl-0 = <&rm_io17_can1_tx &rm_io18_can1_rx>;
+    assigned-clocks = <&cru CLK_CAN1>;
+    assigned-clock-rates = <300000000>;
+    status = "okay";
+};
+
 &mmc {
     bus-width = <4>;
     cap-mmc-highspeed;
@@ -299,6 +373,16 @@
 };
 
 &pinctrl {
+    user-controls {
+        run_led_pin: run-led-pin {
+            rockchip,pins = <1 RK_PA7 RK_FUNC_GPIO &pcfg_pull_none>;
+        };
+
+        user_button_pin: user-button-pin {
+            rockchip,pins = <1 RK_PA5 RK_FUNC_GPIO &pcfg_pull_up>;
+        };
+    };
+
     external-watchdog {
         external_watchdog_pin: external-watchdog-pin {
             rockchip,pins = <0 RK_PB1 RK_FUNC_GPIO &pcfg_pull_none>;
