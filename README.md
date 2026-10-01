@@ -145,28 +145,26 @@ Both CAN interfaces register, but physical CAN traffic has not been tested.
 - User button: GPIO1_A5, active-low, exposed by `gpio-keys` as `KEY_PROG1`
   (code 148). Press/release events have been verified. No reset action is bound.
 
-
-## USB commissioning
+## USB commissioning (experimental)
 
 USB0 (`ff740000`) is configured as a fixed peripheral, not automatic OTG.
 The PHY is disconnected from the host VBUS supply; its fixed regulator remains
 registered with GPIO1_D0 defaulting off. The second SoC controller remains
 unchanged; this does not imply a second external connector. The board's USB
 connector serves MASKROM flashing first, then USB networking after Linux boots.
-Basic USB Ethernet operation has been verified on hardware in fixed peripheral
-mode. Automatic role switching and sustained reconnect testing remain
-unqualified. Keep UART logs and MASKROM recovery available.
+USB Ethernet has carried SSH traffic, but enumeration/reconnects are unstable
+and can fail with SETUP queue error `-11`. Do not rely on USB commissioning yet.
+Keep UART logs, Ethernet access, and MASKROM recovery available.
 
-First boot without a PC connected and check in IEx:
+The current PHY patch initializes device mode and checks VBUS detector control.
+Hardware testing still showed immediate disconnects. Detector readback was
+`0x68 -> 0x68`: detection was already enabled, so missing enablement does not
+explain the failure. VBUS sensing/signal selection and board wiring remain
+unresolved. The patch is experimental, not a verified fix.
 
-```elixir
-File.ls("/sys/class/udc")
-File.read("/sys/firmware/devicetree/base/usb@ff740000/dr_mode")
-```
-
-Expect controller `ff740000.usb` and mode `"peripheral\0"`. Inspect kernel logs
-for controller/PHY failures. Before connecting a PC, verify the OTG connector is
-not sourcing VBUS; software configuration is not an electrical measurement.
+Do not force VBUS valid or invent detection GPIOs. The externally powered EC100
+must not source connector VBUS; verify this electrically rather than relying on
+software configuration. Keep USB debugging separate from MASKROM recovery.
 
 The built-in Ethernet gadget automatically binds a CDC ECM function and exposes
 `usb0`. Linux/macOS hosts support ECM; Windows support is not configured.
@@ -192,19 +190,22 @@ address over UART with `VintageNet.get(["interface", "usb0", "addresses"])` and
 SSH to that address. Existing SSH authorization also governs the USB link.
 Use the same address with the application's OTA upload script.
 
-Test enumeration, DHCP, SSH, and cable reconnects before relying on USB
-commissioning. BootROM MASKROM recovery is independent of this configuration.
+## Watchdog and remaining qualification
 
-## Hardware limits
+The GPIO watchdog is configured on GPIO0_B1 with toggle feeding, `always-running`,
+and `nowayout`. Heart opens `/dev/watchdog0` (expected identity: `GPIO Watchdog`)
+with a 60-second timeout. The 10-second hardware feeding margin is provisional,
+not a measured circuit timeout.
 
-- GPIO0_B1 feeds the external watchdog through the Linux GPIO watchdog driver.
-  Heart uses `/dev/watchdog0`; expected identity is `GPIO Watchdog`. The configured
-  10-second hardware margin is provisional, not a measured reset timeout.
-- External watchdog reset behavior and J1 jumper semantics are unverified. Do not
-  rely on watchdog recovery until the physical circuit has been tested.
-- USB0 fixed peripheral mode is experimental; automatic OTG role switching is
-  not enabled. Automatic A/B rollback, power-loss recovery, and long-term
-  stability still require hardware qualification.
+A `disable_hw` test stopped Heart feeding but produced no reset after ten minutes.
+Do not rely on watchdog recovery. Next verify whether the GPIO stops toggling
+when the userspace timeout expires; then investigate the external watchdog's
+feed/enable/reset wiring and J1. With `nowayout`, closing the device does not
+clear its active state; `always-running` alone does not establish indefinite
+feeding after Heart exits.
+
+Automatic A/B rollback, power-loss recovery, CAN traffic, and long-term stability
+still require hardware qualification.
 
 ## Configuration
 

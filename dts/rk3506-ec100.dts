@@ -361,8 +361,8 @@
     status = "okay";
 };
 
-/* Fixed device mode avoids automatic OTG role switching during bring-up.
- * Gadget DMA operation still requires hardware qualification.
+/* Fix the controller's role. The PHY driver must also honor peripheral mode;
+ * ID/VBUS detection and gadget stability still require hardware qualification.
  */
 &usb20_otg0 {
     dr_mode = "peripheral";

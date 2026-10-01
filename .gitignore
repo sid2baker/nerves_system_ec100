@@ -3,6 +3,7 @@
 /.nerves_artifacts/
 /.nerves/
 /build.log
+/uart.log
 /resources/logs/
 /.expert/
 /docs/
