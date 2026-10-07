@@ -198,6 +198,7 @@
         startup-delay-us = <100000>;
     };
 
+    /* Keep the Type-C host VBUS switch claimed and defaulting off. */
     vcc5v0_otg0: vcc5v0-otg0-regulator {
         compatible = "regulator-fixed";
         regulator-name = "vcc5v0_otg0";
@@ -207,15 +208,6 @@
         gpio = <&gpio1 RK_PD0 GPIO_ACTIVE_HIGH>;
         pinctrl-names = "default";
         pinctrl-0 = <&vcc5v0_otg0_en>;
-    };
-
-    vcc5v0_otg1: vcc5v0-otg1-regulator {
-        compatible = "regulator-fixed";
-        regulator-name = "vcc5v0_otg1";
-        regulator-boot-on;
-        regulator-always-on;
-        regulator-min-microvolt = <5000000>;
-        regulator-max-microvolt = <5000000>;
     };
 };
 
@@ -343,36 +335,9 @@
     };
 };
 
-&usb2phy {
-    status = "okay";
-};
-
-&u2phy_otg0 {
-    /delete-property/ rockchip,low-power-mode;
-    /* Peripheral-only: never let the PHY enable the host VBUS supply.
-     * Keep the fixed regulator registered with its GPIO defaulting off.
-     */
-    /delete-property/ vbus-supply;
-    status = "okay";
-};
-
-&u2phy_otg1 {
-    phy-supply = <&vcc5v0_otg1>;
-    status = "okay";
-};
-
-/* Fix the controller's role. The PHY driver must also honor peripheral mode;
- * ID/VBUS detection and gadget stability still require hardware qualification.
+/* Both USB controllers and their PHY remain disabled in the SoC tree.
+ * The Type-C connector is reserved for MASKROM flashing/recovery.
  */
-&usb20_otg0 {
-    dr_mode = "peripheral";
-    status = "okay";
-};
-
-&usb20_otg1 {
-    dr_mode = "host";
-    status = "okay";
-};
 
 &pinctrl {
     user-controls {

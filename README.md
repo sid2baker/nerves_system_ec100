@@ -159,50 +159,16 @@ Both CAN interfaces register, but physical CAN traffic has not been tested.
 - User button: GPIO1_A5, active-low, exposed by `gpio-keys` as `KEY_PROG1`
   (code 148). Press/release events have been verified. No reset action is bound.
 
-## USB commissioning (experimental)
+## USB
 
-USB0 (`ff740000`) is configured as a fixed peripheral, not automatic OTG.
-The PHY is disconnected from the host VBUS supply; its fixed regulator remains
-registered with GPIO1_D0 defaulting off. The second SoC controller remains
-unchanged; this does not imply a second external connector. The board's USB
-connector serves MASKROM flashing first, then USB networking after Linux boots.
-USB Ethernet has carried SSH traffic, but enumeration/reconnects are unstable
-and can fail with SETUP queue error `-11`. Do not rely on USB commissioning yet.
-Keep UART logs, Ethernet access, and MASKROM recovery available.
+The EC100 has one Type-C connector, reserved for MASKROM flashing and recovery.
+Both Linux USB controllers and their PHY are disabled; USB networking is not
+supported. Use Ethernet for SSH and OTA updates. Applications should omit the
+`usb0` / `VintageNetDirect` configuration.
 
-The current PHY patch initializes device mode and checks VBUS detector control.
-Hardware testing still showed immediate disconnects. Detector readback was
-`0x68 -> 0x68`: detection was already enabled, so missing enablement does not
-explain the failure. VBUS sensing/signal selection and board wiring remain
-unresolved. The patch is experimental, not a verified fix.
-
-Do not force VBUS valid or invent detection GPIOs. The externally powered EC100
-must not source connector VBUS; verify this electrically rather than relying on
-software configuration. Keep USB debugging separate from MASKROM recovery.
-
-The built-in Ethernet gadget automatically binds a CDC ECM function and exposes
-`usb0`. Linux/macOS hosts support ECM; Windows support is not configured.
-The application needs `nerves_pack`, SSH authorized keys, and this VintageNet
-configuration (already present in the standard template):
-
-```elixir
-{"usb0", %{type: VintageNetDirect}}
-```
-
-VintageNetDirect assigns the device a private address and serves DHCP to the
-connected computer. Leave the computer's USB Ethernet connection on automatic
-IPv4/DHCP. It does not provide Internet routing. Ethernet `eth0` configuration
-is independent. With the default mDNS configuration and only one Nerves device
-advertising that name, connect from the computer with:
-
-```sh
-ssh nerves.local
-```
-
-This opens Nerves IEx, not a Linux shell. If mDNS is unavailable, obtain the USB
-address over UART with `VintageNet.get(["interface", "usb0", "addresses"])` and
-SSH to that address. Existing SSH authorization also governs the USB link.
-Use the same address with the application's OTA upload script.
+The Type-C host VBUS regulator remains registered with GPIO1_D0 defaulting off.
+The experimental gadget support and PHY workarounds were removed after unreliable
+cable reconnects. MASKROM recovery does not depend on Linux USB support.
 
 ## Watchdog
 

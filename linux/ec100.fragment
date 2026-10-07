@@ -90,16 +90,9 @@ CONFIG_MDIO_BUS=y
 CONFIG_PHYLIB=y
 CONFIG_MOTORCOMM_PHY=y
 
-CONFIG_USB=y
-CONFIG_USB_DWC2=y
-# One DWC2 controller is a peripheral; the other remains a host.
-CONFIG_USB_DWC2_DUAL_ROLE=y
-CONFIG_USB_GADGET=y
-# Bind a CDC ECM network gadget at boot for USB commissioning on Linux/macOS.
-CONFIG_USB_ETH=y
-# CONFIG_USB_ETH_RNDIS is not set
-CONFIG_PHY_ROCKCHIP_INNO_USB2=y
-CONFIG_USB_STORAGE=y
+# Type-C is reserved for MASKROM flashing/recovery, not Linux USB.
+# CONFIG_USB_SUPPORT is not set
+# CONFIG_EXTCON_USB_GPIO is not set
 
 CONFIG_I2C=y
 CONFIG_I2C_RK3X=y
