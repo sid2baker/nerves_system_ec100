@@ -122,7 +122,7 @@ defmodule Mix.Tasks.Ec100.Flash do
         do: {type, start, count}
 
     if Enum.any?(parts, fn {type, _, _} -> type == 0xEE end),
-      do: "GPT (will be replaced with Nerves MBR)",
+      do: "GPT protective MBR",
       else: "MBR entries #{inspect(parts)} (type, start sector, length)"
   end
 
@@ -132,7 +132,7 @@ defmodule Mix.Tasks.Ec100.Flash do
   # without a USB device. fwup remains authoritative for OS/env/partition data.
   @doc false
   def prepare!(firmware, images, sectors, output) do
-    if sectors < 2_260_992 or sectors > 0xFFFFFFFF, do: Mix.raise("Unsupported eMMC capacity")
+    if sectors < 2_261_026 or sectors > 0xFFFFFFFF, do: Mix.raise("Unsupported eMMC capacity")
     if File.exists?(output), do: Mix.raise("Output already exists: #{output}")
     fwup = executable!("fwup")
     cmd!(fwup, ["-V", "-i", firmware])
@@ -172,7 +172,12 @@ defmodule Mix.Tasks.Ec100.Flash do
       to_string(sectors)
     ])
 
-    validate_mbr!(read_at!(image, 0, 512), sectors)
+    validate_gpt!(
+      read_at!(image, 0, 34 * 512),
+      read_at!(image, (sectors - 33) * 512, 33 * 512),
+      sectors
+    )
+
     {:ok, entries} = :zip.list_dir(String.to_charlist(firmware))
 
     sizes =
@@ -181,17 +186,11 @@ defmodule Mix.Tasks.Ec100.Flash do
           do: {List.to_string(name), elem(info, 1)}
 
     files =
-      for {name, sector, count} <- regions!(sizes) do
+      for {name, sector, count} <- regions!(sizes, sectors) do
         file!(output, name, sector, read_at!(image, sector * 512, count * 512))
       end
 
-    files =
-      files ++
-        [
-          file!(output, "clear-primary-gpt", 1, :binary.copy(<<0>>, 63 * 512)),
-          file!(output, "clear-backup-gpt", sectors - 33, :binary.copy(<<0>>, 33 * 512)),
-          file!(output, "boot-area", 64, boot)
-        ]
+    files = files ++ [file!(output, "boot-area", 64, boot)]
 
     manifest =
       Enum.map_join(files, "\n", fn {name, sector, count, path} ->
@@ -218,10 +217,12 @@ defmodule Mix.Tasks.Ec100.Flash do
       File.write!(backup <> ".sha256", sha256!(backup) <> "  emmc-before.img\n")
     end
 
-    # Payloads first, boot chain then MBR last. Factory flashing is not atomic.
+    # Payloads first, then boot chain, backup GPT, and primary GPT last.
+    # Factory flashing is not atomic.
     Enum.sort_by(files, fn {name, _, _, _} ->
       cond do
-        name == "mbr" -> 3
+        name == "gpt-primary" -> 4
+        name == "gpt-backup" -> 3
         name == "boot-area" -> 2
         String.starts_with?(name, "env") -> 1
         true -> 0
@@ -252,12 +253,13 @@ defmodule Mix.Tasks.Ec100.Flash do
   end
 
   @doc false
-  def regions!(sizes) do
+  def regions!(sizes, sectors) do
     fit = payload_sectors!(sizes, "data/ec100.itb", 65536)
     root = payload_sectors!(sizes, "data/rootfs.img", 524_288)
 
     [
-      {"mbr", 0, 1},
+      {"gpt-primary", 0, 34},
+      {"gpt-backup", sectors - 33, 33},
       {"env-a", 24576, 256},
       {"env-b", 24832, 256},
       {"fit-a", 32768, fit},
@@ -275,23 +277,67 @@ defmodule Mix.Tasks.Ec100.Flash do
   end
 
   @doc false
-  def validate_mbr!(mbr, sectors) do
-    unless byte_size(mbr) == 512 and binary_part(mbr, 510, 2) == <<0x55, 0xAA>>,
-      do: Mix.raise("Invalid staged MBR")
+  def validate_gpt!(primary, backup, sectors) do
+    unless byte_size(primary) == 34 * 512 and byte_size(backup) == 33 * 512 do
+      Mix.raise("Invalid staged GPT size")
+    end
 
-    Enum.with_index([{163_840, 524_288}, {688_128, 524_288}, {1_212_416, sectors - 1_212_416}])
-    |> Enum.each(fn {{start, count}, i} ->
-      <<_::32, type, _::24, actual_start::little-32, actual_count::little-32>> =
-        binary_part(mbr, 446 + i * 16, 16)
+    <<mbr::binary-size(512), header::binary-size(512), entries::binary>> = primary
+    <<backup_entries::binary-size(16384), backup_header::binary>> = backup
 
-      unless type == 0x83 and actual_start == start and actual_count == count,
-        do: Mix.raise("Staged partition #{i + 1} does not match EC100 layout")
+    unless binary_part(mbr, 450, 1) == <<0xEE>> and
+             binary_part(mbr, 454, 56) == <<1::little-32, sectors - 1::little-32, 0::384>> and
+             binary_part(mbr, 510, 2) == <<0x55, 0xAA>> do
+      Mix.raise("Invalid GPT protective MBR")
+    end
+
+    guid = validate_gpt_header!(header, entries, 1, sectors - 1, 2, sectors)
+
+    backup_guid =
+      validate_gpt_header!(backup_header, backup_entries, sectors - 1, 1, sectors - 33, sectors)
+
+    unless entries == backup_entries and guid == backup_guid do
+      Mix.raise("GPT copies do not match")
+    end
+
+    # fwup's expand option leaves one unused sector before the backup GPT.
+    Enum.with_index([{163_840, 688_127}, {688_128, 1_212_415}, {1_212_416, sectors - 35}])
+    |> Enum.each(fn {{start, last}, i} ->
+      <<type::binary-size(16), _guid::binary-size(16), actual_start::little-64,
+        actual_last::little-64, _::binary>> = binary_part(entries, i * 128, 128)
+
+      unless Base.encode16(type) == "AF3DC60F838472478E793D69D8477DE4" and actual_start == start and
+               actual_last == last do
+        Mix.raise("Staged partition #{i + 1} does not match EC100 layout")
+      end
     end)
 
-    unless binary_part(mbr, 494, 16) == :binary.copy(<<0>>, 16),
-      do: Mix.raise("Unexpected fourth partition")
+    unless binary_part(entries, 384, 16000) == :binary.copy(<<0>>, 16000) do
+      Mix.raise("Unexpected GPT partitions")
+    end
 
     :ok
+  end
+
+  defp validate_gpt_header!(header, entries, current, backup, table, sectors) do
+    case header do
+      <<"EFI PART", 0x00010000::little-32, 92::little-32, crc::little-32, 0::32,
+        ^current::little-64, ^backup::little-64, 34::little-64, last::little-64,
+        guid::binary-size(16), ^table::little-64, 128::little-32, 128::little-32,
+        entries_crc::little-32, 0::3360>>
+      when last == sectors - 34 ->
+        <<prefix::binary-size(16), _::32, suffix::binary-size(72), _::binary>> = header
+
+        unless :erlang.crc32([prefix, <<0::32>>, suffix]) == crc and
+                 :erlang.crc32(entries) == entries_crc do
+          Mix.raise("Invalid GPT checksum")
+        end
+
+        guid
+
+      _ ->
+        Mix.raise("Invalid staged GPT header")
+    end
   end
 
   defp file!(output, name, sector, data) do

@@ -57,8 +57,8 @@ MIX_TARGET=ec100 mix ec100.flash
 ```
 
 The task builds firmware, asks for confirmation, backs up the eMMC user area to
-`ec100-backups/`, installs the boot images and slot A, verifies writes, and resets
-the board. It does not write the eMMC boot0/boot1 hardware partitions.
+`ec100-backups/`, installs the GPT, boot images, and slot A, verifies writes, and
+resets the board. It does not write the eMMC boot0/boot1 hardware partitions.
 
 USB commands use `sudo -n` by default; authenticate beforehand or use `--no-sudo`
 with suitable USB permissions. Other options are `--no-reset`, `--yes`, and
@@ -77,8 +77,9 @@ MIX_TARGET=ec100 mix firmware.gen.script
 ```
 
 OTA writes the inactive kernel/rootfs slot and selects it for the next boot. It
-preserves the bootloader and shared data. Configure the application's upload
-success callback to reboot, or reboot after a successful upload.
+preserves the bootloader, partition table, and shared data. Provision the GPT layout
+with factory installation; OTA does not repartition the eMMC. Configure the
+application's upload success callback to reboot, or reboot after a successful upload.
 
 Check the running trial in IEx:
 
@@ -103,17 +104,20 @@ and clears the trial flag and counter. Keep data migrations rollback-compatible.
 
 | Region | Start | Size |
 | --- | ---: | ---: |
+| Protective MBR and primary GPT | 0 | 17 KiB |
 | DDR/SPL loader | 32 KiB | Below 8 MiB |
 | U-Boot/TEE FIT | 8 MiB | Up to 4 MiB |
 | Environment A / B | 12 / 12.125 MiB | 128 KiB each |
 | Kernel FIT A / B | 16 / 48 MiB | 32 MiB each |
 | Rootfs A (`mmcblk0p1`) | 80 MiB | 256 MiB |
 | Rootfs B (`mmcblk0p2`) | 336 MiB | 256 MiB |
-| Data (`mmcblk0p3`) | 592 MiB | Remaining eMMC |
+| Data (`mmcblk0p3`) | 592 MiB | Remaining space before backup GPT |
+| Backup GPT | Final 33 sectors | 16.5 KiB |
 
+The eMMC uses GPT with three partitions named `rootfs-a`, `rootfs-b`, and `data`.
 Root filesystems are read-only SquashFS. Nerves initializes the shared ext4 data
 partition on first use and mounts it at `/root`; `/data` is an alias. Raw FIT slots
-are outside the MBR partitions. The kernel supports both gzip and XZ SquashFS.
+are outside the GPT partitions. The kernel supports both gzip and XZ SquashFS.
 
 ## SD, CAN, and serial ports
 

@@ -3,13 +3,20 @@ defmodule EC100FlashTest do
   alias Mix.Tasks.Ec100.Flash
 
   test "only factory regions are planned; payload sizes round up to sectors" do
-    plan = Flash.regions!(%{"data/ec100.itb" => 513, "data/rootfs.img" => 1024})
+    plan =
+      Mix.Tasks.Ec100.Flash.regions!(
+        %{"data/ec100.itb" => 513, "data/rootfs.img" => 1024},
+        7_471_104
+      )
+
     assert {"fit-a", 32768, 2} in plan
     assert {"rootfs-a", 163_840, 2} in plan
     assert {"initialize-data", 1_212_416, 256} in plan
 
     assert Enum.filter(plan, fn {_, sector, _} -> sector < 32768 end) ==
-             [{"mbr", 0, 1}, {"env-a", 24576, 256}, {"env-b", 24832, 256}]
+             [{"gpt-primary", 0, 34}, {"env-a", 24576, 256}, {"env-b", 24832, 256}]
+
+    assert {"gpt-backup", 7_471_071, 33} in plan
   end
 
   test "factory boot area places SPL at LBA64 and U-Boot at LBA16384, below env" do
@@ -22,14 +29,17 @@ defmodule EC100FlashTest do
   end
 
   test "missing and oversized payloads fail closed" do
-    assert_raise Mix.Error, fn -> Flash.regions!(%{}) end
+    assert_raise Mix.Error, fn -> Mix.Tasks.Ec100.Flash.regions!(%{}, 7_471_104) end
 
     assert_raise Mix.Error, fn ->
-      Flash.regions!(%{"data/ec100.itb" => 33_554_433, "data/rootfs.img" => 1024})
+      Mix.Tasks.Ec100.Flash.regions!(
+        %{"data/ec100.itb" => 33_554_433, "data/rootfs.img" => 1024},
+        7_471_104
+      )
     end
   end
 
-  test "real fwup complete task prepares p1/p2/p3 without USB access" do
+  test "real fwup complete task prepares GPT p1/p2/p3 without USB access" do
     tmp = Path.join(System.tmp_dir!(), "ec100-flash-test-#{System.unique_integer([:positive])}")
     images = Path.join(tmp, "images")
     File.mkdir_p!(images)
@@ -67,7 +77,15 @@ defmodule EC100FlashTest do
     files = Flash.prepare!(firmware, images, 7_471_104, destination)
     assert {"boot-area", 64, 24512, Path.join(destination, "boot-area.bin")} in files
 
-    assert {"clear-backup-gpt", 7_471_071, 33, Path.join(destination, "clear-backup-gpt.bin")} in files
+    assert {"gpt-primary", 0, 34, Path.join(destination, "gpt-primary.bin")} in files
+    assert {"gpt-backup", 7_471_071, 33, Path.join(destination, "gpt-backup.bin")} in files
+
+    files
+    |> Enum.sort_by(fn {_, sector, _, _} -> sector end)
+    |> Enum.chunk_every(2, 1, :discard)
+    |> Enum.each(fn [{_, start, count, _}, {_, next, _, _}] ->
+      assert start + count <= next
+    end)
 
     assert File.read!(Path.join(destination, "fit-a.bin")) == :binary.copy(<<0xAB>>, 1024)
     assert File.read!(Path.join(destination, "rootfs-a.bin")) == :binary.copy(<<0xCD>>, 1024)
@@ -75,7 +93,30 @@ defmodule EC100FlashTest do
     assert File.read!(Path.join(destination, "initialize-data.bin")) ==
              :binary.copy(<<255>>, 131_072)
 
-    assert :ok == Flash.validate_mbr!(File.read!(Path.join(destination, "mbr.bin")), 7_471_104)
+    primary = File.read!(Path.join(destination, "gpt-primary.bin"))
+    backup = File.read!(Path.join(destination, "gpt-backup.bin"))
+    assert :ok == Flash.validate_gpt!(primary, backup, 7_471_104)
+
+    for {name, i} <- Enum.with_index(["rootfs-a", "rootfs-b", "data"]) do
+      encoded = :unicode.characters_to_binary(name, :utf8, {:utf16, :little})
+      assert binary_part(primary, 1024 + i * 128 + 56, byte_size(encoded)) == encoded
+    end
+
+    for sectors <- [2_261_026, 8_000_000] do
+      other = destination <> "-#{sectors}"
+      Flash.prepare!(firmware, images, sectors, other)
+
+      assert :ok ==
+               Flash.validate_gpt!(
+                 File.read!(Path.join(other, "gpt-primary.bin")),
+                 File.read!(Path.join(other, "gpt-backup.bin")),
+                 sectors
+               )
+    end
+
+    assert_raise Mix.Error, ~r/Unsupported eMMC capacity/, fn ->
+      Flash.prepare!(firmware, images, 2_261_025, destination <> "-small")
+    end
 
     # Exercise both fwup creation and application: escaped ${name} used to be
     # consumed on the second pass, leaving a bare `mmc read` and `bootm`.
@@ -98,6 +139,19 @@ defmodule EC100FlashTest do
           ],
           do: assert(entry in entries, "#{name} missing #{entry}")
     end
+
+    image = Path.join(destination, "factory.img")
+
+    {output, status} =
+      System.cmd(fwup, ["-a", "-U", "-i", firmware, "-d", image, "-t", "upgrade.b"])
+
+    assert status == 0, output
+
+    File.open!(image, [:read, :binary], fn io ->
+      assert {:ok, ^primary} = :file.pread(io, 0, 34 * 512)
+      assert {:ok, ^backup} = :file.pread(io, 7_471_071 * 512, 33 * 512)
+      assert {:ok, :binary.copy(<<0xCD>>, 1024)} == :file.pread(io, 688_128 * 512, 1024)
+    end)
 
     assert_raise Mix.Error, ~r/Output already exists/, fn ->
       Flash.prepare!(firmware, images, 7_471_104, destination)
@@ -126,7 +180,7 @@ defmodule EC100FlashTest do
     end
   end
 
-  test "install backs up first, verifies writes, and writes MBR last" do
+  test "install backs up first, verifies writes, and writes primary GPT last" do
     tmp = Path.join(System.tmp_dir!(), "ec100-install-test-#{System.unique_integer([:positive])}")
     File.mkdir_p!(tmp)
     on_exit(fn -> File.rm_rf!(tmp) end)
@@ -145,14 +199,28 @@ defmodule EC100FlashTest do
       "OK"
     end
 
-    files = [{"mbr", 0, 1, payload}, {"fit-a", 3, 1, payload}]
+    files = [
+      {"gpt-primary", 0, 1, payload},
+      {"gpt-backup", 9, 1, payload},
+      {"fit-a", 3, 1, payload}
+    ]
+
     Flash.install!(run, files, 10, tmp)
     backup = Path.join(tmp, "emmc-before.img")
-    assert_receive {:command, ["rl", "0", "10", ^backup]}
-    assert_receive {:command, ["wl", "3", ^payload]}
-    assert_receive {:command, ["rl", "3", "1", _]}
-    assert_receive {:command, ["wl", "0", ^payload]}
-    assert_receive {:command, ["rl", "0", "1", _]}
+
+    for expected <- [
+          ["rl", "0", "10", backup],
+          ["wl", "3", payload],
+          ["rl", "3", "1", Path.join(tmp, "fit-a-readback.bin")],
+          ["wl", "9", payload],
+          ["rl", "9", "1", Path.join(tmp, "gpt-backup-readback.bin")],
+          ["wl", "0", payload],
+          ["rl", "0", "1", Path.join(tmp, "gpt-primary-readback.bin")]
+        ] do
+      assert_receive {:command, actual}
+      assert actual == expected
+    end
+
     assert File.exists?(backup <> ".sha256")
 
     bad_readback = fn
@@ -166,6 +234,7 @@ defmodule EC100FlashTest do
     end
 
     assert_receive {:write, "3"}
+    refute_receive {:write, "9"}
     refute_receive {:write, "0"}
     bad_backup = fn ["rl", "0", "10", path] -> File.write!(path, <<0>>) end
 
@@ -208,21 +277,84 @@ defmodule EC100FlashTest do
     end
   end
 
-  test "MBR must exactly match current layout and requested capacity" do
+  test "GPT rejects invalid headers, checksums, partitions, and capacity" do
     sectors = 7_471_104
 
     entries =
-      for {start, count} <- [
-            {163_840, 524_288},
-            {688_128, 524_288},
-            {1_212_416, sectors - 1_212_416}
-          ] do
-        <<0::32, 0x83, 0::24, start::little-32, count::little-32>>
+      for {start, last} <- [{163_840, 688_127}, {688_128, 1_212_415}, {1_212_416, sectors - 35}] do
+        type = Base.decode16!("AF3DC60F838472478E793D69D8477DE4")
+        <<type::binary, start::128, start::little-64, last::little-64, 0::640>>
       end
+      |> IO.iodata_to_binary()
+      |> Kernel.<>(:binary.copy(<<0>>, 16000))
 
-    mbr = IO.iodata_to_binary([:binary.copy(<<0>>, 446), entries, <<0::128, 0x55, 0xAA>>])
-    assert :ok == Flash.validate_mbr!(mbr, sectors)
-    assert_raise Mix.Error, fn -> Flash.validate_mbr!(mbr, sectors + 1) end
-    assert_raise Mix.Error, fn -> Flash.validate_mbr!(<<0::4096>>, sectors) end
+    {primary, backup} = gpt_copies(entries, sectors)
+    assert :ok == Flash.validate_gpt!(primary, backup, sectors)
+    assert_raise Mix.Error, fn -> Flash.validate_gpt!(primary, backup, sectors + 1) end
+    assert_raise Mix.Error, fn -> Flash.validate_gpt!(<<>>, backup, sectors) end
+
+    for {copy, offset} <- [
+          primary: 450,
+          primary: 512,
+          primary: 528,
+          primary: 1024,
+          backup: 0,
+          backup: 16384,
+          backup: 16400
+        ] do
+      original =
+        if copy == :primary do
+          primary
+        else
+          backup
+        end
+
+      corrupted = flip_byte(original, offset)
+
+      assert_raise Mix.Error, fn ->
+        if copy == :primary do
+          Flash.validate_gpt!(corrupted, backup, sectors)
+        else
+          Flash.validate_gpt!(primary, corrupted, sectors)
+        end
+      end
+    end
+
+    {_, different_backup} = gpt_copies(flip_byte(entries, 56), sectors)
+
+    assert_raise Mix.Error, ~r/GPT copies do not match/, fn ->
+      Flash.validate_gpt!(primary, different_backup, sectors)
+    end
+
+    # Valid CRCs exercise the layout checks, not just corruption detection.
+    for offset <- [0, 32, 40, 384] do
+      altered = flip_byte(entries, offset)
+      {bad_primary, bad_backup} = gpt_copies(altered, sectors)
+      assert_raise Mix.Error, fn -> Flash.validate_gpt!(bad_primary, bad_backup, sectors) end
+    end
+  end
+
+  defp flip_byte(binary, offset) do
+    binary
+    |> :binary.bin_to_list()
+    |> List.update_at(offset, &Bitwise.bxor(&1, 1))
+    |> :binary.list_to_bin()
+  end
+
+  defp gpt_copies(entries, sectors) do
+    header = fn current, backup, table ->
+      data =
+        <<"EFI PART", 65536::little-32, 92::little-32, 0::64, current::little-64,
+          backup::little-64, 34::little-64, sectors - 34::little-64, 1::128, table::little-64,
+          128::little-32, 128::little-32, :erlang.crc32(entries)::little-32>>
+
+      <<prefix::binary-size(16), _::32, suffix::binary>> = data
+      <<prefix::binary, :erlang.crc32(data)::little-32, suffix::binary, 0::3360>>
+    end
+
+    mbr = <<0::3568, 0::32, 238, 0::24, 1::little-32, sectors - 1::little-32, 0::384, 85, 170>>
+
+    {mbr <> header.(1, sectors - 1, 2) <> entries,
+     entries <> header.(sectors - 1, 1, sectors - 33)}
   end
 end
