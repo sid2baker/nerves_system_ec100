@@ -10,23 +10,33 @@ the Rockchip RK3506J (ARM Cortex-A7).
 
 ## Build
 
+This system requires Nerves 2 (currently `2.0.0-pre.3`). For an existing application,
+update its Nerves dependency, remove `:shoehorn`, and replace
+`&Nerves.Release.init/1` with `&Nerves.init_release/1` in its release steps.
+
 Add this system to your Nerves application's dependencies and target configuration:
 
 ```elixir
 {:nerves_system_ec100,
  path: "../nerves_system_ec100",
  runtime: false,
- targets: [:ec100],
- nerves: [compile: true]}
+ targets: [:ec100]}
 ```
 
 Adjust the path for your checkout. From the application directory:
 
 ```sh
-export MIX_TARGET=ec100
 mix deps.get
-mix firmware
+MIX_TARGET=ec100 mix nerves.artifact.build nerves_system_ec100
+MIX_TARGET=ec100 mix firmware
 ```
+
+Nerves 2 does not automatically build custom systems. The artifact build requires
+a working Docker or Podman installation; rerun it after changing this system.
+Prebuilt artifacts are downloaded as needed by `mix firmware`, not `mix deps.get`.
+For the first build after upgrading from Nerves 1, use a fresh system checkout:
+the current prerelease copies old `.nerves/` and Buildroot caches into its container
+workspace, which can exhaust disk space or leave broken host-path symlinks.
 
 The build produces application firmware (`.fw`) and separate factory boot images.
 It does not flash the board. Source pins are listed in [SOURCES.md](SOURCES.md);
@@ -190,19 +200,18 @@ address over UART with `VintageNet.get(["interface", "usb0", "addresses"])` and
 SSH to that address. Existing SSH authorization also governs the USB link.
 Use the same address with the application's OTA upload script.
 
-## Watchdog and remaining qualification
+## Watchdog
 
 The GPIO watchdog is configured on GPIO0_B1 with toggle feeding, `always-running`,
 and `nowayout`. Heart opens `/dev/watchdog0` (expected identity: `GPIO Watchdog`)
 with a 60-second timeout. The 10-second hardware feeding margin is provisional,
 not a measured circuit timeout.
 
-A `disable_hw` test stopped Heart feeding but produced no reset after ten minutes.
-Do not rely on watchdog recovery. Next verify whether the GPIO stops toggling
-when the userspace timeout expires; then investigate the external watchdog's
-feed/enable/reset wiring and J1. With `nowayout`, closing the device does not
-clear its active state; `always-running` alone does not establish indefinite
-feeding after Heart exits.
+Hardware watchdog recovery is verified on the EC100. **Remove the watchdog-disable
+jumper for normal operation**; leaving it fitted disables hardware watchdog resets.
+With `nowayout`, closing the watchdog device does not disarm it.
+
+## Remaining qualification
 
 Automatic A/B rollback, power-loss recovery, CAN traffic, and long-term stability
 still require hardware qualification.

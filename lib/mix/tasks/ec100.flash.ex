@@ -29,8 +29,12 @@ defmodule Mix.Tasks.Ec100.Flash do
       do: Mix.raise("Run mix ec100.flash from your EC100 application (MIX_TARGET=ec100).")
 
     Mix.Task.run("firmware")
-    firmware = Nerves.Env.firmware_path(Mix.Project.config())
-    images = Path.join(Nerves.Env.system_path(), "images")
+    build_plan = Nerves.build_plan()
+    firmware = build_plan.config[:firmware_path]
+
+    images =
+      Path.join(Nerves.BuildPlan.fetch_interpolated_env!(build_plan, "NERVES_SYSTEM"), "images")
+
     loader = Path.join(images, "ec100-maskrom-loader.bin")
 
     unless String.contains?(
