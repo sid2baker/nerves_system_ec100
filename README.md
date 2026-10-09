@@ -88,9 +88,9 @@ Nerves.Runtime.KV.get_all_active()
 Nerves.Runtime.KV.get_all() |> Map.take(["nerves_fw_active", "upgrade_available", "bootcount"])
 ```
 
-The standard Nerves application's StartupGuard validates automatically after
-startup. For an application configured for manual validation, check its health
-and then confirm it:
+Enable [StartupGuard in the application](#application-setup) to validate firmware
+automatically after the expected OTP applications start. For an application
+configured for manual validation, check its health and then confirm it:
 
 ```elixir
 Nerves.Runtime.validate_firmware()
@@ -212,6 +212,33 @@ not a measured circuit timeout.
 Hardware watchdog recovery is verified on the EC100. **Remove the watchdog-disable
 jumper for normal operation**; leaving it fitted disables hardware watchdog resets.
 With `nowayout`, closing the watchdog device does not disarm it.
+
+### Application setup
+
+The hardware driver is configured by this system. In the application, enable the
+standard startup guard in `config/target.exs`:
+
+```elixir
+config :nerves_runtime, startup_guard_enabled: true
+```
+
+Enable Heart and its initialization handshake in `rel/vm.args.eex`:
+
+```text
+-heart -env HEART_BEAT_TIMEOUT 30
+-env HEART_INIT_TIMEOUT 600
+```
+
+StartupGuard sends the required Heart initialization handshake, waits for the
+expected OTP applications to start, then validates the firmware. Internet
+connectivity is not required.
+
+**Keeping `HEART_INIT_TIMEOUT` without a handshake can trigger recovery even when
+the VM is healthy.** If replacing StartupGuard with custom startup logic, that
+logic must arrange the handshake and firmware validation instead. These VM and
+initialization timeouts are separate from the hardware watchdog timing.
+
+Nerves Heart handles watchdog feeding; do not add a separate GPIO-feeding process.
 
 ## Remaining qualification
 
