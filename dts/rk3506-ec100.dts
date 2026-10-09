@@ -209,6 +209,16 @@
         pinctrl-names = "default";
         pinctrl-0 = <&vcc5v0_otg0_en>;
     };
+
+    /* USB1 PHY supply, as described by the factory EC100 device tree. */
+    vcc5v0_otg1: vcc5v0-otg1-regulator {
+        compatible = "regulator-fixed";
+        regulator-name = "vcc5v0_otg1";
+        regulator-boot-on;
+        regulator-always-on;
+        regulator-min-microvolt = <5000000>;
+        regulator-max-microvolt = <5000000>;
+    };
 };
 
 &cpu0 {
@@ -335,9 +345,37 @@
     };
 };
 
-/* Both USB controllers and their PHY remain disabled in the SoC tree.
- * The Type-C connector is reserved for MASKROM flashing/recovery.
- */
+&usb2phy {
+    status = "okay";
+};
+
+&u2phy_otg0 {
+    /delete-property/ rockchip,low-power-mode;
+    /* VBUS sensing stays low on the tested board, even during traffic.
+     * Keep the PHY awake so a host reset can reach the gadget controller.
+     */
+    rockchip,dis-u2-susphy;
+    /* Externally powered peripheral: never source Type-C host VBUS. */
+    /delete-property/ vbus-supply;
+    status = "okay";
+};
+
+&u2phy_otg1 {
+    phy-supply = <&vcc5v0_otg1>;
+    status = "okay";
+};
+
+/* Type-C setup port. No automatic OTG role switching. */
+&usb20_otg0 {
+    dr_mode = "peripheral";
+    status = "okay";
+};
+
+/* Internal USB host; modem power/reset awaits an identified module. */
+&usb20_otg1 {
+    dr_mode = "host";
+    status = "okay";
+};
 
 &pinctrl {
     user-controls {

@@ -90,9 +90,28 @@ CONFIG_MDIO_BUS=y
 CONFIG_PHYLIB=y
 CONFIG_MOTORCOMM_PHY=y
 
-# Type-C is reserved for MASKROM flashing/recovery, not Linux USB.
-# CONFIG_USB_SUPPORT is not set
+# Fixed roles: USB0 Type-C peripheral, USB1 internal host.
+CONFIG_USB_SUPPORT=y
+CONFIG_USB=y
+CONFIG_USB_DWC2=y
+CONFIG_USB_DWC2_DUAL_ROLE=y
+CONFIG_PHY_ROCKCHIP_INNO_USB2=y
 # CONFIG_EXTCON_USB_GPIO is not set
+
+# Bind one CDC ECM setup gadget at boot; no vendor FunctionFS service.
+CONFIG_USB_GADGET=y
+CONFIG_USB_ETH=y
+# CONFIG_USB_ETH_RNDIS is not set
+# CONFIG_USB_CONFIGFS is not set
+
+# Host-side preparation for a future modem; protocol still unqualified.
+CONFIG_USB_ACM=y
+CONFIG_USB_SERIAL=y
+CONFIG_USB_SERIAL_OPTION=y
+CONFIG_USB_NET_DRIVERS=y
+CONFIG_USB_USBNET=y
+CONFIG_USB_NET_CDCETHER=y
+CONFIG_USB_STORAGE=y
 
 CONFIG_I2C=y
 CONFIG_I2C_RK3X=y

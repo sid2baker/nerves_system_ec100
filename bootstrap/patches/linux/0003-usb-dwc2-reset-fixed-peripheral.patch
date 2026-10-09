@@ -1,0 +1,32 @@
+Subject: [PATCH] usb: dwc2: reinitialize fixed peripheral on bus reset
+
+On EC100 USB0, BSESVLD remains low even during working gadget traffic.
+Unplug suspends the controller without reporting a session disconnect.
+The reset on reconnect then disconnects the old gadget session, putting
+it in L3, but skips core reinitialization because BSESVLD is low. EP0
+setup requests subsequently fail with -EAGAIN.
+
+For a fixed peripheral, accept the received USB reset as sufficient to
+reinitialize a previously connected gadget. Retain the connected guard
+and the existing session-valid requirement for OTG operation. This does
+not fake VBUS status, change host mode, or treat suspend as disconnect.
+
+---
+diff --git a/drivers/usb/dwc2/gadget.c b/drivers/usb/dwc2/gadget.c
+--- a/drivers/usb/dwc2/gadget.c
++++ b/drivers/usb/dwc2/gadget.c
+@@ -3792,7 +3792,13 @@
+ 		/* Reset device address to zero */
+ 		dwc2_clear_bit(hsotg, DCFG, DCFG_DEVADDR_MASK);
+ 
+-		if (usb_status & GOTGCTL_BSESVLD && connected)
++		/*
++		 * Fixed peripherals may lack usable VBUS sensing. A bus reset
++		 * still requires reinitialization after disconnecting the old
++		 * session, otherwise EP0 remains inactive in L3.
++		 */
++		if (connected && ((usb_status & GOTGCTL_BSESVLD) ||
++				  hsotg->dr_mode == USB_DR_MODE_PERIPHERAL))
+ 			dwc2_hsotg_core_init_disconnected(hsotg, true);
+ 	}
+ 

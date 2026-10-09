@@ -161,14 +161,38 @@ Both CAN interfaces register, but physical CAN traffic has not been tested.
 
 ## USB
 
-The EC100 has one Type-C connector, reserved for MASKROM flashing and recovery.
-Both Linux USB controllers and their PHY are disabled; USB networking is not
-supported. Use Ethernet for SSH and OTA updates. Applications should omit the
-`usb0` / `VintageNetDirect` configuration.
+USB0 (`ff740000.usb`) uses the Type-C connector as a fixed CDC ECM Ethernet
+peripheral for laptop setup. It is not an OTG host port. Power the EC100 separately;
+the Type-C host VBUS switch (GPIO1_D0) remains claimed and off. MASKROM flashing
+and recovery remain independent of Linux USB support.
 
-The Type-C host VBUS regulator remains registered with GPIO1_D0 defaulting off.
-The experimental gadget support and PHY workarounds were removed after unreliable
-cable reconnects. MASKROM recovery does not depend on Linux USB support.
+For an application using `vintage_net_direct`, include this entry in its
+`:vintage_net` configuration:
+
+```elixir
+{"usb0", %{type: VintageNetDirect}}
+```
+
+VintageNetDirect derives a /30 subnet from the hostname and interface, and serves
+DHCP to the laptop. On the test board, the addresses are `172.31.92.201` (EC100)
+and `172.31.92.202` (laptop). The application must provide SSH and an authorized key.
+
+Current status (Linux laptop, system `0.1.28-dev`):
+- Booting unplugged, then connecting passed USB SSH/ping and three reconnect cycles.
+- Booting with Type-C connected stalled USB traffic; unplug/replug did not recover
+  it. One USB0 software disconnect/connect restored operation without a reboot.
+- Usable for development with Ethernet as a fallback; boot-connected reliability
+  remains unresolved. macOS and Windows are untested.
+
+Local PHY/DWC2 patches keep USB0 in device mode and allow reconnect resets despite
+missing session-valid sensing. The PHY stays awake; gadget state/carrier may
+remain stale while unplugged.
+
+USB1 (`ff780000.usb`) is enabled as an internal host with USB serial (`option`),
+CDC ACM, and CDC ECM drivers. No modem is fitted, so device operation is untested;
+modem power/reset and networking are not configured. Before adding a USB-network
+modem, verify interface identity so it cannot inherit the setup port's
+`VintageNetDirect`/DHCP-server configuration.
 
 ## Watchdog
 
