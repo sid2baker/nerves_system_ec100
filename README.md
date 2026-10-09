@@ -184,9 +184,17 @@ Current status (Linux laptop, system `0.1.28-dev`):
 - Usable for development with Ethernet as a fallback; boot-connected reliability
   remains unresolved. macOS and Windows are untested.
 
-Local PHY/DWC2 patches keep USB0 in device mode and allow reconnect resets despite
-missing session-valid sensing. The PHY stays awake; gadget state/carrier may
-remain stale while unplugged.
+The tested `0.1.28-dev` build uses local PHY/DWC2 patches to keep USB0 in device
+mode and allow reconnect resets despite missing session-valid sensing. The PHY
+stays awake; gadget state/carrier may remain stale while unplugged.
+
+`0.1.30-dev` is an **unqualified bulk-OUT guard candidate**. It retains the PHY
+and DWC2 reconnect patches and explicitly sets NAK on bulk OUT endpoint setup;
+the existing request-start path clears NAK after programming a receive buffer.
+This targets the observed early-traffic startup failure without a startup delay,
+tracing, or automatic reset. One temporary boot passed USB SSH/ping, but host
+traffic arrived late; the failing early-traffic sequence and reconnect behavior
+remain unvalidated for this candidate. Do not replace a known-good slot with it.
 
 USB1 (`ff780000.usb`) is enabled as an internal host with USB serial (`option`),
 CDC ACM, and CDC ECM drivers. No modem is fitted, so device operation is untested;

@@ -1,0 +1,30 @@
+Subject: [PATCH] usb: dwc2: NAK bulk OUT until a receive request is armed
+
+On EC100, boot-connected Ethernet can stop receiving when the host sends
+bulk OUT traffic before the gadget netdevice opens. Delaying host traffic
+until the netdevice is ready avoids the observed failure. The precise
+controller failure is still unconfirmed.
+
+Explicitly set NAK when configuring a bulk OUT endpoint, so making the
+endpoint active does not rely on its previous NAK state while there is no
+receive request. dwc2_hsotg_start_req() already clears NAK after
+programming the receive buffer and transfer size. Leave EP0, IN and
+periodic endpoints unchanged.
+
+This is a defensive candidate for hardware validation, not a claim that
+the boot-connected failure or reconnect reliability is fixed.
+
+---
+diff --git a/drivers/usb/dwc2/gadget.c b/drivers/usb/dwc2/gadget.c
+--- a/drivers/usb/dwc2/gadget.c
++++ b/drivers/usb/dwc2/gadget.c
+@@ -4177,6 +4177,9 @@
+ 
+ 	case USB_ENDPOINT_XFER_BULK:
+ 		epctrl |= DXEPCTL_EPTYPE_BULK;
++		/* Keep OUT NAKed until start_req() installs a receive buffer. */
++		if (!dir_in)
++			epctrl |= DXEPCTL_SNAK;
+ 		break;
+ 
+ 	case USB_ENDPOINT_XFER_INT:
