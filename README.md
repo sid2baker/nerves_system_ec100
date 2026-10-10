@@ -202,6 +202,27 @@ modem power/reset and networking are not configured. Before adding a USB-network
 modem, verify interface identity so it cannot inherit the setup port's
 `VintageNetDirect`/DHCP-server configuration.
 
+## Tailscale gateways
+
+`0.1.31-dev` adds built-in TUN, IPv6 and dual-stack policy routing, plus netfilter
+support for Tailscale's default **iptables** backend. The image includes
+`iptables` and `ip6tables`, with kernel support for filtering, connection tracking,
+NAT/masquerading, packet/connection marks and TCP MSS clamping. The nftables
+backend is not enabled.
+
+`0.1.32-dev` adds built-in LAN bridging, `bridge-utils`, and firewall comment
+matching and IPv4/IPv6 REJECT targets in `linux/ec100.fragment`. Bridge
+netfilter is disabled so ordinary Layer-2 bridge traffic does not pass through
+the IP firewall; routed traffic can still be filtered. The application owns
+bridge configuration and supplies `tailscaled` during firmware assembly.
+
+The application still needs to start Tailscale in kernel-TUN mode, enable the
+required IP forwarding sysctls on each boot, and advertise only the intended
+routes. Route approval and access rules belong to the tailnet configuration.
+This system does not automatically enable forwarding or advertise routes.
+Gateway operation still needs hardware validation; `/dev/net/tun` existing alone
+is not proof that routing and NAT work.
+
 ## Watchdog
 
 The GPIO watchdog is configured on GPIO0_B1 with toggle feeding, `always-running`,
@@ -248,7 +269,7 @@ still require hardware qualification.
 ## Configuration
 
 - `dts/rk3506-ec100.dts` — board hardware
-- `linux/ec100.fragment` — kernel features
+- `linux/ec100.fragment` — board kernel features, bridging, routing and firewall support
 - `bootstrap/uboot.env` — boot selection and rollback
 - `fwup.conf` — storage layout and firmware updates
 - `fwup-ops.conf` — validation, revert, and factory reset
