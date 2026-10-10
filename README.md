@@ -202,6 +202,14 @@ modem power/reset and networking are not configured. Before adding a USB-network
 modem, verify interface identity so it cannot inherit the setup port's
 `VintageNetDirect`/DHCP-server configuration.
 
+## Kernel profile
+
+This wired, headless profile enables strict kernel memory permissions: kernel
+code and read-only data are protected against writes, and writable kernel data
+is non-executable. Unused Rockchip RGA graphics, audio, Bluetooth, and Wi-Fi stacks
+are disabled. Wi-Fi, Bluetooth, and audio peripherals require a different kernel
+configuration; USB Ethernet and the other documented interfaces remain enabled.
+
 ## Tailscale gateways
 
 `0.1.31-dev` adds built-in TUN, IPv6 and dual-stack policy routing, plus netfilter

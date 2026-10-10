@@ -2,6 +2,9 @@
 # CONFIG_WERROR is not set
 # CONFIG_MODULES is not set
 
+# Protect kernel code/rodata and keep writable kernel data non-executable.
+CONFIG_STRICT_KERNEL_RWX=y
+
 # EC100 / RK3506J essentials
 CONFIG_SMP=y
 CONFIG_VFP=y
@@ -21,7 +24,6 @@ CONFIG_EFI_PARTITION=y
 CONFIG_SERIAL_8250=y
 CONFIG_SERIAL_8250_CONSOLE=y
 CONFIG_SERIAL_8250_DW=y
-CONFIG_EARLY_PRINTK=y
 # Use the standard UART0 console, not the vendor FIQ wrapper.
 # CONFIG_FIQ_DEBUGGER is not set
 
@@ -180,3 +182,12 @@ CONFIG_PL330_DMA=y
 # CONFIG_DRM_V3D is not set
 # CONFIG_DRM_VC4 is not set
 # CONFIG_DRM_ROCKCHIP is not set
+# CONFIG_ROCKCHIP_RGA is not set
+# CONFIG_ROCKCHIP_MULTI_RGA is not set
+
+# Wired gateway: no audio, Bluetooth, or Wi-Fi hardware is used.
+# CONFIG_SOUND is not set
+# CONFIG_BT is not set
+# CONFIG_WLAN is not set
+# CONFIG_WIRELESS is not set
+# CONFIG_RFKILL is not set

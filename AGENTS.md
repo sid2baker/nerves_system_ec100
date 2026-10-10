@@ -17,7 +17,7 @@ Keep it stupidly simple.
 - Preserve a known-good boot path while replacing components incrementally.
 - Fail early and loudly when assumptions are wrong.
 - Keep factory flashing and recovery simple and repeatable.
-- Bump the system version when build artifacts change.
+- Bump the system version when build artifacts change, except during `-dev` iteration. Keep the same `-dev` version while iterating; Nerves artifact fingerprints distinguish builds.
 
 ## Priorities
 
