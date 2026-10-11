@@ -6,8 +6,10 @@ with the USB0 Type-C setup port.
 
 Initialize fixed peripherals using the existing device-mode transition,
 then override ID to device. Ignore ID-driven host selection for this mode,
-including ID interrupts. Propagate the VBUS detector callback result.
-Do not override BVALID or provide a host VBUS supply.
+including ID interrupts and system resume. Keep resume ID bookkeeping,
+IRQ restoration, BVALID handling and low-power exit unchanged.
+Propagate the VBUS detector callback result. Do not override BVALID or
+provide a host VBUS supply.
 
 ---
 diff --git a/drivers/phy/rockchip/phy-rockchip-inno-usb2.c b/drivers/phy/rockchip/phy-rockchip-inno-usb2.c
@@ -70,3 +72,30 @@ diff --git a/drivers/phy/rockchip/phy-rockchip-inno-usb2.c b/drivers/phy/rockchi
  	 * Let us put phy-port into suspend mode here for saving power
  	 * consumption, and usb controller will resume it during probe
  	 * time if needed.
+@@ -3583,15 +3606,17 @@ static int rockchip_usb2phy_pm_resume(struct device *dev)
+ 				dev_dbg(&rport->phy->dev,
+ 					"iddig changed during resume\n");
+ 				rport->prev_iddig = iddig;
+-				extcon_set_state_sync(rphy->edev,
+-						      EXTCON_USB_HOST,
+-						      !iddig);
+-				extcon_set_state_sync(rphy->edev,
+-						      EXTCON_USB_VBUS_EN,
+-						      !iddig);
+-				ret = rockchip_set_vbus_power(rport, !iddig);
+-				if (ret)
+-					return ret;
++				if (rport->mode != USB_DR_MODE_PERIPHERAL) {
++					extcon_set_state_sync(rphy->edev,
++							      EXTCON_USB_HOST,
++							      !iddig);
++					extcon_set_state_sync(rphy->edev,
++							      EXTCON_USB_VBUS_EN,
++							      !iddig);
++					ret = rockchip_set_vbus_power(rport, !iddig);
++					if (ret)
++						return ret;
++				}
+ 			}
+ 		}
+ 
