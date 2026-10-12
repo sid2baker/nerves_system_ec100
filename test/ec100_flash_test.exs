@@ -153,6 +153,52 @@ defmodule EC100FlashTest do
       assert {:ok, :binary.copy(<<0xCD>>, 1024)} == :file.pread(io, 688_128 * 512, 1024)
     end)
 
+    # The standard reset only invalidates the filesystem header, even when
+    # p3 is larger than the old fixed 512 MiB trim range. No hardware access.
+    ops = Path.join(tmp, "ops.fw")
+    {output, status} = System.cmd(fwup, ["-c", "-f", "fwup-ops.conf", "-o", ops])
+    assert status == 0, output
+
+    protected = [
+      {0, 34 * 512},
+      {64 * 512, 512},
+      {16384 * 512, 512},
+      {24576 * 512, 512 * 512},
+      {32768 * 512, 1024},
+      {98304 * 512, 1024},
+      {163_840 * 512, 1024},
+      {688_128 * 512, 1024},
+      {7_471_071 * 512, 33 * 512}
+    ]
+
+    File.open!(image, [:read, :write, :binary], fn io ->
+      before = for {offset, size} <- protected, do: :file.pread(io, offset, size)
+      data_start = 1_212_416 * 512
+      untouched = [data_start + 131_072, data_start + 536_870_912, 7_471_070 * 512]
+      sentinel = :binary.copy(<<0x5A>>, 512)
+      :ok = :file.pwrite(io, data_start, sentinel)
+      for offset <- untouched, do: :ok = :file.pwrite(io, offset, sentinel)
+      :ok = :file.sync(io)
+
+      {output, status} =
+        System.cmd(fwup, [
+          "-a",
+          "-U",
+          "--enable-trim",
+          "-i",
+          ops,
+          "-d",
+          image,
+          "-t",
+          "factory-reset"
+        ])
+
+      assert status == 0, output
+      assert :file.pread(io, data_start, 131_072) == {:ok, :binary.copy(<<255>>, 131_072)}
+      for offset <- untouched, do: assert(:file.pread(io, offset, 512) == {:ok, sentinel})
+      assert before == for({offset, size} <- protected, do: :file.pread(io, offset, size))
+    end)
+
     assert_raise Mix.Error, ~r/Output already exists/, fn ->
       Flash.prepare!(firmware, images, 7_471_104, destination)
     end

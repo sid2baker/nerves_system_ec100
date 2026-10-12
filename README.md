@@ -119,6 +119,48 @@ Root filesystems are read-only SquashFS. Nerves initializes the shared ext4 data
 partition on first use and mounts it at `/root`; `/data` is an alias. Raw FIT slots
 are outside the GPT partitions. The kernel supports both gzip and XZ SquashFS.
 
+## Factory reset (application data only)
+
+Use the standard Nerves operation, after stopping application data writers:
+
+```elixir
+Nerves.Runtime.FwupOps.factory_reset()
+```
+
+Like the [Raspberry Pi](https://github.com/nerves-project/nerves_system_rpi4/blob/main/fwup-ops.conf)
+and [BeagleBone](https://github.com/nerves-project/nerves_system_bbb/blob/main/fwup-ops.conf)
+systems, this invalidates the first 128 KiB of the data filesystem. The runtime
+immediately reboots, and `Nerves.Runtime.Init` reformats the **actual partition**
+on the next boot. No fixed 512 MiB trim or custom formatter is needed. This is a
+logical reset, **not secure erasure**; old data blocks may remain recoverable.
+
+The application owns the reset procedure:
+
+1. Prevent firmware updates and new writes; stop databases, logging, and other
+   users of `/data`/`/root`, including shell history. Leave any working directory
+   on that filesystem.
+2. Unmount `/root` normally (and any other mounts of the same partition). Abort
+   on failure; do not use lazy/forced unmount. The fwup task itself does **not**
+   enforce this, and requiring the whole destination disk to be unmounted would
+   also reject the running root filesystem.
+3. Call `factory_reset()` with its default immediate reboot. Do not use
+   `reboot: false` or perform a graceful shutdown after invalidation. If the call
+   fails, treat reset as incomplete; do not resume normal data writes.
+4. After reboot, verify `/root` is mounted read-write as ext4 before starting
+   data-dependent services. Runtime format/mount failures must not be treated as
+   a successful reset by the application.
+
+The task does not write GPT, firmware slots, U-Boot, its environment, or hardware
+identity storage. **Everything stored in `/root` is reset**, including software
+credentials and network configuration. Identity that must survive cannot live
+only there. Keep a local serial/recovery path; network access may disappear.
+
+Hardware qualification is still pending: test reset on expanded p3, busy-unmount
+and I/O failures, and power cuts during invalidation and reformatting. Verify
+empty usable storage and unchanged firmware/identity after recovery. The standard
+reset is not an atomic transaction: interruption may leave old data or an invalid
+filesystem, so do not claim completion until the post-boot checks pass.
+
 ## SD, CAN, and serial ports
 
 | Interface | Linux device | Board pins |
@@ -154,10 +196,32 @@ Both CAN interfaces register, but physical CAN traffic has not been tested.
 
 ## User controls
 
-- Run LED: GPIO1_A7, `/sys/class/leds/ec100:run/brightness`. Values `0` and `1`
-  control the output; the physical on/off polarity is not yet recorded.
-- User button: GPIO1_A5, active-low, exposed by `gpio-keys` as `KEY_PROG1`
-  (code 148). Press/release events have been verified. No reset action is bound.
+| LED | GPIO | Linux LED name |
+| --- | --- | --- |
+| RUN | GPIO1_A7 | `ec100:run` |
+| USER1 | GPIO1_A6 | `ec100:user1` |
+| USER2 | GPIO1_A4 | `ec100:user2` |
+
+These GPIO mappings come from the [IOTRouter EC100 guide](https://en.iotrouter.com/ec100-arm-industrial-computer-development-guide/)
+(RUN/LED1/LED2) and match the captured stock device tree. All three have pinctrl
+and `gpio-leds` definitions. **Physical polarity is still unverified**:
+`GPIO_ACTIVE_HIGH` currently makes brightness `0` raw low and `1` raw high.
+Observe each LED at both values before treating them as physical off/on.
+
+All three use `default-state = "off"` (raw low) when the Linux driver probes,
+rather than inheriting the bootloader output. Earlier boot stages are unchanged;
+no early-boot blink is promised. Control them through `/sys/class/leds/<name>/`
+or application-level [Delux](https://github.com/elixir-circuits/delux). The kernel
+includes the timer, transient, and pattern triggers; pattern supports Delux.
+
+RUN is **not a VM-health guarantee**. A latched brightness or repeating kernel
+pattern can survive an abrupt VM failure. Applications needing a timeout can use
+the standard transient trigger, but physical off-on-crash behavior still needs
+polarity and failure testing. Heart/watchdog recovery remains separate; no LED
+supervisor is added by this system.
+
+The user button is GPIO1_A5, active-low, exposed by `gpio-keys` as `KEY_PROG1`
+(code 148). Press/release events have been verified. No reset action is bound.
 
 ## USB
 
@@ -271,8 +335,9 @@ Nerves Heart handles watchdog feeding; do not add a separate GPIO-feeding proces
 
 ## Remaining qualification
 
-Automatic A/B rollback, power-loss recovery, CAN traffic, and long-term stability
-still require hardware qualification.
+Automatic A/B rollback, power-loss recovery, LED polarity/VM-failure behavior,
+factory reset, CAN traffic, and long-term stability still require hardware
+qualification.
 
 ## Configuration
 

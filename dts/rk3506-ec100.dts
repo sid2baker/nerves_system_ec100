@@ -107,13 +107,28 @@
     leds {
         compatible = "gpio-leds";
         pinctrl-names = "default";
-        pinctrl-0 = <&run_led_pin>;
+        pinctrl-0 = <&run_led_pin &user1_led_pin &user2_led_pin>;
 
+        /* GPIOs match the IOTRouter EC100 guide and stock device tree.
+         * ACTIVE_HIGH is provisional: physical polarity needs verification.
+         * "off" currently means raw low, not a qualified physical off state.
+         */
         run {
             label = "ec100:run";
-            /* Raw high/low control until LED polarity is verified on hardware. */
             gpios = <&gpio1 RK_PA7 GPIO_ACTIVE_HIGH>;
-            default-state = "keep";
+            default-state = "off";
+        };
+
+        user1 {
+            label = "ec100:user1";
+            gpios = <&gpio1 RK_PA6 GPIO_ACTIVE_HIGH>;
+            default-state = "off";
+        };
+
+        user2 {
+            label = "ec100:user2";
+            gpios = <&gpio1 RK_PA4 GPIO_ACTIVE_HIGH>;
+            default-state = "off";
         };
     };
 
@@ -381,6 +396,14 @@
     user-controls {
         run_led_pin: run-led-pin {
             rockchip,pins = <1 RK_PA7 RK_FUNC_GPIO &pcfg_pull_none>;
+        };
+
+        user1_led_pin: user1-led-pin {
+            rockchip,pins = <1 RK_PA6 RK_FUNC_GPIO &pcfg_pull_none>;
+        };
+
+        user2_led_pin: user2-led-pin {
+            rockchip,pins = <1 RK_PA4 RK_FUNC_GPIO &pcfg_pull_none>;
         };
 
         user_button_pin: user-button-pin {
