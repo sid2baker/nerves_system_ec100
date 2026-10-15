@@ -1,4 +1,5 @@
 /_build/
+/dist/
 /deps/
 /.nerves_artifacts/
 /.nerves/

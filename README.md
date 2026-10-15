@@ -42,6 +42,69 @@ The build produces application firmware (`.fw`) and separate factory boot images
 It does not flash the board. Source pins are listed in [SOURCES.md](SOURCES.md);
 boot-image details are in [bootstrap/README.md](bootstrap/README.md).
 
+## Prebuilt systems and releases
+
+The [System artifact workflow](.github/workflows/artifacts.yml) builds with Nerves 2
+from a clean checkout. Run it manually for an untagged development build; its
+`ec100-system` Actions artifact contains the system tarball, corresponding-source
+tarball, and `SHA256SUMS` and is retained for 14 days. It does not contain application firmware (`.fw`).
+
+Pushing a version tag builds the system and creates a **draft** GitHub release.
+Nothing publishes automatically. Release tarballs keep Nerves' generated name,
+including the source fingerprint. Nerves looks for them under `v<VERSION>`; do not
+rename a tarball or move a published tag.
+
+Once a release has been published, an application can replace its local path
+with a Git dependency pinned to that tag (Hex publication is not required):
+
+```elixir
+{:nerves_system_ec100,
+ github: "sid2baker/nerves_system_ec100",
+ tag: "v<release-version>",
+ runtime: false,
+ targets: [:ec100]}
+```
+
+Then run `mix deps.get` and `MIX_TARGET=ec100 mix firmware`. Nerves downloads the
+matching system artifact. Keep the path dependency and explicit artifact build
+when developing the system itself.
+
+### Maintainer release checklist
+
+The workflow runs Buildroot's `make legal-info`, adds the external toolchain's
+sources and notices, and includes the matching Buildroot and EC100 build recipes.
+See [SOURCES.md](SOURCES.md#release-source-archive) for the archive layout and local
+command. When updating components, review the collected manifests, warnings, and
+notices, and update the pinned toolchain source list if needed. Always distribute
+the source tarball alongside the system tarball.
+
+1. Keep a `-dev` version during development. For a release, choose an unused
+   version such as `0.2.0`, update `VERSION`, and move the relevant
+   [changelog](CHANGELOG.md) entries into `## 0.2.0 - YYYY-MM-DD`, leaving
+   `Unreleased` at the top. Use `0.2.0-rc.1` instead when a prerelease is intended.
+   Release notes are copied from that section; missing, empty, or duplicate
+   sections fail before the build.
+2. Commit the final sources and push the matching `v0.2.0` tag. The workflow
+   refuses tags that disagree with `VERSION` and refuses `-dev` releases. It never
+   overwrites an existing release. Only the release job has `contents: write`;
+   no personal token or Hex credentials are needed.
+3. Verify `SHA256SUMS`, download the draft assets with maintainer credentials,
+   and test the exact artifact in a clean application environment. Supply a
+   maintainer token through `GH_TOKEN` or the GitHub CLI: Nerves 2 can fall back
+   to the authenticated API for draft assets. Do not edit `mix.exs` to test the
+   download, since that changes the fingerprint. Public downloads only work
+   after publication. Test firmware built from that artifact on EC100,
+   including boot, networking, factory recovery, and A/B update/rollback.
+4. Review the draft's title (exactly the tag), changelog notes, assets, and
+   prerelease flag before publishing. After publication, verify an unauthenticated
+   download and a fresh application build. Do not promote untested binaries.
+
+The workflow deliberately does not reuse host `deps/`, `.nerves/`, or Buildroot
+workspaces: Nerves `2.0.0-pre.3` can copy broken host symlinks into containers.
+Dependencies are locked, but the prerelease's default container uses a mutable
+base image, and the vendor loader tool embeds a timestamp. Builds are not claimed
+to be bit-for-bit reproducible.
+
 ## Factory installation
 
 **Factory flashing replaces the boot chain, partition layout, and application data.**

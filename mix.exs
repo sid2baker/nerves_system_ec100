@@ -28,6 +28,9 @@ defmodule NervesSystemEC100.MixProject do
   defp nerves_package do
     [
       type: :system,
+      artifact_sites: [
+        {:github_releases, "sid2baker/nerves_system_ec100"}
+      ],
       platform: Nerves.System.BR,
       platform_config: [defconfig: "nerves_defconfig"],
       env: [
@@ -57,8 +60,10 @@ defmodule NervesSystemEC100.MixProject do
       "bootstrap",
       "dts",
       "ec100.its",
+      "lib/mix/tasks/ec100.release.ex",
       "linux",
       "patches",
+      "release",
       "rootfs_overlay",
       "LICENSE",
       "README.md",
