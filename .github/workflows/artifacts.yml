@@ -7,7 +7,7 @@ on:
       - 'v*'
 
 permissions:
-  contents: read
+  contents: write # Create draft releases on version tags; no PR trigger.
 
 concurrency:
   group: system-artifact-${{ github.ref }}
@@ -27,8 +27,8 @@ jobs:
         with:
           otp-version: '29.0.6'
           elixir-version: '1.20.3'
-      - name: Test release notes extraction
-        run: elixir -r test/test_helper.exs test/release_notes_test.exs
+      - name: Test release scripts
+        run: elixir -r test/test_helper.exs -r 'test/release_*_test.exs' -e ''
       - name: Check tag and prepare release notes
         if: github.ref_type == 'tag'
         env:
@@ -42,6 +42,8 @@ jobs:
           mix archive.install hex nerves_bootstrap 1.17.3 --force
           mix deps.get
           git diff --exit-code -- mix.lock
+      - name: Download and verify toolchain sources
+        run: bash release/download-sources.sh "$NERVES_DL_DIR/ec100-toolchain-sources"
       - name: Build system
         # Nerves 2 pre.3 uses an interactive container runner, even for builds.
         # Start with a clean checkout; do not restore host Buildroot/deps caches.
@@ -57,37 +59,14 @@ jobs:
           if-no-files-found: error
           compression-level: 0
           retention-days: 14
-      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
-        if: github.ref_type == 'tag'
-        with:
-          name: release-notes
-          path: release-notes.md
-          if-no-files-found: error
-          retention-days: 14
-
-  release:
-    if: github.ref_type == 'tag'
-    needs: build
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
-        with:
-          name: ec100-system
-          path: dist
-      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
-        with:
-          name: release-notes
       - name: Create draft release
+        if: github.ref_type == 'tag'
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
           RELEASE_TAG: ${{ github.ref_name }}
         shell: bash
         run: |
-          (cd dist && sha256sum --check SHA256SUMS)
           options=(--draft --latest=false)
           if [[ "$RELEASE_TAG" == *-* ]]; then
             options+=(--prerelease)

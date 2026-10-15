@@ -47,9 +47,10 @@ NERVES_CONTAINER_TOOL=docker mix ec100.release
 (cd dist && sha256sum --check SHA256SUMS)
 ```
 
-The collector requires an empty `dist/` directory. Nerves `2.0.0-pre.3` does not
-run the legacy `build_runner_opts` legal-info target, so the collector invokes it
-explicitly in the existing build container and repackages the system with notices.
+The collector requires an empty `dist/` directory. It runs `make legal-info` in
+the existing build container and repackages the system with notices. CI prefetches
+the toolchain sources with `release/download-sources.sh` before building; downloads
+have bounded retries and timeouts, and cached files are rechecked against SHA512.
 
 Buildroot's generated README still warns that it cannot save its own sources or
 the external toolchain's licenses; the additions above cover those omissions.

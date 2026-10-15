@@ -44,18 +44,13 @@ boot-image details are in [bootstrap/README.md](bootstrap/README.md).
 
 ## Prebuilt systems and releases
 
-The [System artifact workflow](.github/workflows/artifacts.yml) builds with Nerves 2
-from a clean checkout. Run it manually for an untagged development build; its
-`ec100-system` Actions artifact contains the system tarball, corresponding-source
-tarball, and `SHA256SUMS` and is retained for 14 days. It does not contain application firmware (`.fw`).
+Run the [System artifact workflow](.github/workflows/artifacts.yml) manually for
+a development build. It verifies toolchain downloads before building, then saves
+the system tarball, corresponding-source tarball, and `SHA256SUMS` in the
+`ec100-system` Actions artifact for 14 days. Application firmware (`.fw`) is separate.
+Version tags also create a **draft** GitHub release; nothing publishes automatically.
 
-Pushing a version tag builds the system and creates a **draft** GitHub release.
-Nothing publishes automatically. Release tarballs keep Nerves' generated name,
-including the source fingerprint. Nerves looks for them under `v<VERSION>`; do not
-rename a tarball or move a published tag.
-
-Once a release has been published, an application can replace its local path
-with a Git dependency pinned to that tag (Hex publication is not required):
+To use a published system, replace the local path with a pinned Git dependency:
 
 ```elixir
 {:nerves_system_ec100,
@@ -65,45 +60,31 @@ with a Git dependency pinned to that tag (Hex publication is not required):
  targets: [:ec100]}
 ```
 
-Then run `mix deps.get` and `MIX_TARGET=ec100 mix firmware`. Nerves downloads the
-matching system artifact. Keep the path dependency and explicit artifact build
-when developing the system itself.
+Run `mix deps.get` and `MIX_TARGET=ec100 mix firmware`; Nerves downloads the matching
+artifact. Hex publication is not required. Keep the path dependency for development.
 
-### Maintainer release checklist
+### Releasing
 
-The workflow runs Buildroot's `make legal-info`, adds the external toolchain's
-sources and notices, and includes the matching Buildroot and EC100 build recipes.
-See [SOURCES.md](SOURCES.md#release-source-archive) for the archive layout and local
-command. When updating components, review the collected manifests, warnings, and
-notices, and update the pinned toolchain source list if needed. Always distribute
-the source tarball alongside the system tarball.
+1. Keep `VERSION` at `-dev` while developing. For a release, choose an unused
+   version and add its `## X.Y.Z - YYYY-MM-DD` section to [CHANGELOG.md](CHANGELOG.md).
+2. Commit and push the matching `vX.Y.Z` tag. The workflow rejects mismatched tags,
+   `-dev` versions, and missing or empty notes. It never overwrites a release.
+3. Download the draft assets using maintainer credentials (`GH_TOKEN` or `gh`),
+   verify `SHA256SUMS`, and test firmware built from that exact system on EC100:
+   boot, networking, factory recovery, and A/B update/rollback. Do not edit
+   `mix.exs` to test downloads: it changes the artifact fingerprint.
+4. Check the draft title (exactly the tag), notes (exactly the changelog section),
+   assets, and prerelease flag, then publish. Verify public downloads and a clean
+   application build. Never rename a tarball or move a published tag.
 
-1. Keep a `-dev` version during development. For a release, choose an unused
-   version such as `0.2.0`, update `VERSION`, and move the relevant
-   [changelog](CHANGELOG.md) entries into `## 0.2.0 - YYYY-MM-DD`, leaving
-   `Unreleased` at the top. Use `0.2.0-rc.1` instead when a prerelease is intended.
-   Release notes are copied from that section; missing, empty, or duplicate
-   sections fail before the build.
-2. Commit the final sources and push the matching `v0.2.0` tag. The workflow
-   refuses tags that disagree with `VERSION` and refuses `-dev` releases. It never
-   overwrites an existing release. Only the release job has `contents: write`;
-   no personal token or Hex credentials are needed.
-3. Verify `SHA256SUMS`, download the draft assets with maintainer credentials,
-   and test the exact artifact in a clean application environment. Supply a
-   maintainer token through `GH_TOKEN` or the GitHub CLI: Nerves 2 can fall back
-   to the authenticated API for draft assets. Do not edit `mix.exs` to test the
-   download, since that changes the fingerprint. Public downloads only work
-   after publication. Test firmware built from that artifact on EC100,
-   including boot, networking, factory recovery, and A/B update/rollback.
-4. Review the draft's title (exactly the tag), changelog notes, assets, and
-   prerelease flag before publishing. After publication, verify an unauthenticated
-   download and a fresh application build. Do not promote untested binaries.
+Always distribute both tarballs. See [SOURCES.md](SOURCES.md#release-source-archive)
+for the collected notices, sources, recipes, and local packaging command. Review
+license warnings and update the toolchain source list when changing components.
 
-The workflow deliberately does not reuse host `deps/`, `.nerves/`, or Buildroot
-workspaces: Nerves `2.0.0-pre.3` can copy broken host symlinks into containers.
-Dependencies are locked, but the prerelease's default container uses a mutable
-base image, and the vendor loader tool embeds a timestamp. Builds are not claimed
-to be bit-for-bit reproducible.
+Builds use clean checkouts: do not restore host `deps/`, `.nerves/`, or Buildroot
+workspaces, which can contain broken host symlinks under Nerves `2.0.0-pre.3`.
+Dependencies are locked, but the default container base is mutable and the vendor
+loader embeds a timestamp; builds are not claimed to be bit-for-bit reproducible.
 
 ## Factory installation
 

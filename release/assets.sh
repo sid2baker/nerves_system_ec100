@@ -20,29 +20,31 @@ cp "$system/LICENSE" legal-info/licenses/nerves_system_ec100/
 cp "$system/SOURCES.md" legal-info/EC100-SOURCES.md
 cp "$system/release/toolchain-sources.sha512" "$supplement/"
 
-# Keep verified downloads across retries; never accept a partial or changed archive.
 cache=/workspace/dl/ec100-toolchain-sources
-mkdir -p "$cache"
+bash "$system/release/download-sources.sh" "$cache"
 while read -r checksum url; do
     [[ -z "$checksum" || "$checksum" == \#* ]] && continue
-    filename=${url##*/}
-    if [[ ! -f "$cache/$filename" ]]; then
-        curl --fail --location --retry 3 --silent --show-error "$url" -o "$cache/$filename.part"
-        printf '%s  %s\n' "$checksum" "$cache/$filename.part" | sha512sum --check -
-        mv "$cache/$filename.part" "$cache/$filename"
-    fi
-    printf '%s  %s\n' "$checksum" "$cache/$filename" | sha512sum --check -
-    cp "$cache/$filename" "$supplement/"
+    cp "$cache/${url##*/}" "$supplement/"
 done < "$system/release/toolchain-sources.sha512"
 
 # Nerves includes notices but omits legal-info/{sources,host-sources} in the binary.
 make system NERVES_ARTIFACT_NAME="$name"
 mkdir -p "$NERVES_ARTIFACT_DIR"
 cp "$name.tar.gz" "$NERVES_ARTIFACT_DIR/"
+cp "$name.tar.gz" /dist/
 
 # Include Buildroot itself and the exact system recipes alongside collected sources.
 # Exclude only Buildroot's absolute convenience symlink, not its expanded sources.
-tar -czf "$NERVES_ARTIFACT_DIR/$sources.tar.gz.part" \
+tar -czf "/dist/$sources.tar.gz.part" \
     --exclude=nerves_system_br/buildroot \
     -C /workspace build/legal-info nerves_system_ec100 nerves_system_br
-mv "$NERVES_ARTIFACT_DIR/$sources.tar.gz.part" "$NERVES_ARTIFACT_DIR/$sources.tar.gz"
+mv "/dist/$sources.tar.gz.part" "/dist/$sources.tar.gz"
+
+cd /dist
+for archive in "$name.tar.gz" "$sources.tar.gz"; do
+    if (( $(stat -c %s "$archive") >= 2147483648 )); then
+        echo "$archive exceeds GitHub's 2 GiB limit" >&2
+        exit 1
+    fi
+done
+sha256sum "$name.tar.gz" "$sources.tar.gz" > SHA256SUMS
