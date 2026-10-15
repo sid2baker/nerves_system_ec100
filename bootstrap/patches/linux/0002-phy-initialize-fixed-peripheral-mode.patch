@@ -11,6 +11,13 @@ IRQ restoration, BVALID handling and low-power exit unchanged.
 Propagate the VBUS detector callback result. Do not override BVALID or
 provide a host VBUS supply.
 
+The upstream PR covers the ID-based role guards only. This local patch
+also retains device-mode initialization, forced device ID and VBUS
+detector error propagation. Keep it until the pinned kernel includes the
+upstream fix, then reassess these local additions before removing it.
+
+Link: https://github.com/armbian/linux-rockchip/pull/578
+
 ---
 diff --git a/drivers/phy/rockchip/phy-rockchip-inno-usb2.c b/drivers/phy/rockchip/phy-rockchip-inno-usb2.c
 --- a/drivers/phy/rockchip/phy-rockchip-inno-usb2.c
