@@ -5,7 +5,58 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## v0.5.0
+
+### Changed
+
+- Maintain the system in `sid2baker/nerves_system_ec100`, with `vX.Y.Z` tags.
+- Use the official `actions-nerves2-package` build and draft-release workflow.
+- Require Nerves 2.0.0-pre.9 or later; use standard target selection and bootstrap.
+- Include Buildroot legal notices through the standard system build.
+
+## 0.4.0 - 2026-11-02
+
+### Changed
+
+- Move to the Armbian Rockchip 6.12 kernel (`rk-6.12-rkr1`). The board device
+  tree now lives in `dts/rockchip/`, beside the SoC files it includes. The MMC
+  regulator fix is upstream there, so its local patch is gone.
+
+### Fixed
+
+- Ethernet statistics no longer stall the gateway. The 6.1 kernel's stmmac
+  driver lost 64-bit counter updates on this 32-bit SoC, so after hours of
+  uptime every read of `eth0` counters spun in the kernel for seconds. The
+  6.12 driver protects these updates.
+
+## 0.3.0 - 2026-10-22
+
+### Added
+
+- Enable power to the Quectel EG800AK 4G module using the factory GPIO1_C0
+  power-enable line.
+- Name the EG800AK's CDC-ECM data interface `wwan0`, keeping `usb0` reserved for
+  the Type-C recovery link.
+- Document the active-high modem reset on GPIO1_D1; the system leaves it
+  unclaimed and does not automatically reset the modem.
+
+## 0.2.2 - 2026-10-22
+
+### Changed
+
+- System builds use Nerves 2 artifact tooling and Buildroot's source fetching and
+  license collection instead of a separate toolchain-source downloader.
+
+## 0.2.1 - 2026-10-20
+
+### Changed
+
+- System sources and prebuilt artifacts are now available from `sid2baker/nerves_gate`,
+  using `system-ec100/v0.2.1` instead of releases in the standalone system repository.
+
+### Compatibility
+
+- Uses Nerves `2.0.0-pre.4`, matching the gateway firmware build tools.
 
 ## 0.2.0 - 2026-10-15
 
