@@ -46,8 +46,12 @@ Every push builds the artifact. No Hex package is built or published. To release
    review it and commit it. Git consumers need the manifest in the tagged sources;
    the manifest is excluded from the build fingerprint.
 3. Push a matching `vX.Y.Z` tag.
-4. CI creates a draft release with the artifact and `checksum.exs`. Review it
-   and publish it; Nerves cannot download from a draft.
+4. CI creates a draft release. Before publishing, verify its binary and manifest
+   match the checksum committed in the tag, and its notes match the changelog.
+   Rebuilds may produce different archive bytes under the same fingerprint; in
+   that case use the matching, verified pre-tag CI artifact in the unpublished
+   draft. Never replace published assets or rewrite a tag. Nerves cannot download
+   from a draft.
 
 The artifact includes Buildroot's `legal-info` notices but not source tarballs.
 Review the licensing notes in [SOURCES.md](SOURCES.md) before distributing.
