@@ -44,3 +44,13 @@ After changing code:
 - Fix the observed problem, not hypothetical ones.
 
 Do not refactor working hardware code while bring-up is still in progress.
+
+## Releases
+
+Follow the official Nerves system layout and `actions-nerves2-package` workflow.
+Use GitHub releases with `vX.Y.Z` tags matching VERSION and the changelog heading.
+Do not publish to Hex. Review and commit the generated checksum.exs before tagging
+so Git dependencies verify artifacts too. CI creates drafts; publishing is manual.
+Never overwrite published tags or assets. Tags, publishing, commits, pushes and
+physical operations require explicit authorization. A source change never
+implicitly authorizes hardware testing, flashing, resetting or erasing storage.
